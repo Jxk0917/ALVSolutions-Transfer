@@ -114,61 +114,398 @@
     reveals.forEach(function (el) { io.observe(el); });
   }
 
-  /* ---- quote form ------------------------------------------------------
+
+  /* ---- project intake wizard -------------------------------------------
      Only the home page and /contact/ render the form. Everything below is
      guarded: unguarded, the null deref throws on the other 16 pages. It
      would not break the menu or the reveals (they run above it), which is
-     exactly what makes it the kind of error nobody notices for a month.  */
+     exactly what makes it the kind of error nobody notices for a month.
+
+     Answers live in the inputs and nowhere else. Panels are hidden, never
+     detached, so stepping back and forth preserves everything for free and
+     no copy of the visitor's details is kept anywhere on their machine. */
   var form = document.getElementById('quote-form');
   if (!form) return;
 
+  function toArray(list) { return Array.prototype.slice.call(list); }
+
+  var panels  = toArray(form.querySelectorAll('[data-panel]'));
+  var backBtn = form.querySelector('[data-back]');
+  var nextBtn = form.querySelector('[data-next]');
+  var sendBtn = form.querySelector('[data-send]');
+  var liveMsg = form.querySelector('[data-live]');
+  var bar     = form.querySelector('.wiz-bar');
+  var barFill = form.querySelector('[data-fill]');
+  var stepN   = form.querySelector('[data-step-n]');
+  var stepName = form.querySelector('[data-step-name]');
+  var LAST    = panels.length - 1;
+  var reduce  = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var at = 0;  // panel on screen
+
+  /* ---- reading the answers ---- */
+
+  /* A RadioNodeList reports the checked radio's value, so one getter covers
+     text inputs, selects and every single-answer group. Checkboxes are the
+     exception: they report nothing, and go through pickedList instead. */
+  function val(name) {
+    var el = form.elements[name];
+    return el && el.value ? el.value.trim() : '';
+  }
+  function pickedList(name) {
+    return toArray(form.querySelectorAll('input[name="' + name + '"]:checked'))
+      .map(function (i) { return i.value; });
+  }
+
+  /* ---- validation ----
+     Rules a browser will not enforce on its own. type=email accepts "a@b",
+     which is not an address anyone can reply to. */
+  var CHECKS = {
+    email: /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i,
+    url:   /^(https?:\/\/)?[^\s/?#.]+\.[^\s]{2,}$/i
+  };
+
+  function validateField(box) {
+    var ok = true;
+    if (!box.hidden && box.hasAttribute('data-req')) {
+      if (box.hasAttribute('data-group')) {
+        ok = toArray(box.querySelectorAll('input')).some(function (i) { return i.checked; });
+      } else {
+        var el = box.querySelector('.input');
+        if (!el) return true;
+        var v = el.value.trim();
+        var kind = el.getAttribute('data-check');
+        ok = v !== '';
+        if (ok && kind === 'phone') ok = (v.match(/\d/g) || []).length >= 10;
+        else if (ok && CHECKS[kind]) ok = CHECKS[kind].test(v);
+        el.setAttribute('aria-invalid', String(!ok));
+      }
+    }
+    box.classList.toggle('invalid', !ok);
+    return ok;
+  }
+
+  function setAlert(panel, count) {
+    var alert = panel.querySelector('[data-alert]');
+    if (!alert) return;
+    alert.hidden = count === 0;
+    if (count) {
+      alert.querySelector('[data-alert-text]').textContent = count === 1
+        ? 'One answer needs your attention.'
+        : count + ' answers need your attention.';
+    }
+  }
+
+  /* Keeps a banner that is already up honest as the answers get fixed, and
+     clears it on the last one. It never raises a banner by itself: pressing
+     Continue is what asks the whole step how it is doing. */
+  function syncAlert(box) {
+    var panel = box.closest('[data-panel]');
+    if (!panel) return;
+    var alert = panel.querySelector('[data-alert]');
+    if (!alert || alert.hidden) return;
+    setAlert(panel, panel.querySelectorAll('[data-field].invalid').length);
+  }
+
+  function validateStep(i, moveFocus) {
+    var panel = panels[i];
+    var bad = toArray(panel.querySelectorAll('[data-field]'))
+      .filter(function (box) { return !validateField(box); });
+
+    setAlert(panel, bad.length);
+    if (bad.length && moveFocus) {
+      var el = bad[0].querySelector('.input, input');
+      if (el) el.focus();
+    }
+    return bad.length === 0;
+  }
+
+  /* ---- the progress bar ----
+     The bar fills to the end of the step being answered, not to the start of
+     it, so step one already shows a quarter done and the review sits at full.
+     Nobody opens a form to a bar reading zero. */
+  function label(i) { return panels[i].getAttribute('data-step-label') || ''; }
+  function position() { return 'Step ' + (at + 1) + ' of ' + panels.length + ', ' + label(at); }
+
+  function paint() {
+    if (barFill) barFill.style.setProperty('--p', (at + 1) / panels.length);
+    if (stepN) stepN.textContent = String(at + 1);
+    if (stepName) stepName.textContent = label(at);
+    if (bar) {
+      bar.setAttribute('aria-valuenow', String(at + 1));
+      bar.setAttribute('aria-valuetext', position());
+    }
+  }
+
+  function announce() {
+    if (liveMsg) liveMsg.textContent = position();
+  }
+
+  /* Replaying the entry animation means clearing the class, forcing the
+     layout to settle, then setting it again. Without the reflow the browser
+     collapses both writes into one frame and nothing moves. */
+  function replay(el) {
+    if (reduce) return;
+    el.classList.remove('is-in');
+    void el.offsetWidth;
+    el.classList.add('is-in');
+  }
+
+  function focusPanel(panel) {
+    var head = panel.querySelector('.wiz-title');
+    if (head) head.focus({ preventScroll: true });
+    var navH = parseInt(getComputedStyle(document.documentElement)
+      .getPropertyValue('--nav-h'), 10) || 68;
+    var top = form.getBoundingClientRect().top;
+    if (top < navH + 16 || top > window.innerHeight * 0.55) {
+      window.scrollTo({
+        top: window.pageYOffset + top - navH - 16,
+        behavior: reduce ? 'auto' : 'smooth'
+      });
+    }
+  }
+
+  function goTo(i, opts) {
+    opts = opts || {};
+    panels[at].hidden = true;
+    form.style.setProperty('--wiz-y', i < at ? '-10px' : '10px');
+    at = i;
+
+    if (at === LAST) buildReview();
+    panels[at].hidden = false;
+    replay(panels[at]);
+
+    backBtn.hidden = at === 0;
+    nextBtn.hidden = at === LAST;
+    sendBtn.hidden = at !== LAST;
+
+    paint();
+    announce();
+    if (opts.focus !== false) focusPanel(panels[at]);
+  }
+
+  /* ---- conditional questions ----
+     One question opens another: Yes opens the address field, Other opens
+     "what does it do", ASAP opens the rush note. Closing one clears what was
+     typed into it, so an answer that is no longer on screen never reaches
+     the email. */
+  function bindCond(input) {
+    var target = document.getElementById(input.getAttribute('data-cond'));
+    if (!target) return;
+    var wanted = input.getAttribute('data-cond-value');
+
+    function sync() {
+      var on = input.type === 'checkbox' ? input.checked
+             : wanted ? input.value === wanted
+             : input.checked;
+      if (on === !target.hidden) return;
+      target.hidden = !on;
+      if (on) {
+        replay(target);
+      } else {
+        target.classList.remove('invalid');
+        toArray(target.querySelectorAll('.input')).forEach(function (el) {
+          el.value = '';
+          el.removeAttribute('aria-invalid');
+        });
+      }
+      syncAlert(target);
+    }
+
+    input.addEventListener('change', sync);
+    if (input.type === 'radio') {
+      toArray(form.querySelectorAll('input[name="' + input.name + '"]'))
+        .forEach(function (sib) { if (sib !== input) sib.addEventListener('change', sync); });
+    }
+    sync();
+  }
+
+  /* ---- review ---- */
+  function addRow(dl, label, value) {
+    var many = Array.isArray(value);
+    if (many ? !value.length : !value) return;
+
+    var row = document.createElement('div');
+    row.className = 'rev-row';
+    var dt = document.createElement('dt');
+    dt.textContent = label;
+    var dd = document.createElement('dd');
+
+    if (many) {
+      var ul = document.createElement('ul');
+      ul.className = 'rev-tags';
+      value.forEach(function (v) {
+        var li = document.createElement('li');
+        li.textContent = v;
+        ul.appendChild(li);
+      });
+      dd.appendChild(ul);
+    } else {
+      dd.textContent = value;
+    }
+
+    row.appendChild(dt);
+    row.appendChild(dd);
+    dl.appendChild(row);
+  }
+
+  function fill(key, rows) {
+    var dl = form.querySelector('[data-rev="' + key + '"]');
+    if (!dl) return;
+    dl.textContent = '';
+    rows.forEach(function (r) { addRow(dl, r[0], r[1]); });
+  }
+
+  /* Everything here goes through textContent, so whatever was typed into
+     "Other" is read back as text and never as markup. */
+  function goalList() {
+    var other = val('goalOther');
+    return pickedList('goals').map(function (g) {
+      return g === 'Other' && other ? other : g;
+    });
+  }
+
+  function buildReview() {
+    fill('contact', [
+      ['Name', val('name')],
+      ['Business', val('business')],
+      ['Email', val('email')],
+      ['Phone', val('phone')],
+      ['Service area', val('city')],
+      ['Current site', val('hasSite') === 'Yes' ? (val('siteUrl') || 'Yes') : 'No site yet']
+    ]);
+    fill('business', [
+      ['Type', val('businessType')],
+      ['What it does', val('businessOther')]
+    ]);
+    fill('goals', [
+      ['Customers should be able to', goalList()],
+      ['Budget', val('budget')],
+      ['Timeline', val('timeline')],
+      ['Package viewed', val('package')]
+    ]);
+  }
+
+  /* ---- the message ---- */
+  function messageBody() {
+    var lines = [
+      'CONTACT',
+      'Name: ' + val('name'),
+      'Business: ' + val('business'),
+      'Email: ' + val('email'),
+      'Phone: ' + val('phone'),
+      'Service area: ' + val('city'),
+      'Current site: ' + (val('hasSite') === 'Yes' ? (val('siteUrl') || 'Yes') : 'None'),
+      '',
+      'BUSINESS',
+      'Type: ' + val('businessType')
+    ];
+    if (val('businessOther')) lines.push('What it does: ' + val('businessOther'));
+
+    lines.push('', 'THE SITE', 'Customers should be able to:');
+    goalList().forEach(function (g) { lines.push('  - ' + g); });
+    lines.push('Budget: ' + val('budget'));
+    lines.push('Timeline: ' + val('timeline'));
+    if (val('package')) lines.push('Package viewed: ' + val('package'));
+    if (val('notes')) lines.push('', 'NOTES', val('notes'));
+
+    return lines.join('\n');
+  }
+
+  function finish() {
+    var slot = form.querySelector('[data-firstname]');
+    var first = val('name').split(/\s+/)[0];
+    if (slot) slot.textContent = first ? ', ' + first : '';
+    form.classList.add('done');
+    var head = form.querySelector('[data-sent-head]');
+    if (head) head.focus({ preventScroll: true });
+  }
+
+  /* ---- wiring ---- */
+  nextBtn.addEventListener('click', function () {
+    if (validateStep(at, true)) goTo(at + 1);
+  });
+  backBtn.addEventListener('click', function () { goTo(at - 1); });
+
+  /* Edit on the review screen only ever goes backwards, so it does not run the
+     check Continue does: nobody should be held on a step they are leaving. */
+  form.querySelectorAll('[data-edit]').forEach(function (btn) {
+    btn.addEventListener('click', function () { goTo(Number(btn.getAttribute('data-edit'))); });
+  });
+
+  /* Enter inside a step means "next step", not "send". Without this the
+     browser fires the only submit button on the form and someone on step one
+     is bounced through a validation pass they never asked for. */
+  form.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter' || at === LAST) return;
+    var tag = e.target.tagName;
+    if (tag === 'TEXTAREA' || tag === 'BUTTON') return;
+    e.preventDefault();
+    nextBtn.click();
+  });
+
+  form.querySelectorAll('.input').forEach(function (el) {
+    var box = el.closest('[data-field]');
+    if (!box) return;
+    el.addEventListener('blur', function () { validateField(box); syncAlert(box); });
+    function live() {
+      if (!box.classList.contains('invalid')) return;
+      validateField(box);
+      syncAlert(box);
+    }
+    el.addEventListener('input', live);
+    el.addEventListener('change', live);
+  });
+
+  form.querySelectorAll('[data-group] input').forEach(function (el) {
+    el.addEventListener('change', function () {
+      var box = el.closest('[data-field]');
+      if (!box || !box.classList.contains('invalid')) return;
+      validateField(box);
+      syncAlert(box);
+    });
+  });
+
+  /* Typed as ten digits or as (210) 555 0134, it reaches the inbox the same
+     way. Formatting on blur rather than on keystroke keeps the caret still. */
+  var phone = document.getElementById('f-phone');
+  if (phone) {
+    phone.addEventListener('blur', function () {
+      var d = (phone.value.match(/\d/g) || []).join('');
+      if (d.length === 11 && d.charAt(0) === '1') d = d.slice(1);
+      if (d.length === 10) phone.value = '(' + d.slice(0, 3) + ') ' + d.slice(3, 6) + ' ' + d.slice(6);
+    });
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    for (var i = 0; i < LAST; i++) {
+      if (!validateStep(i)) {
+        goTo(i, { focus: false });
+        validateStep(i, true);
+        return;
+      }
+    }
+    window.location.href = 'mailto:' + (form.getAttribute('data-to') || '')
+      + '?subject=' + encodeURIComponent('Website project: ' + val('business'))
+      + '&body='    + encodeURIComponent(messageBody());
+    finish();
+  });
+
   /* The package cards link to /contact/?package=growth. Carrying that through
-     means the message already says which tier they clicked, so the first reply
+     means the request already says which tier they clicked, so the first reply
      is a quote rather than a question they have already answered. */
   var wanted = new URLSearchParams(window.location.search).get('package');
   var names = { starter: 'Starter', growth: 'Growth', pro: 'Pro' };
   if (wanted && names[wanted]) {
-    var project = document.getElementById('f-project');
-    if (project && !project.value) {
-      project.value = 'I am interested in the ' + names[wanted] + ' package.\n\n';
-      project.setAttribute('data-prefilled', 'true');
+    form.elements.package.value = names[wanted];
+    var tag = form.querySelector('.wiz-tag');
+    if (tag) {
+      tag.querySelector('[data-package-label]').textContent = names[wanted] + ' package';
+      tag.hidden = false;
     }
   }
 
-  function validate(input) {
-    var field = input.closest('[data-field]');
-    var ok = input.checkValidity() && input.value.trim() !== '';
-    field.classList.toggle('invalid', !ok);
-    input.setAttribute('aria-invalid', String(!ok));
-    return ok;
-  }
-
-  form.querySelectorAll('.input').forEach(function (input) {
-    input.addEventListener('blur', function () { validate(input); });
-    input.addEventListener('input', function () {
-      if (input.closest('[data-field]').classList.contains('invalid')) validate(input);
-    });
-  });
-
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var inputs = Array.prototype.slice.call(form.querySelectorAll('.input'));
-    var firstBad = null;
-    inputs.forEach(function (input) { if (!validate(input) && !firstBad) firstBad = input; });
-    if (firstBad) { firstBad.focus(); return; }
-
-    var d = new FormData(form);
-    var body =
-      'Business: ' + d.get('business') + '\n' +
-      'Name: '     + d.get('name')     + '\n' +
-      'Email: '    + d.get('email')    + '\n\n' +
-      d.get('project');
-
-    window.location.href = 'mailto:laurenttsautos@gmail.com'
-      + '?subject=' + encodeURIComponent('Website project: ' + d.get('business'))
-      + '&body='    + encodeURIComponent(body);
-
-    form.classList.add('done');
-  });
+  form.querySelectorAll('[data-cond]').forEach(bindCond);
+  paint();
 })();
-

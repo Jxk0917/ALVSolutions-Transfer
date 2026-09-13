@@ -12,9 +12,11 @@
   <meta property="og:image" content="/assets/brand/alv-lockup.png" />
   <link rel="icon" href="/assets/brand/alv-mark.png" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Self-hosted variable fonts: Manrope for headings, Geist for body. Preloaded
+       because they are declared inside styles.css, so without this the browser
+       cannot discover either file until the stylesheet has finished parsing. -->
+  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/Manrope-Variable.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/Geist-Variable.woff2" crossorigin />
   {%- if preloadImage %}
   <link rel="preload" as="image" href="{{ preloadImage }}" />
   {%- endif %}

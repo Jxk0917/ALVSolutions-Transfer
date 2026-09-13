@@ -8,6 +8,10 @@ _site/
 # AlvSolutions site.
 Sherpa Site/
 
+# Pc Site (Voyage) is likewise a separate project living alongside this one,
+# not part of the AlvSolutions site. ~160MB, has its own .gitignore.
+Pc Site/
+
 # Puppeteer capture scratch — ~900MB of review screenshots. Regenerate with
 # shot-bands.mjs / shot-view.mjs rather than storing them.
 temporary screenshots/
