@@ -3,45 +3,57 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hacienda Grill — Cooked Over Fire | San Antonio, TX</title>
+<title>Hacienda Grill | Cooked Over Fire in San Antonio, TX</title>
 <meta name="description" content="Family taqueria on Calle Bonita since 2012. Birria braised overnight, pork on the trompo, tortillas pressed at five in the morning. Order online or book a table.">
 <meta name="theme-color" content="#140C08">
-<link rel="icon" href="Hacienda%20Demo%20Resturant%20Logo.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="HG%20Brand/logo/png/hg-favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="HG%20Brand/logo/png/hg-favicon-180.png">
+<link rel="preload" as="font" type="font/ttf" href="HG%20Fonts/League_Gothic/static/LeagueGothic-Regular.ttf" crossorigin>
+<link rel="preload" as="font" type="font/ttf" href="HG%20Fonts/Source_Sans_3/SourceSans3-VariableFont_wght.ttf" crossorigin>
 <script>document.documentElement.className += ' js';</script>
 <style>
 /* ══════════════════════════════════════════════════════════════
-   HACIENDA GRILL — "Enamel & Fire"
-   Palette + type taken from the official brand guidelines.
+   HACIENDA GRILL, "Enamel & Fire"
+   Source of truth: HG Brand/ (hacienda-grill-brand-guidelines.png,
+   hg-buttons.css, README.md). Fonts self-hosted from HG Fonts/.
    ══════════════════════════════════════════════════════════════ */
 
+@font-face{ font-family:'League Gothic'; src:url('HG%20Fonts/League_Gothic/static/LeagueGothic-Regular.ttf') format('truetype'); font-weight:400; font-display:swap; }
+@font-face{ font-family:'Fjalla One'; src:url('HG%20Fonts/Fjalla_One/FjallaOne-Regular.ttf') format('truetype'); font-weight:400; font-display:swap; }
+@font-face{ font-family:'Montserrat'; src:url('HG%20Fonts/Montserrat/Montserrat-VariableFont_wght.ttf') format('truetype'); font-weight:100 900; font-display:swap; }
+@font-face{ font-family:'Source Sans 3'; src:url('HG%20Fonts/Source_Sans_3/SourceSans3-VariableFont_wght.ttf') format('truetype'); font-weight:200 900; font-display:swap; }
+
 :root{
-  /* Brand palette — official hex values */
-  --charcoal:  #231F20;
-  --chili:     #C81010;
-  --terracotta:#FF8C00;
-  --gold:      #F2C230;
-  --agave:     #6B8E23;
+  /* Brand palette (HG Brand/README.md). Contrast noted where it sets a rule. */
+  --charcoal:  #231F20;  /* text on light, 15.6:1 on paper */
+  --chili:     #C81010;  /* actions and prices; white text 5.94:1 */
+  --marigold:  #F89221;  /* logo and ember accents on dark only */
+  --gold:      #F2C230;  /* accents on dark only; 1.6:1 on paper */
+  --agave:     #5A7A1C;  /* secondary actions; white text 4.96:1 */
+  --agave-deep:#4E6B17;  /* agave as text on cream (5.41:1) and hover */
   --cream:     #F7F1E1;
-  --sand:      #D9B27A;
   --cocoa:     #4B2E20;
 
   /* Derived working tones */
   --ink:        #140C08;
   --ink-soft:   #1F140E;
   --paper:      #FDFAF2;
-  --chili-deep: #9E0C0C;
-  --muted:      #7C6A57;
+  --chili-deep: #9E0C0C;  /* "Adobe": hover and pressed chili */
+  --clay:       #6E5C4B;  /* secondary text: 6.1:1 paper, 5.65:1 cream */
   --rule:       rgba(75,46,32,.14);
   --rule-strong:rgba(75,46,32,.26);
   --on-dark:    rgba(247,241,225,.62);
   --on-dark-hi: rgba(247,241,225,.90);
 
-  /* Type */
-  --display: 'Bebas Neue', 'Haettenschweiler', Impact, sans-serif;
-  --body:    'Montserrat', system-ui, -apple-system, sans-serif;
+  /* Type: five roles from the brand kit
+     --display  League Gothic   hero and major display only
+     --heading  Fjalla One      section and card headings, prices
+     --ui       Montserrat      navigation, buttons, labels, heritage text
+     --body     Source Sans 3   body copy */
+  --display: 'League Gothic', 'Arial Narrow', Impact, sans-serif;
+  --heading: 'Fjalla One', 'Arial Narrow', sans-serif;
+  --ui:      'Montserrat', system-ui, -apple-system, sans-serif;
+  --body:    'Source Sans 3', system-ui, -apple-system, sans-serif;
 
   /* Layout */
   --max: 1180px;
@@ -69,8 +81,8 @@ body{
   background:var(--paper);
   color:var(--charcoal);
   font-family:var(--body);
-  font-size:15px;
-  line-height:1.75;
+  font-size:17px;
+  line-height:1.65;
   font-weight:400;
   overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
@@ -80,22 +92,25 @@ img,svg{ display:block; max-width:100%; }
 a{ color:inherit; }
 
 :focus-visible{
-  outline:3px solid var(--terracotta);
+  outline:3px solid var(--charcoal);
   outline-offset:3px;
   border-radius:2px;
 }
+.hero :focus-visible, .board-section :focus-visible, .happy-band :focus-visible,
+.footer :focus-visible{ outline-color:var(--gold); }
+.reviews-section :focus-visible{ outline-color:var(--cream); }
 
 ::selection{ background:var(--gold); color:var(--charcoal); }
 
 ::-webkit-scrollbar{ width:10px; }
 ::-webkit-scrollbar-track{ background:var(--cream); }
-::-webkit-scrollbar-thumb{ background:var(--sand); border-radius:10px; border:3px solid var(--cream); }
+::-webkit-scrollbar-thumb{ background:rgba(75,46,32,.35); border-radius:10px; border:3px solid var(--cream); }
 ::-webkit-scrollbar-thumb:hover{ background:var(--cocoa); }
 
 .skip{
   position:absolute; left:14px; top:-100px; z-index:200;
   background:var(--chili); color:#fff; padding:12px 20px; border-radius:var(--r-sm);
-  font:700 12px/1 var(--body); letter-spacing:.12em; text-transform:uppercase; text-decoration:none;
+  font:700 12px/1 var(--ui); letter-spacing:.12em; text-transform:uppercase; text-decoration:none;
   transition:top .2s var(--ease);
 }
 .skip:focus{ top:14px; }
@@ -118,8 +133,8 @@ a{ color:inherit; }
 /* ── Type system ───────────────────────────────────────── */
 .eyebrow{
   display:flex; align-items:center; gap:11px;
-  font:600 clamp(10px,1vw,11.5px)/1 var(--body);
-  letter-spacing:.26em; text-transform:uppercase;
+  font:600 clamp(13px,1.1vw,14px)/1.2 var(--ui);
+  letter-spacing:.2em; text-transform:uppercase;
   color:var(--chili);
 }
 .eyebrow::before{
@@ -138,20 +153,21 @@ a{ color:inherit; }
 
 .h1{
   font-family:var(--display); font-weight:400;
-  font-size:clamp(3.4rem, 8.4vw, 6.7rem);
-  line-height:.85; letter-spacing:.012em;
+  font-size:clamp(3.8rem, 9.2vw, 7.4rem);
+  line-height:.86; letter-spacing:.005em;
   text-transform:uppercase;
 }
+/* Fjalla One is far wider than the old Bebas Neue, so the scale steps down. */
 .h2{
-  font-family:var(--display); font-weight:400;
-  font-size:clamp(2.4rem, 5.4vw, 4.4rem);
-  line-height:.9; letter-spacing:.015em;
+  font-family:var(--heading); font-weight:400;
+  font-size:clamp(2.05rem, 4.1vw, 3.1rem);
+  line-height:1.02; letter-spacing:.01em;
   text-transform:uppercase;
 }
 .h3{
-  font-family:var(--display); font-weight:400;
-  font-size:clamp(1.65rem, 2.8vw, 2.3rem);
-  line-height:.98; letter-spacing:.02em;
+  font-family:var(--heading); font-weight:400;
+  font-size:clamp(1.4rem, 2.2vw, 1.75rem);
+  line-height:1.1; letter-spacing:.02em;
   text-transform:uppercase;
 }
 
@@ -164,11 +180,11 @@ a{ color:inherit; }
 @supports not (-webkit-text-stroke: 2px red){ .outlined{ color:var(--gold); } }
 
 .lead{
-  font-size:clamp(15px,1.5vw,17px); line-height:1.75;
-  color:var(--muted); max-width:46ch;
+  font-size:clamp(18px,1.6vw,20px); line-height:1.55; font-weight:500;
+  color:var(--clay); max-width:46ch;
 }
 .lead--dark{ color:var(--on-dark); }
-.lead--sm{ font-size:14px; }
+.lead--sm{ font-size:17px; font-weight:400; }
 
 .section-head{ max-width:620px; margin-bottom:clamp(38px,5vw,60px); }
 .section-head .h2{ margin-block:16px 14px; }
@@ -184,51 +200,47 @@ a{ color:inherit; }
 
 .h2--stack{ margin-block:16px 20px; }
 
-/* ── Buttons — per brand guide ─────────────────────────── */
+/* ── Buttons: HG Brand/brand/hg-buttons.css ───────────────
+   Signage lettering, 4px corners, no coloured glow and no hover lift:
+   the fill change is the signal. */
 .btn{
-  display:inline-flex; align-items:center; justify-content:center; gap:9px;
-  font:700 12px/1 var(--body); letter-spacing:.14em; text-transform:uppercase;
-  padding:16px 28px; border-radius:var(--r-xs);
-  border:2px solid transparent; text-decoration:none; cursor:pointer;
-  transition:transform .2s var(--ease), box-shadow .2s var(--ease),
-             background .2s var(--ease), color .2s var(--ease), border-color .2s var(--ease);
+  display:inline-flex; align-items:center; justify-content:center; gap:10px;
+  min-height:48px; padding:0 26px;
+  font:700 14px/1 var(--ui); letter-spacing:.08em; text-transform:uppercase;
+  border-radius:4px;
+  border:2px solid transparent; text-decoration:none; cursor:pointer; white-space:nowrap;
+  transition:background-color .16s var(--ease), color .16s var(--ease),
+             border-color .16s var(--ease), transform .1s var(--ease);
 }
-.btn svg{ width:14px; height:14px; flex:none; }
+.btn svg{ width:18px; height:18px; flex:none; }
 
-.btn--primary{ background:var(--chili); color:#fff; box-shadow:0 5px 16px rgba(200,16,16,.30); }
-.btn--primary:hover{ background:var(--chili-deep); transform:translateY(-2px); box-shadow:0 10px 26px rgba(200,16,16,.42); }
+.btn--primary{ background:var(--chili); color:#fff; }
+.btn--primary:hover{ background:var(--chili-deep); }
 
-.btn--secondary{ background:var(--agave); color:#fff; box-shadow:0 5px 16px rgba(107,142,35,.30); }
-.btn--secondary:hover{ background:#5A7A1C; transform:translateY(-2px); box-shadow:0 10px 26px rgba(107,142,35,.42); }
+.btn--secondary{ background:var(--agave); color:#fff; }
+.btn--secondary:hover{ background:var(--agave-deep); }
 
 .btn--outline{ border-color:var(--charcoal); color:var(--charcoal); background:transparent; }
-.btn--outline:hover{ background:var(--charcoal); color:var(--cream); transform:translateY(-2px); }
-.btn--outline-light{ border-color:rgba(247,241,225,.5); color:var(--cream); background:transparent; }
-.btn--outline-light:hover{ background:var(--cream); color:var(--charcoal); border-color:var(--cream); transform:translateY(-2px); }
+.btn--outline:hover{ background:var(--charcoal); color:var(--cream); }
+.btn--outline-light{ border-color:var(--cream); color:var(--cream); background:transparent; }
+.btn--outline-light:hover{ background:var(--cream); color:var(--ink); }
 
 .btn--text{
-  padding:6px 0; border-radius:0; color:var(--charcoal); background:none;
-  border-bottom:2px solid var(--chili); text-decoration:none;
+  min-height:0; padding:6px 0; border:0; border-radius:0;
+  color:var(--chili); background:none; box-shadow:inset 0 -2px 0 var(--chili);
 }
-.btn--text:hover{ color:var(--chili); gap:13px; }
+.btn--text:hover{ color:var(--chili-deep); box-shadow:inset 0 -2px 0 var(--chili-deep); }
 
-.btn:active{ transform:translateY(0) scale(.985); }
-.btn--sm{ padding:12px 20px; font-size:11px; }
+.btn:active{ transform:translateY(1px); }
+.btn:disabled{ background:#ECE4D2; color:#8C7C6A; border-color:transparent; cursor:not-allowed; transform:none; }
+.btn--sm{ min-height:40px; padding:0 18px; font-size:13px; gap:8px; }
 .btn--block{ width:100%; }
 
-/* ── Logo — cropped from the source PNG's transparent canvas ──
-   Source 1536×1024, artwork occupies x386–1087, y153–722.       */
-.logo{
-  position:relative; overflow:hidden; flex:none; display:block;
-  height:var(--logo-h);
-  width:calc(var(--logo-h) * 1.23198);
-}
-.logo img{
-  position:absolute; max-width:none; width:auto;
-  height:calc(var(--logo-h) * 1.79965);
-  top:calc(var(--logo-h) * -.26890);
-  left:calc(var(--logo-h) * -.67838);
-}
+/* ── Logo: pre-cropped files from HG Brand/logo/png (726 x 594) ──
+   Full colour on light surfaces, the cream reverse on Ink and Charcoal:
+   the badge's black outline disappears against a dark ground. */
+.logo{ flex:none; display:block; height:var(--logo-h); width:calc(var(--logo-h) * 1.2222); }
+.logo img{ width:100%; height:100%; object-fit:contain; }
 
 /* ── Navigation ────────────────────────────────────────── */
 .nav{
@@ -251,7 +263,7 @@ a{ color:inherit; }
 .nav-links{ display:none; align-items:center; gap:clamp(20px,3vw,38px); }
 .nav-link{
   position:relative; padding:6px 0;
-  font:600 12px/1 var(--body); letter-spacing:.13em; text-transform:uppercase;
+  font:600 14px/1 var(--ui); letter-spacing:.08em; text-transform:uppercase;
   color:var(--charcoal); text-decoration:none;
   transition:color .2s var(--ease);
 }
@@ -288,7 +300,7 @@ a{ color:inherit; }
   padding:8px var(--gutter) 26px; display:flex; flex-direction:column; gap:2px;
 }
 .mobile-menu .nav-link{
-  padding:14px 0; border-bottom:1px solid var(--rule); font-size:13px;
+  padding:14px 0; border-bottom:1px solid var(--rule); font-size:15px;
 }
 .mobile-menu .btn{ margin-top:16px; }
 
@@ -309,10 +321,16 @@ a{ color:inherit; }
   grid-template-columns:1fr;
 }
 
+/* Native 16:9 below the split layout, so the band never chops the frame.
+   Between 600 and 900 a full 16:9 band gets too tall, so it tightens to
+   2.2:1 — a mild trim off the dark hood rather than half the picture. */
 .hero-media{
   position:relative; overflow:hidden;
-  min-height:clamp(200px, 38vw, 300px);
+  aspect-ratio:16/9;
   background:#0B0605;
+}
+@media (min-width:600px) and (max-width:899.98px){
+  .hero-media{ aspect-ratio:2.2/1; }
 }
 .hero-media img{
   position:absolute; inset:0; width:100%; height:100%;
@@ -323,18 +341,18 @@ a{ color:inherit; }
   content:''; position:absolute; inset:0;
   background:
     linear-gradient(to top, rgba(20,12,8,.92) 0%, rgba(20,12,8,.22) 44%, rgba(20,12,8,.10) 100%),
-    radial-gradient(95% 70% at 55% 86%, rgba(255,140,0,.26), transparent 62%);
+    radial-gradient(95% 70% at 55% 86%, rgba(248,146,33,.26), transparent 62%);
 }
 
 .hero-media-note{
   position:absolute; left:22px; bottom:15px; z-index:3;
   display:inline-flex; align-items:center; gap:9px;
-  font:600 10.5px/1 var(--body); letter-spacing:.2em; text-transform:uppercase;
+  font:600 12px/1 var(--ui); letter-spacing:.2em; text-transform:uppercase;
   color:rgba(247,241,225,.88);
 }
 .hero-media-note::before{
   content:''; width:7px; height:7px; border-radius:50%; flex:none;
-  background:var(--terracotta); box-shadow:0 0 10px rgba(255,140,0,.9);
+  background:var(--marigold);
 }
 
 .hero-panel{
@@ -342,7 +360,7 @@ a{ color:inherit; }
   padding:clamp(38px,6vw,64px) var(--gutter) clamp(84px,9vw,96px);
   display:flex; flex-direction:column; align-items:flex-start;
   background:
-    radial-gradient(75% 60% at 100% 42%, rgba(255,140,0,.10), transparent 70%),
+    radial-gradient(75% 60% at 100% 42%, rgba(248,146,33,.10), transparent 70%),
     var(--ink);
 }
 /* faint diamond texture keeps the ink panel from reading as dead flat */
@@ -361,7 +379,7 @@ a{ color:inherit; }
 
 .hero-rule{
   width:56px; height:4px; margin-bottom:20px; border-radius:2px;
-  background:linear-gradient(90deg, var(--chili), var(--terracotta));
+  background:linear-gradient(90deg, var(--chili), var(--marigold));
 }
 .hero .lead{ margin-bottom:clamp(22px,2.8vw,28px); max-width:44ch; }
 .hero-actions{ display:flex; flex-wrap:wrap; gap:12px; }
@@ -374,40 +392,42 @@ a{ color:inherit; }
   background:rgba(10,6,4,.72);
   backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
   border-top:1px solid rgba(247,241,225,.12);
-  font:600 11.5px/1.4 var(--body); letter-spacing:.14em; text-transform:uppercase;
-  color:var(--on-dark);
+  font:600 12.5px/1.4 var(--ui); letter-spacing:.12em; text-transform:uppercase;
+  color:var(--on-dark-hi);
 }
 .status-badge{ display:inline-flex; align-items:center; gap:9px; color:var(--cream); }
 .status-dot{
   width:9px; height:9px; border-radius:50%; flex:none;
-  background:var(--agave); box-shadow:0 0 0 0 rgba(107,142,35,.6);
+  background:#7FA62B; box-shadow:0 0 0 0 rgba(127,166,43,.6);
   animation:pulse 2.6s infinite;
 }
-.status-dot[data-state="closed"]{ background:var(--terracotta); animation:none; box-shadow:none; }
+/* the dot sits on near-black, so it uses a lighter agave than the button fill */
+.status-dot[data-state="closed"]{ background:var(--marigold); animation:none; box-shadow:none; }
 @keyframes pulse{
-  0%{ box-shadow:0 0 0 0 rgba(107,142,35,.55); }
-  70%{ box-shadow:0 0 0 9px rgba(107,142,35,0); }
-  100%{ box-shadow:0 0 0 0 rgba(107,142,35,0); }
+  0%{ box-shadow:0 0 0 0 rgba(127,166,43,.55); }
+  70%{ box-shadow:0 0 0 9px rgba(127,166,43,0); }
+  100%{ box-shadow:0 0 0 0 rgba(127,166,43,0); }
 }
 .status-sep{ width:1px; height:14px; background:rgba(247,241,225,.2); }
 .status-link{ text-decoration:none; transition:color .2s var(--ease); }
 .status-link:hover{ color:var(--gold); }
 
 @media (min-width:900px){
-  .hero-grid{ grid-template-columns:minmax(0,.94fr) minmax(0,1.06fr); min-height:clamp(540px,80vh,740px); }
-  /* The footage is 480×270. Cropping it to a full-height portrait slab
-     upscales ~3× and throws away most of the frame, so it plays letterboxed
-     at its native aspect instead — sharp, and the hairlines make the
-     framing read as deliberate. */
+  .hero-grid{ grid-template-columns:minmax(0,.94fr) minmax(0,1.06fr); min-height:clamp(500px,64vh,620px); }
+  /* The footage is only 480×270, so filling the column costs sharpness.
+     Keeping the panel compact holds the media row near landscape, which
+     keeps the crop and the upscale to the smallest they can be here. */
   .hero-media{
-    order:2; align-self:center;
-    min-height:0; aspect-ratio:16/9;
-    border-block:1px solid rgba(242,194,48,.32);
+    order:2; align-self:stretch;
+    aspect-ratio:auto;
   }
   .hero-media img{
     object-position:center center;
     filter:saturate(1.18) contrast(1.06);
   }
+  /* The media now runs to the base of the hero, so the caption has to clear
+     the open/closed strip pinned there. */
+  .hero-media-note{ bottom:clamp(62px,5vw,72px); }
   .hero-media::after{
     background:
       linear-gradient(to right, var(--ink) 0%, rgba(20,12,8,.42) 22%, rgba(20,12,8,0) 52%),
@@ -435,7 +455,7 @@ a{ color:inherit; }
 .ticker-group{ display:flex; }
 .ticker-item{
   display:inline-flex; align-items:center; gap:20px; padding-inline:20px;
-  font:600 11.5px/1 var(--body); letter-spacing:.2em; text-transform:uppercase;
+  font:600 13px/1 var(--ui); letter-spacing:.18em; text-transform:uppercase;
   white-space:nowrap;
 }
 .ticker-item::after{
@@ -480,26 +500,26 @@ a{ color:inherit; }
 .fave--side .fave-body{ padding:20px 22px; display:flex; flex-direction:column; justify-content:center; }
 
 .fave-cat{
-  font:600 10.5px/1 var(--body); letter-spacing:.2em; text-transform:uppercase;
-  color:var(--chili); margin-bottom:9px;
+  font:600 12px/1 var(--ui); letter-spacing:.18em; text-transform:uppercase;
+  color:var(--chili); margin-bottom:10px;
 }
 .fave--lead .fave-cat{ color:var(--gold); }
-.fave-name{ font-family:var(--display); font-size:clamp(1.55rem,2.6vw,2.35rem); line-height:1; letter-spacing:.02em; text-transform:uppercase; margin-bottom:8px; }
-.fave-desc{ font-size:13.5px; line-height:1.6; color:var(--muted); }
+.fave-name{ font-family:var(--heading); font-size:clamp(1.35rem,2.1vw,1.85rem); line-height:1.08; letter-spacing:.02em; text-transform:uppercase; margin-bottom:8px; }
+.fave-desc{ font-size:16px; line-height:1.55; color:var(--clay); }
 .fave-foot{
   display:flex; align-items:baseline; justify-content:space-between; gap:12px;
   margin-top:16px; padding-top:14px; border-top:1px solid var(--rule);
 }
-.fave-price{ font-family:var(--display); font-size:1.9rem; line-height:1; color:var(--chili); letter-spacing:.02em; }
+.fave-price{ font-family:var(--heading); font-size:1.6rem; line-height:1; color:var(--chili); letter-spacing:.01em; }
 .fave--lead .fave-price{ color:var(--gold); }
-.fave-note{ font-size:11.5px; color:var(--muted); letter-spacing:.02em; }
+.fave-note{ font-size:14px; color:var(--clay); }
 
 .tag{
   position:absolute; top:16px; left:16px; z-index:3;
   display:inline-flex; align-items:center; gap:7px;
   background:var(--chili); color:#fff;
-  font:700 10.5px/1 var(--body); letter-spacing:.16em; text-transform:uppercase;
-  padding:8px 13px; border-radius:var(--r-xs);
+  font:700 12px/1 var(--ui); letter-spacing:.14em; text-transform:uppercase;
+  padding:9px 13px; border-radius:var(--r-xs);
   box-shadow:0 4px 14px rgba(0,0,0,.28);
 }
 .tag::before{ content:''; width:5px; height:5px; background:var(--gold); transform:rotate(45deg); }
@@ -518,7 +538,7 @@ a{ color:inherit; }
 .story-photos{ display:grid; gap:10px; grid-template-columns:1fr 1fr; }
 .story-photo{
   position:relative; overflow:hidden; border-radius:var(--r-md);
-  box-shadow:var(--sh-md); background:var(--sand);
+  box-shadow:var(--sh-md); background:var(--cocoa);
 }
 .story-photo img{ width:100%; height:100%; object-fit:cover; }
 .story-photo--tall{ grid-column:span 2; aspect-ratio:16/10; }
@@ -526,12 +546,12 @@ a{ color:inherit; }
 .story-caption{
   position:absolute; left:14px; bottom:14px; z-index:2;
   background:rgba(20,12,8,.78); color:var(--cream);
-  font:600 10px/1 var(--body); letter-spacing:.18em; text-transform:uppercase;
-  padding:8px 12px; border-radius:var(--r-xs);
+  font:600 12px/1 var(--ui); letter-spacing:.16em; text-transform:uppercase;
+  padding:9px 12px; border-radius:var(--r-xs);
   backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
 }
 
-.story-body p{ color:var(--muted); margin-bottom:16px; max-width:52ch; }
+.story-body p{ color:var(--clay); margin-bottom:16px; max-width:52ch; }
 .story-body p:last-of-type{ margin-bottom:0; }
 
 .quote{
@@ -539,12 +559,12 @@ a{ color:inherit; }
   border-left:4px solid var(--gold);
 }
 .quote blockquote{
-  font-family:var(--display); font-size:clamp(1.35rem,2.3vw,1.85rem);
-  line-height:1.14; letter-spacing:.015em; text-transform:uppercase;
+  font-family:var(--heading); font-size:clamp(1.25rem,1.9vw,1.55rem);
+  line-height:1.25; letter-spacing:.01em; text-transform:uppercase;
   color:var(--charcoal); margin-bottom:12px;
 }
 .quote cite{
-  font:600 11px/1 var(--body); letter-spacing:.16em; text-transform:uppercase;
+  font:600 12.5px/1 var(--ui); letter-spacing:.16em; text-transform:uppercase;
   color:var(--chili); font-style:normal;
 }
 
@@ -555,12 +575,12 @@ a{ color:inherit; }
 }
 .figure{ display:flex; flex-direction:column; gap:2px; }
 .figure b{
-  font-family:var(--display); font-weight:400; font-size:1.85rem; line-height:1;
-  color:var(--chili); letter-spacing:.02em;
+  font-family:var(--display); font-weight:400; font-size:2.6rem; line-height:1;
+  color:var(--chili); letter-spacing:.01em;
 }
 .figure span{
-  font:600 10.5px/1.4 var(--body); letter-spacing:.16em; text-transform:uppercase;
-  color:var(--muted);
+  font:600 12px/1.4 var(--ui); letter-spacing:.14em; text-transform:uppercase;
+  color:var(--clay);
 }
 
 .specs{ display:grid; gap:0; }
@@ -570,7 +590,7 @@ a{ color:inherit; }
 }
 .spec:last-child{ border-bottom:none; }
 .spec svg{ width:30px; height:30px; flex:none; color:var(--cocoa); }
-.spec p{ font-size:13.5px; line-height:1.55; color:var(--charcoal); margin:0; max-width:none; }
+.spec p{ font-size:16px; line-height:1.5; color:var(--charcoal); margin:0; max-width:none; }
 
 @media (min-width:900px){
   .story{ grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr); }
@@ -588,7 +608,7 @@ a{ color:inherit; }
 }
 .board-section::after{
   content:''; position:absolute; inset:0; pointer-events:none;
-  background:radial-gradient(90% 60% at 50% -10%, rgba(255,140,0,.12), transparent 60%);
+  background:radial-gradient(90% 60% at 50% -10%, rgba(248,146,33,.12), transparent 60%);
 }
 .board-section .wrap{ position:relative; z-index:2; }
 .board-section .h2{ color:var(--cream); }
@@ -598,8 +618,8 @@ a{ color:inherit; }
   margin-bottom:clamp(28px,4vw,42px);
 }
 .tab{
-  font-family:var(--display); font-size:17px; letter-spacing:.11em; text-transform:uppercase;
-  padding:11px 22px; border-radius:var(--r-xs); cursor:pointer;
+  font:700 14px/1 var(--ui); letter-spacing:.08em; text-transform:uppercase;
+  min-height:44px; padding:0 22px; border-radius:4px; cursor:pointer;
   background:transparent; color:rgba(247,241,225,.58);
   border:1.5px solid rgba(247,241,225,.18);
   transition:color .2s var(--ease), background .2s var(--ease),
@@ -608,7 +628,6 @@ a{ color:inherit; }
 .tab:hover{ color:var(--cream); border-color:rgba(247,241,225,.45); }
 .tab[aria-selected="true"]{
   background:var(--chili); color:#fff; border-color:var(--chili);
-  box-shadow:0 6px 20px rgba(200,16,16,.4);
 }
 
 .board{ display:grid; gap:8px; }
@@ -621,12 +640,12 @@ a{ color:inherit; }
   padding:14px 18px; border-radius:var(--r-md);
   background:rgba(247,241,225,.035);
   border:1px solid rgba(247,241,225,.09);
-  transition:background .25s var(--ease), border-color .25s var(--ease), transform .25s var(--ease);
+  transition:background .25s var(--ease), border-color .25s var(--ease);
 }
+/* rows are not links, so hover only warms the surface: no movement that implies a click */
 .board-row:hover{
-  background:rgba(247,241,225,.07);
-  border-color:rgba(242,194,48,.34);
-  transform:translateX(4px);
+  background:rgba(247,241,225,.06);
+  border-color:rgba(242,194,48,.28);
 }
 /* Comal disc */
 .board-disc{
@@ -636,8 +655,7 @@ a{ color:inherit; }
 .board-main{ flex:1; min-width:0; }
 .board-line{ display:flex; align-items:baseline; }
 .board-name{
-  font:600 14.5px/1.35 var(--body); color:var(--cream);
-  letter-spacing:.01em;
+  font:600 17px/1.35 var(--body); color:var(--cream);
 }
 .board-dots{
   flex:1; min-width:14px; margin:0 10px;
@@ -645,19 +663,19 @@ a{ color:inherit; }
   transform:translateY(-4px);
 }
 .board-price{
-  font-family:var(--display); font-size:1.5rem; line-height:1;
+  font-family:var(--heading); font-size:1.3rem; line-height:1;
   color:var(--gold); letter-spacing:.02em; white-space:nowrap;
 }
 .board-desc{
-  margin-top:5px; font-size:12.5px; line-height:1.55;
-  color:rgba(247,241,225,.52);
+  margin-top:5px; font-size:15px; line-height:1.5;
+  color:rgba(247,241,225,.66);
 }
 
 .board-foot{
   display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:14px 24px;
   margin-top:clamp(30px,4vw,42px); padding-top:clamp(24px,3vw,32px);
   border-top:1px solid rgba(247,241,225,.14);
-  font-size:13px; color:var(--on-dark); text-align:center;
+  font-size:16px; color:var(--on-dark-hi); text-align:center;
 }
 
 @media (min-width:880px){
@@ -684,23 +702,21 @@ a{ color:inherit; }
   border-top:5px solid var(--gold);
   padding:28px 26px 24px;
   box-shadow:0 20px 46px rgba(20,12,8,.26);
-  transition:transform .3s var(--ease), box-shadow .3s var(--ease);
 }
-.plaque:hover{ transform:translateY(-5px); box-shadow:0 28px 60px rgba(20,12,8,.34); }
 .stars{ display:flex; gap:3px; margin-bottom:15px; color:var(--gold); }
 .stars svg{ width:17px; height:17px; }
-.plaque > p{ flex:1; font-size:14px; line-height:1.75; color:var(--charcoal); margin-bottom:20px; }
+.plaque > p{ flex:1; font-size:17px; line-height:1.6; color:var(--charcoal); margin-bottom:20px; }
 .reviewer{ display:flex; align-items:center; gap:12px; padding-top:16px; border-top:1px solid var(--rule); }
 .avatar{
   width:38px; height:38px; border-radius:50%; flex:none;
   display:grid; place-items:center;
-  font:700 14px/1 var(--body); color:#fff;
+  font:700 14px/1 var(--ui); color:#fff;
 }
 .avatar--chili{ background:var(--chili); }
 .avatar--agave{ background:var(--agave); }
 .avatar--cocoa{ background:var(--cocoa); }
-.reviewer-meta b{ display:block; font:600 13px/1.35 var(--body); color:var(--charcoal); }
-.reviewer-meta small{ display:block; font:400 11px/1.5 var(--body); color:var(--muted); letter-spacing:.04em; }
+.reviewer-meta b{ display:block; font:600 14px/1.35 var(--ui); color:var(--charcoal); }
+.reviewer-meta small{ display:block; font:400 14px/1.5 var(--body); color:var(--clay); }
 
 @media (min-width:760px){ .reviews{ grid-template-columns:repeat(3,1fr); } }
 
@@ -717,7 +733,7 @@ a{ color:inherit; }
 .map::before{
   content:'Calle Bonita Ave'; position:absolute; inset:0; z-index:0;
   display:grid; place-items:center;
-  font-family:var(--display); font-size:1.4rem; letter-spacing:.14em;
+  font-family:var(--heading); font-size:1.3rem; letter-spacing:.1em; text-transform:uppercase;
   color:rgba(247,241,225,.28);
 }
 .map iframe{ position:relative; z-index:1; width:100%; height:100%; border:0; display:block; filter:saturate(.86) contrast(1.03); }
@@ -730,10 +746,10 @@ a{ color:inherit; }
 }
 .contact-icon svg{ width:17px; height:17px; }
 .contact-row h3{
-  font:600 10.5px/1 var(--body); letter-spacing:.18em; text-transform:uppercase;
-  color:var(--muted); margin-bottom:6px;
+  font:600 12px/1 var(--ui); letter-spacing:.16em; text-transform:uppercase;
+  color:var(--clay); margin-bottom:7px;
 }
-.contact-row p{ font-size:14px; line-height:1.6; color:var(--charcoal); }
+.contact-row p{ font-size:17px; line-height:1.55; color:var(--charcoal); }
 .contact-row a{ text-decoration:none; border-bottom:1px solid var(--rule-strong); transition:color .2s var(--ease), border-color .2s var(--ease); }
 .contact-row a:hover{ color:var(--chili); border-color:var(--chili); }
 
@@ -743,19 +759,19 @@ a{ color:inherit; }
   padding:24px 22px;
 }
 .hours-card h3{
-  font-family:var(--display); font-size:1.25rem; letter-spacing:.11em; text-transform:uppercase;
-  color:var(--charcoal); margin-bottom:16px;
+  font-family:var(--heading); font-size:1.3rem; letter-spacing:.04em; text-transform:uppercase;
+  color:var(--charcoal); margin-bottom:14px;
 }
 .hours-list{ list-style:none; display:grid; gap:1px; }
 .hours-list li{
   display:flex; justify-content:space-between; gap:16px; align-items:baseline;
   padding:8px 10px; margin-inline:-10px; border-radius:var(--r-xs);
-  font-size:13px; color:var(--muted);
+  font-size:16px; color:var(--clay);
 }
 .hours-list li b{ font-weight:600; color:var(--charcoal); font-variant-numeric:tabular-nums; }
 .hours-list li.is-today{ background:rgba(242,194,48,.24); color:var(--charcoal); }
 .hours-list li.is-today::after{
-  content:'Today'; font:700 9.5px/1 var(--body); letter-spacing:.16em; text-transform:uppercase;
+  content:'Today'; font:700 11px/1 var(--ui); letter-spacing:.14em; text-transform:uppercase;
   color:var(--cocoa); background:var(--gold); padding:4px 7px; border-radius:2px;
   align-self:center; order:1; margin-right:auto;
 }
@@ -763,9 +779,9 @@ a{ color:inherit; }
 .happy{
   display:flex; justify-content:space-between; gap:16px;
   margin-top:14px; padding-top:14px; border-top:1px solid var(--rule-strong);
-  font-size:13px; color:var(--muted);
+  font-size:16px; color:var(--clay);
 }
-.happy b{ color:var(--agave); font-weight:600; }
+.happy b{ color:var(--agave-deep); font-weight:600; }
 
 /* Reservation form */
 .reserve-card{
@@ -779,24 +795,24 @@ a{ color:inherit; }
 @media (min-width:520px){ .field-row{ grid-template-columns:1fr 1fr; } }
 .field label{
   display:block; margin-bottom:7px;
-  font:600 10.5px/1 var(--body); letter-spacing:.17em; text-transform:uppercase;
+  font:600 12px/1 var(--ui); letter-spacing:.14em; text-transform:uppercase;
   color:var(--cocoa);
 }
 .input{
   width:100%; padding:13px 14px;
-  font:400 14px/1.4 var(--body); color:var(--charcoal);
+  font:400 16px/1.4 var(--body); color:var(--charcoal);
   background:var(--paper); border:1.5px solid var(--rule-strong);
   border-radius:var(--r-xs); outline:none;
   transition:border-color .2s var(--ease), box-shadow .2s var(--ease);
 }
-.input::placeholder{ color:#A99884; }
+.input::placeholder{ color:#857462; }
 .input:hover{ border-color:rgba(75,46,32,.4); }
 .input:focus{ border-color:var(--chili); box-shadow:0 0 0 3px rgba(200,16,16,.12); }
 select.input{ cursor:pointer; appearance:none;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' fill='none' stroke='%234B2E20' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E");
   background-repeat:no-repeat; background-position:right 14px center; padding-right:36px; }
 textarea.input{ resize:vertical; min-height:88px; }
-.form-note{ font-size:12px; color:var(--muted); text-align:center; margin-top:2px; }
+.form-note{ font-size:14px; color:var(--clay); text-align:center; margin-top:2px; }
 
 @media (min-width:940px){
   .visit{ grid-template-columns:minmax(0,1fr) minmax(0,1fr); }
@@ -818,7 +834,7 @@ textarea.input{ resize:vertical; min-height:88px; }
 }
 .happy-text{ padding:clamp(32px,5vw,48px) var(--gutter); }
 .happy-text .h3{ color:var(--gold); margin-block:14px 12px; }
-.happy-text p{ color:rgba(247,241,225,.7); font-size:14.5px; max-width:44ch; margin-bottom:20px; }
+.happy-text p{ color:rgba(247,241,225,.78); font-size:17px; max-width:44ch; margin-bottom:20px; }
 
 @media (min-width:860px){
   .happy-inner{ grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr); }
@@ -834,7 +850,7 @@ textarea.input{ resize:vertical; min-height:88px; }
 .footer{ background:var(--charcoal); color:var(--cream); padding-block:clamp(52px,7vw,74px) 26px; }
 .footer-grid{ display:grid; gap:40px; margin-bottom:44px; }
 .footer-brand{ --logo-h:64px; margin-bottom:20px; }
-.footer-about{ font-size:13px; line-height:1.75; color:rgba(247,241,225,.5); max-width:30ch; margin-bottom:22px; }
+.footer-about{ font-size:16px; line-height:1.6; color:rgba(247,241,225,.66); max-width:30ch; margin-bottom:22px; }
 
 .socials{ display:flex; gap:10px; }
 .social{
@@ -845,24 +861,24 @@ textarea.input{ resize:vertical; min-height:88px; }
   transition:background .2s var(--ease), border-color .2s var(--ease), color .2s var(--ease), transform .2s var(--ease);
 }
 .social svg{ width:16px; height:16px; }
-.social:hover{ background:var(--chili); border-color:var(--chili); color:#fff; transform:translateY(-2px); }
+.social:hover{ background:var(--chili); border-color:var(--chili); color:#fff; }
 
 .footer-col h4{
-  font-family:var(--display); font-weight:400; font-size:1.05rem;
-  letter-spacing:.15em; text-transform:uppercase; color:var(--cream); margin-bottom:18px;
+  font-family:var(--heading); font-weight:400; font-size:1.15rem;
+  letter-spacing:.06em; text-transform:uppercase; color:var(--cream); margin-bottom:16px;
 }
 .footer-col ul{ list-style:none; display:grid; gap:11px; }
 .footer-col a{
-  font-size:13px; color:rgba(247,241,225,.5); text-decoration:none;
+  font-size:16px; color:rgba(247,241,225,.66); text-decoration:none;
   transition:color .2s var(--ease);
 }
 .footer-col a:hover{ color:var(--gold); }
-.footer-col li{ font-size:13px; line-height:1.6; color:rgba(247,241,225,.5); }
+.footer-col li{ font-size:16px; line-height:1.55; color:rgba(247,241,225,.66); }
 
 .footer-bottom{
   display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px;
   padding-top:22px; border-top:1px solid rgba(247,241,225,.1);
-  font-size:12px; color:rgba(247,241,225,.32);
+  font-size:14px; color:rgba(247,241,225,.52);
 }
 .footer-bottom a{ color:var(--gold); text-decoration:none; opacity:.75; transition:opacity .2s var(--ease); }
 .footer-bottom a:hover{ opacity:1; }
@@ -913,8 +929,8 @@ textarea.input{ resize:vertical; min-height:88px; }
 <!-- ══ NAV ══════════════════════════════════════════════ -->
 <nav class="nav" id="nav">
   <div class="nav-inner">
-    <a href="#" class="nav-brand logo" aria-label="Hacienda Grill — home">
-      <img src="Hacienda%20Demo%20Resturant%20Logo.png" alt="Hacienda Grill">
+    <a href="#" class="nav-brand logo" aria-label="Hacienda Grill home">
+      <img src="HG%20Brand/logo/png/hg-logo-full-256.png" alt="Hacienda Grill">
     </a>
 
     <div class="nav-links">
@@ -957,7 +973,7 @@ textarea.input{ resize:vertical; min-height:88px; }
 
     <div class="hero-panel">
       <div class="hero-logo logo">
-        <img src="Hacienda%20Demo%20Resturant%20Logo.png" alt="Hacienda Grill">
+        <img src="HG%20Brand/logo/png/hg-logo-cream-256.png" alt="Hacienda Grill">
       </div>
 
       <p class="eyebrow eyebrow--gold">San Antonio, Texas &middot; Since 2012</p>
@@ -972,7 +988,7 @@ textarea.input{ resize:vertical; min-height:88px; }
 
       <p class="lead lead--dark">
         Twelve years on Calle Bonita. Beef braised overnight, pork turning on the trompo,
-        tortillas pressed at five in the morning — nothing on your plate has been sitting.
+        tortillas pressed at five in the morning. Nothing on your plate has been sitting.
       </p>
 
       <div class="hero-actions">
@@ -1001,14 +1017,14 @@ textarea.input{ resize:vertical; min-height:88px; }
       <span class="ticker-item">Salsa ground the same day</span>
       <span class="ticker-item">Birria braised eight hours</span>
       <span class="ticker-item">Three generations of recipes</span>
-      <span class="ticker-item">Happy hour Mon&ndash;Fri, 3&ndash;6</span>
+      <span class="ticker-item">Happy hour weekdays, 3 to 6</span>
     </div>
     <div class="ticker-group">
       <span class="ticker-item">Tortillas pressed at 5am</span>
       <span class="ticker-item">Salsa ground the same day</span>
       <span class="ticker-item">Birria braised eight hours</span>
       <span class="ticker-item">Three generations of recipes</span>
-      <span class="ticker-item">Happy hour Mon&ndash;Fri, 3&ndash;6</span>
+      <span class="ticker-item">Happy hour weekdays, 3 to 6</span>
     </div>
   </div>
 </div>
@@ -1053,7 +1069,7 @@ textarea.input{ resize:vertical; min-height:88px; }
           <p class="fave-desc">Skirt steak in citrus marinade, straight off the fire, with rice, beans and warm tortillas.</p>
           <div class="fave-foot">
             <span class="fave-price">$19.00</span>
-            <span class="fave-note">Serves 1&ndash;2</span>
+            <span class="fave-note">Serves 1 or 2</span>
           </div>
         </div>
       </a>
@@ -1100,7 +1116,7 @@ textarea.input{ resize:vertical; min-height:88px; }
         <h2 class="h2 h2--stack">One cart.<br>Three generations.</h2>
 
         <p>
-          In 2012 we sold birria out of a cart on the corner of Calle Bonita and Fifth &mdash;
+          In 2012 we sold birria out of a cart on the corner of Calle Bonita and Fifth,
           four hours a night, until the pot ran out. The recipes came from Elena&rsquo;s grandmother
           in Jalisco, written on index cards that still hang above the pass.
         </p>
@@ -1110,7 +1126,7 @@ textarea.input{ resize:vertical; min-height:88px; }
 
         <div class="quote">
           <blockquote>If the salsa wasn&rsquo;t ground this morning, it doesn&rsquo;t leave the kitchen.</blockquote>
-          <cite>Elena Rivas &mdash; Owner</cite>
+          <cite>Elena Rivas, Owner</cite>
         </div>
 
         <div class="figures">
@@ -1417,15 +1433,15 @@ textarea.input{ resize:vertical; min-height:88px; }
         <div class="hours-card">
           <h3>Hours of operation</h3>
           <ul class="hours-list" id="hours-list">
-            <li data-day="1"><span>Monday</span><b>11:00am &ndash; 9:00pm</b></li>
-            <li data-day="2"><span>Tuesday</span><b>11:00am &ndash; 9:00pm</b></li>
-            <li data-day="3"><span>Wednesday</span><b>11:00am &ndash; 9:00pm</b></li>
-            <li data-day="4"><span>Thursday</span><b>11:00am &ndash; 9:00pm</b></li>
-            <li data-day="5"><span>Friday</span><b>11:00am &ndash; 10:30pm</b></li>
-            <li data-day="6"><span>Saturday</span><b>11:00am &ndash; 10:30pm</b></li>
-            <li data-day="0"><span>Sunday</span><b>12:00pm &ndash; 8:00pm</b></li>
+            <li data-day="1"><span>Monday</span><b>11:00am to 9:00pm</b></li>
+            <li data-day="2"><span>Tuesday</span><b>11:00am to 9:00pm</b></li>
+            <li data-day="3"><span>Wednesday</span><b>11:00am to 9:00pm</b></li>
+            <li data-day="4"><span>Thursday</span><b>11:00am to 9:00pm</b></li>
+            <li data-day="5"><span>Friday</span><b>11:00am to 10:30pm</b></li>
+            <li data-day="6"><span>Saturday</span><b>11:00am to 10:30pm</b></li>
+            <li data-day="0"><span>Sunday</span><b>12:00pm to 8:00pm</b></li>
           </ul>
-          <div class="happy"><span>Happy hour</span><b>Mon&ndash;Fri, 3&ndash;6pm</b></div>
+          <div class="happy"><span>Happy hour</span><b>Mon to Fri, 3 to 6pm</b></div>
         </div>
       </div>
 
@@ -1465,8 +1481,8 @@ textarea.input{ resize:vertical; min-height:88px; }
                   <option value="" disabled selected>Select</option>
                   <option>1 guest</option>
                   <option>2 guests</option>
-                  <option>3&ndash;4 guests</option>
-                  <option>5&ndash;6 guests</option>
+                  <option>3 to 4 guests</option>
+                  <option>5 to 6 guests</option>
                   <option>7+ guests</option>
                 </select>
               </div>
@@ -1511,7 +1527,7 @@ textarea.input{ resize:vertical; min-height:88px; }
 
       <div>
         <div class="footer-brand logo">
-          <img src="Hacienda%20Demo%20Resturant%20Logo.png" alt="Hacienda Grill">
+          <img src="HG%20Brand/logo/png/hg-logo-cream-256.png" alt="Hacienda Grill">
         </div>
         <p class="footer-about">Authentic Mexican cooking on Calle Bonita since 2012. One cart, three generations, still pressing tortillas at five in the morning.</p>
         <div class="socials">

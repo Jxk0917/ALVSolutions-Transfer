@@ -1,0 +1,122 @@
+---
+layout: layouts/base.njk
+permalink: /pricing/
+title: Full price list
+description: Every service AlvSolutions sells on its own, with the price next to it. Pages, booking, Google Business Profile, print, updates and project extras.
+---
+
+{%- set ph = {
+  heading: "Everything I sell,<br />with the price next to it.",
+  lead: "This is the whole list, including the small things. If you want one page added to a site you already have, or one photo swapped, it is on here with a number beside it rather than behind an enquiry form.",
+  crumbs: [{ label: "Price list" }],
+  actions: [
+    { label: "Start a project", url: "/contact/" },
+    { label: "See packages instead", url: "/packages/", style: "btn-ghost" }
+  ]
+} -%}
+{% include "components/pagehead.njk" %}
+
+<main id="main">
+
+  <section class="sec">
+    <div class="wrap">
+
+      <nav class="jump reveal" aria-label="Price list sections">
+        {%- for g in standalone %}
+        <a class="jump-link" href="#{{ g.slug }}">{{ g.name }}</a>
+        {%- endfor %}
+      </nav>
+
+      <div class="plist-groups">
+        {%- for group in standalone %}
+        {% include "components/price-list.njk" %}
+        {%- endfor %}
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════ WHAT THIS PAGE IS NOT ══════════════ -->
+  <section class="sec band sec-line">
+    <div class="wrap">
+      <div class="sec-head reveal" style="margin-bottom: 30px;">
+        <h2>Buying more than one of these?</h2>
+        <p class="lead">Then a package is almost certainly cheaper, and that is worth saying on the page that stands to lose from it.</p>
+      </div>
+
+      <div class="forks reveal">
+        <div class="card fork">
+          <div class="ic-box">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tag"/></svg>
+          </div>
+          <h3>A new site, from {{ packages.tiers[0].price | price | safe }}</h3>
+          <p class="body-3">
+            Foundation covers up to three pages, hosting, a contact form and on-page SEO
+            for one price. Standard and Complete bundle in the extras above at less than
+            the list price of buying them one at a time.
+          </p>
+          <a class="btn btn-ghost btn-sm" href="/packages/">Compare the three packages</a>
+        </div>
+
+        <div class="card fork">
+          <div class="ic-box gold">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-refresh"/></svg>
+          </div>
+          <h3>Changes every month, from {{ careplans.plans[0].price | price | safe }}/mo</h3>
+          <p class="body-3">
+            If you are buying website updates one at a time, a care plan is the cheaper
+            shape. Host covers 15 minutes of edits a month; Grow covers four updates and
+            your Google listing.
+          </p>
+          <a class="btn btn-ghost btn-sm" href="/services/care-plans/">How care plans work</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════ THE RULES ══════════════ -->
+  <section class="sec sec-line">
+    <div class="wrap wrap-mid">
+      <div class="sec-head reveal" style="margin-bottom: 26px;">
+        <h2>How these prices behave.</h2>
+      </div>
+
+      <div class="pts reveal">
+        <div class="pt">
+          <span class="ic-dot"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <div>
+            <h3>The number is the number</h3>
+            <p>A price on this list is what you pay, not a starting point that grows once I have seen the job. Where something genuinely cannot be fixed in advance it says so, with a floor or a range instead of a single figure.</p>
+          </div>
+        </div>
+        <div class="pt">
+          <span class="ic-dot"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <div>
+            <h3>Simple and complex are defined, not judged</h3>
+            <p>Every service page states exactly what puts a job in one bracket or the other, so you can work out which one you are before you ask me.</p>
+          </div>
+        </div>
+        <div class="pt">
+          <span class="ic-dot"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <div>
+            <h3>You approve anything extra first</h3>
+            <p>If a job turns out to be bigger than what you paid for, you get a quote and a choice before I start, not an invoice afterwards.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec-close reveal" style="margin-top: 34px;">
+        <p>Payment, ownership, cancellation and what happens if you stop paying are all written out in plain English.</p>
+        <a class="btn btn-ghost" href="/policies/">Read the policies</a>
+      </div>
+    </div>
+  </section>
+
+
+  {%- set ctaHeading = "Tell me the job and I will tell you the line." %}
+  {%- set ctaLead = "Describe what you need in a sentence and I will point at the row on this page, or tell you that a package covers it for less." %}
+  {% include "components/cta-band.njk" %}
+
+</main>

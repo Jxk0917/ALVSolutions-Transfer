@@ -5,7 +5,7 @@
    shared foundation, and nothing here overrides a rule in it except
    the two marked OVERRIDE below.
 
-   Same rules as styles.css, no exceptions:
+   Same rules as styles.css and Brand_Assets/brand/, no exceptions:
      radius  --r-xs 6 inner chrome · --r-ctl 10 controls
              --r-card 16 cards/media · 999px pills and dots only
      icons   Tabler outline, uniform 1.75 stroke, no emoji
@@ -49,13 +49,12 @@
 .foot-legal a:hover { color: var(--text-2); }
 
 /* ---------- gold button ----------
-   Solid gold, ink label — measures 12.6:1. Used for the popular tier's CTA,
-   the one other button on the site that is allowed to compete with
-   "Start a project" for attention.                                   */
+   Solid gold, ink label, 12.6:1. The recommended pick in a set (the popular
+   tier's CTA) and nothing else. Never placed next to a Primary.          */
 
 .btn-gold { background: var(--gold); color: var(--ink); }
-.btn-gold:hover { background: #FFD84A; }
-.btn-gold:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.btn-gold:hover { background: var(--gold-hover); }
+.btn-gold:active { background: var(--gold-pressed); }
 
 /* ---------- page head ---------- */
 
@@ -104,24 +103,35 @@
   background: linear-gradient(180deg, rgba(255,200,17,.055), transparent 46%), var(--surface);
 }
 .tier-badge {
-  position: absolute; top: -10px; left: 24px;
-  font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  position: absolute; top: -12px; left: 24px;
+  font-size: 12.5px; font-weight: 600;
   color: var(--ink); background: var(--gold);
-  border-radius: 999px; padding: 3px 11px;
+  border-radius: 999px; padding: 4px 12px;
 }
 .tier-name { font-family: var(--font-head); font-size: 20px; font-weight: 800; }
-.tier-for { color: var(--text-3); font-size: 14px; line-height: 1.6; margin-top: 8px; min-height: 4.8em; }
+.tier-for { color: var(--text-2); font-size: 14px; line-height: 1.6; margin-top: 8px; min-height: 4.8em; }
 
-.tier-price { margin: 20px 0 22px; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
+.tier-price { margin: 20px 0 20px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
 /* Prices are display type, not body copy: they take the heading face so the
    figures match the h2 above them instead of sitting a shade lighter. */
 .tier-amt {
-  display: block; font-family: var(--font-head); font-size: 40px; font-weight: 800;
+  font-family: var(--font-head); font-size: 40px; font-weight: 800;
   letter-spacing: -.035em; line-height: 1;
   font-variant-numeric: tabular-nums;
 }
 .tier.pop .tier-amt { color: var(--gold); }
-.tier-mo { display: block; margin-top: 10px; font-size: 14px; color: var(--text-3); font-variant-numeric: tabular-nums; }
+/* "one-time" sits on the price baseline, not under it: the build price and the
+   monthly are two different charges and the unit is what separates them. */
+.tier-unit { margin-left: 8px; font-size: 13.5px; font-weight: 500; color: var(--text-3); }
+/* The care plan is required, so it is stated on the price block itself rather
+   than left to a footnote somebody scrolls past. */
+.tier-mo {
+  display: flex; align-items: flex-start; gap: 8px;
+  margin-top: 14px; font-size: 13.5px; line-height: 1.5; color: var(--text-2);
+}
+.tier-mo .ic { font-size: 15px; color: var(--blue); margin-top: 2px; }
+
+.tier-builds { font-size: 13.5px; font-weight: 600; color: var(--text-3); margin-bottom: 14px; }
 
 /* align-content:start matters: the ul is flex:1 so all three cards end the
    same height, and a stretched grid would space Starter's five rows out to
@@ -129,7 +139,6 @@
 .tier-list { list-style: none; padding: 0; margin: 0 0 24px; display: grid; gap: 10px; align-content: start; flex: 1; }
 .tier-list li { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; line-height: 1.55; color: var(--text-2); }
 .tier-list .ic { font-size: 17px; color: var(--blue); margin-top: 2px; }
-.tier.pop .tier-list .ic { color: var(--gold); }
 .tier-list b { color: var(--text); font-weight: 600; }
 .tier-list em { font-style: normal; color: var(--text-3); }
 .tier-cta { width: 100%; }
@@ -185,91 +194,327 @@
 .matrix tbody tr:hover .col-pop { background: rgba(255,200,17,.085); }
 
 .mx-yes { font-size: 20px; color: var(--blue); margin-inline: auto; }
-.col-pop .mx-yes { color: var(--gold); }
 .mx-no  { font-size: 20px; color: var(--text-3); opacity: .55; margin-inline: auto; }
 .mx-val { color: var(--text); font-variant-numeric: tabular-nums; }
-.mx-either { color: var(--gold); font-weight: 600; font-size: 13.5px; }
+.mx-either { color: var(--text); font-weight: 600; font-size: 13.5px; }
 
 /* factor tables read left-aligned: these are sentences, not values */
 .addon .matrix td { text-align: left; }
-.addon .matrix thead th { text-align: left; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--text-2); }
+.addon .matrix thead th { text-align: left; font-size: 13.5px; font-weight: 600; color: var(--text-2); }
 .addon .matrix thead th .mx-sub { font-family: var(--font-head); font-size: 15px; font-weight: 700; letter-spacing: -.02em; color: var(--text); text-transform: none; }
 .addon .matrix { min-width: 560px; }
 .mx-eg th[scope="row"], .mx-eg td { color: var(--text-3); font-size: 13.5px; font-style: italic; }
 
-/* ---------- add-on blocks ---------- */
+/* ---------- factor table wrapper ----------
+   The only surviving use of .addon is the Compare panel inside .ptier, which
+   strips the card chrome back off again. The rules that matter are the table
+   ones further down: factor tables read left-aligned because their cells are
+   sentences, not values. */
 
-.addons { display: grid; gap: 20px; }
 .addon {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  padding: 24px;
+}
+
+/* ============================================================
+   THE PICK TOKENS
+   One vocabulary across three components — the package cards, the
+   add-ons page and the trade builds. A blue square is a page add-on;
+   a gold diamond is a power feature.
+
+   The gold one is rotated rather than only recoloured, so the two are
+   still distinguishable without relying on colour.
+   ============================================================ */
+
+.slot {
+  flex: none; display: block; width: 11px; height: 11px;
+  border-radius: 3px;
+  border: 1.5px solid rgba(61,168,248,.62);
+  background: rgba(61,168,248,.15);
+}
+.slot-hi {
+  border-color: rgba(255,200,17,.72);
+  background: rgba(255,200,17,.17);
+  transform: rotate(45deg);
+}
+
+.legend { display: flex; flex-wrap: wrap; gap: 10px 26px; margin-bottom: 26px; }
+.legend span { display: inline-flex; align-items: center; gap: 9px; font-size: 13px; color: var(--text-3); }
+
+/* ---------- the picks block on a package card ---------- */
+
+.picks {
+  margin-bottom: 22px; padding: 15px 16px;
+  background: rgba(7,12,20,.42);
+  border: 1px solid var(--line);
+  border-radius: var(--r-ctl);
+}
+.picks-lg { display: block; font-size: 12.5px; font-weight: 600; color: var(--text-3); margin-bottom: 11px; }
+.picks-line { display: flex; align-items: center; gap: 10px; }
+.picks-line + .picks-line { margin-top: 8px; }
+/* A shared track so the two labels start on the same x even when one row has
+   five tokens and the other has one. min-width, not width: Complete's five
+   tokens measure 75px and a fixed 60px track ran them under the label. */
+.slots { flex: none; display: flex; align-items: center; gap: 5px; min-width: 80px; }
+.picks-txt { font-size: 13.5px; line-height: 1.45; color: var(--text-2); }
+.picks-link {
+  display: inline-block; margin-top: 12px;
+  font-size: 13px; font-weight: 600; color: var(--blue);
+  text-decoration: none;
+  transition: color .18s var(--ease);
+}
+.picks-link:hover { color: var(--gold); text-decoration: underline; text-underline-offset: 4px; }
+.picks-link:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 3px; }
+
+/* ---------- care plans ----------
+   Deliberately a different shape from a build tier: a recurring charge on a
+   different clock should not look like a fourth package you could pick
+   instead of one. Wider, shorter, price on the same line as the name. */
+
+.cares { display: grid; gap: 16px; grid-template-columns: 1fr; align-items: start; }
+@media (min-width: 720px) { .cares { grid-template-columns: repeat(2, 1fr); } }
+
+.care {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  padding: 24px;
+}
+.care.pop {
+  border-color: rgba(255,200,17,.42);
+  background: linear-gradient(180deg, rgba(255,200,17,.055), transparent 46%), var(--surface);
+}
+.care-top {
+  display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
+  gap: 8px 18px; padding-bottom: 16px; margin-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+.care-name { font-family: var(--font-head); font-size: 20px; font-weight: 800; }
+.care-price {
+  font-family: var(--font-head); font-size: 30px; font-weight: 800;
+  letter-spacing: -.03em; line-height: 1; font-variant-numeric: tabular-nums;
+}
+.care.pop .care-price { color: var(--gold); }
+.care-per { font-family: var(--font-body); font-size: 14px; font-weight: 500; color: var(--text-3); letter-spacing: 0; }
+.care-for { font-size: 14px; line-height: 1.6; color: var(--text-2); margin-bottom: 18px; }
+.care .tier-list { margin-bottom: 0; }
+
+.care-note {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin-top: 18px; padding: 13px 16px;
+  background: rgba(61,168,248,.07);
+  border: 1px solid rgba(61,168,248,.26);
+  border-radius: var(--r-ctl);
+  font-size: 13.5px; line-height: 1.6; color: var(--text-2);
+}
+.care-note .ic { flex: none; font-size: 17px; color: var(--blue); margin-top: 2px; }
+
+/* ---------- trade builds ---------- */
+
+.bundles { display: grid; gap: 16px; grid-template-columns: 1fr; align-items: start; }
+@media (min-width: 760px) { .bundles { grid-template-columns: repeat(2, 1fr); } }
+
+.bundle {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  padding: 24px;
+  display: flex; flex-direction: column; height: 100%;
+  scroll-margin-top: calc(var(--nav-h) + 24px);
+  transition: border-color .25s var(--ease);
+}
+.bundle:hover { border-color: rgba(61,168,248,.3); }
+.bundle-head { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: start; }
+.bundle-id { min-width: 0; }
+.bundle-id h3 { font-family: var(--font-head); font-size: 19px; font-weight: 800; }
+.bundle-trades { font-size: 13px; line-height: 1.5; color: var(--text-3); margin-top: 4px; }
+.bundle-price {
+  font-family: var(--font-head); font-size: 26px; font-weight: 800;
+  letter-spacing: -.03em; line-height: 1; color: var(--gold);
+  font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap;
+}
+.bundle-unit {
+  display: block; margin-top: 5px;
+  font-family: var(--font-body); font-size: 12px; font-weight: 500;
+  color: var(--text-3); letter-spacing: 0;
+}
+.bundle-for { font-size: 14.5px; line-height: 1.6; color: var(--text-2); margin: 18px 0; }
+
+.bundle-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 11px; flex: 1; align-content: start; }
+.bundle-list li { display: flex; align-items: flex-start; gap: 11px; font-size: 14px; line-height: 1.5; color: var(--text); }
+.bundle-list .slot { margin-top: 5px; }
+
+.bundle-foot { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); }
+.bundle-base { font-size: 13px; line-height: 1.55; color: var(--text-3); margin-bottom: 14px; }
+.bundle-base a { color: var(--blue); text-decoration: none; }
+.bundle-base a:hover { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
+.bundle-foot .btn { width: 100%; }
+
+/* ---------- the "something else" card ---------- */
+
+.custom-card {
+  background:
+    radial-gradient(120% 130% at 100% 0%, rgba(255,200,17,.10) 0%, transparent 58%),
+    var(--surface);
+  border: 1px solid rgba(255,200,17,.28);
+  border-radius: var(--r-card);
+  padding: clamp(26px, 3.4vw, 38px);
+}
+.custom-card h2 { margin-top: 20px; font-size: clamp(24px, 2.6vw, 32px); }
+.custom-card .lead { margin-top: 14px; }
+.custom-card .hero-actions { margin-top: 26px; }
+
+/* ---------- an add-on class: one price, many items ----------
+   Every item in a class costs the same, so the figure is stated once at
+   section scale instead of being reprinted on eight tiles. */
+
+.class-head {
+  display: flex; flex-wrap: wrap; gap: 20px 32px;
+  align-items: flex-start; justify-content: space-between;
+  margin-bottom: 32px;
+}
+.class-id { max-width: 52ch; }
+.class-id .lead { margin-top: 12px; }
+.class-price {
+  display: grid; justify-items: end; align-content: start; gap: 4px;
+  padding-left: 22px; border-left: 1px solid var(--line-2);
+}
+.class-amt {
+  font-family: var(--font-head); font-size: clamp(34px, 4vw, 44px); font-weight: 800;
+  letter-spacing: -.035em; line-height: 1; color: var(--gold);
+  font-variant-numeric: tabular-nums;
+}
+.class-unit { font-size: 13px; font-weight: 500; color: var(--text-3); }
+@media (max-width: 559px) {
+  .class-price { justify-items: start; padding-left: 0; border-left: 0; }
+}
+
+.picks-grid { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; grid-template-columns: 1fr; }
+@media (min-width: 620px) { .picks-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1000px) { .picks-grid { grid-template-columns: repeat(4, 1fr); } }
+
+.pick {
+  display: grid; grid-template-columns: auto 1fr; gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  padding: 18px 18px 20px;
+  transition: border-color .25s var(--ease), background .25s var(--ease);
+}
+.pick:hover { border-color: rgba(61,168,248,.3); background: var(--surface-2); }
+.pick .slot { margin-top: 6px; }
+.pick h3 { font-size: 15.5px; }
+.pick p { font-size: 13.5px; line-height: 1.6; color: var(--text-2); margin-top: 7px; }
+.pick-link {
+  display: inline-block; margin-top: 11px;
+  font-size: 12.5px; font-weight: 600; color: var(--blue); text-decoration: none;
+  transition: color .18s var(--ease);
+}
+.pick-link:hover { color: var(--gold); text-decoration: underline; text-underline-offset: 4px; }
+.pick-link:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 3px; }
+
+/* ---------- what your package already covers ---------- */
+
+.allowance {
+  background: var(--ink-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  padding: clamp(20px, 2.6vw, 28px);
+}
+.allowance-h { font-size: 16px; font-weight: 700; margin-bottom: 20px; }
+.allow-grid { display: grid; gap: 18px; grid-template-columns: 1fr; }
+@media (min-width: 720px) { .allow-grid { grid-template-columns: repeat(3, 1fr); gap: 26px; } }
+.allow { padding-top: 16px; border-top: 1px solid var(--line); }
+.allow-name { display: block; font-family: var(--font-head); font-size: 15px; font-weight: 800; margin-bottom: 12px; }
+.allow-none .picks-txt { max-width: 30ch; color: var(--text-3); }
+.picks-none .picks-txt { max-width: 34ch; color: var(--text-3); }
+
+/* ---------- jump nav ---------- */
+
+.jump { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: clamp(32px, 4vw, 44px); }
+.jump-link {
+  display: inline-flex; align-items: center;
+  padding: 8px 15px; border-radius: 999px;
+  border: 1px solid var(--line-ui); background: transparent;
+  font-size: 13px; font-weight: 500; color: var(--text-2); text-decoration: none;
+  transition: color .18s var(--ease), border-color .18s var(--ease), background .18s var(--ease);
+}
+.jump-link:hover { color: var(--gold); border-color: rgba(255,200,17,.55); background: rgba(255,200,17,.08); }
+.jump-link:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+/* ---------- the price list ----------
+   A two-column list, not a comparison table: there is nothing to compare, only
+   a thing and what it costs. */
+
+.plist-groups { display: grid; gap: clamp(44px, 5vw, 64px); }
+.plist-group { scroll-margin-top: calc(var(--nav-h) + 28px); }
+.plist-head { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 18px; }
+.plist-head h2 { font-size: clamp(21px, 2.2vw, 26px); }
+.plist-head .body-3 { margin-top: 6px; max-width: 54ch; }
+
+.plist {
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  background: var(--ink-2);
+  overflow: hidden;
+}
+.plist-row {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px 24px; align-items: baseline;
+  padding: 16px 20px;
+  border-top: 1px solid var(--line);
+  transition: background .18s var(--ease);
+}
+.plist-row:first-child { border-top: 0; }
+.plist-row:hover { background: rgba(125,166,214,.04); }
+.plist-name { display: block; font-size: 15px; font-weight: 600; color: var(--text); }
+.plist-note { display: block; margin-top: 4px; font-size: 13px; line-height: 1.55; color: var(--text-3); max-width: 58ch; }
+.plist-row dd {
+  margin: 0; white-space: nowrap; text-align: right;
+  font-family: var(--font-head); font-size: 19px; font-weight: 800;
+  letter-spacing: -.02em; color: var(--gold);
+  font-variant-numeric: tabular-nums;
+}
+/* "From" is a qualifier on the figure, not part of it, so it stays body-weight */
+.money-pre { font-family: var(--font-body); font-size: 12.5px; font-weight: 500; color: var(--text-3); letter-spacing: 0; }
+
+/* A price that does not exist yet because the service is not for sale yet.
+   Solid border, not the dashed PLACEHOLDER one: this is a finished decision. */
+.tag-soon {
+  display: inline-block;
+  padding: 4px 12px; border-radius: 999px;
+  border: 1px solid rgba(125,166,214,.34);
+  background: rgba(125,166,214,.08);
+  font-family: var(--font-body); font-size: 12.5px; font-weight: 600;
+  letter-spacing: 0; color: var(--text-3); white-space: nowrap;
+}
+
+/* ---------- policies ---------- */
+
+.policies { display: grid; gap: 16px; grid-template-columns: 1fr; }
+@media (min-width: 640px)  { .policies { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1040px) { .policies { grid-template-columns: repeat(3, 1fr); } }
+
+.policy {
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--r-card);
   padding: 24px;
   scroll-margin-top: calc(var(--nav-h) + 24px);
 }
+.policy h2 { font-size: 17px; font-weight: 700; margin: 16px 0 9px; }
+.policy p { font-size: 14px; line-height: 1.7; color: var(--text-2); }
 
-/* Fixed-price items (cards, shirts) carry no factor table, so nothing needs
-   the width a table demands. Two to a row instead of stacked full-bleed,
-   which is what was leaving the print & apparel section mostly empty air. */
-.addons-compact { gap: 16px; }
-@media (min-width: 640px) {
-  .addons-compact { grid-template-columns: repeat(2, 1fr); }
-}
-.addon-compact { padding: 22px; display: flex; flex-direction: column; }
-.addon-compact .addon-head { margin-bottom: 0; flex: 1; }
-.addon-compact .addon-more { margin-top: 16px; }
-.addon-head {
-  display: flex; flex-wrap: wrap; gap: 16px 24px;
-  align-items: flex-start; justify-content: space-between;
-  margin-bottom: 20px;
-}
-.addon-head h3 { font-size: 20px; font-weight: 800; }
-.addon-head p { color: var(--text-3); font-size: 14px; margin-top: 6px; max-width: 46ch; }
+/* ---------- the two-card fork ----------
+   Used wherever a page has to hand the reader a genuine choice of route.
+   Two columns, never three: a fork with three prongs is a grid. */
 
-.addon-prices { display: flex; flex-wrap: wrap; gap: 10px; }
-.lvl {
-  display: grid; gap: 2px;
-  border: 1px solid var(--line-2);
-  border-radius: var(--r-ctl);
-  padding: 9px 16px;
-  background: var(--ink-2);
-  text-align: center;
-}
-.lvl-hi { border-color: rgba(255,200,17,.32); }
-.lvl-l { font-size: 11px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--text-3); }
-.lvl-p { font-family: var(--font-head); font-size: 19px; font-weight: 800; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
-.lvl-hi .lvl-p { color: var(--gold); }
-/* "one-time" / "per month" under a price, for levels that are two different
-   charges rather than two brackets of the same one. */
-.lvl-u { font-size: 10.5px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; color: var(--text-3); }
-
-.addon-more {
-  display: inline-flex; align-items: center; gap: 8px;
-  margin-top: 18px; font-size: 14px; font-weight: 600;
-  color: var(--blue); text-decoration: none;
-  transition: gap .18s var(--ease);
-}
-.addon-more:hover { gap: 12px; }
-.addon-more:focus-visible { outline: 2px solid var(--blue-2); outline-offset: 3px; border-radius: 3px; }
-
-/* ---------- fees ---------- */
-
-.fees { display: grid; gap: 14px; grid-template-columns: 1fr; }
-@media (min-width: 780px) { .fees { grid-template-columns: repeat(3, 1fr); } }
-.fee {
-  background: var(--ink-2);
-  border: 1px solid var(--line);
-  border-left: 2px solid rgba(255,200,17,.4);
-  border-radius: var(--r-card);
-  padding: 22px 24px;
-}
-.fee-top { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; justify-content: space-between; margin-bottom: 14px; }
-.fee-top h3 { font-size: 16.5px; }
-.fee-price { font-family: var(--font-head); font-size: 19px; font-weight: 800; letter-spacing: -.02em; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.fee-unit { display: block; font-size: 11.5px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--text-3); text-align: right; margin-top: 2px; }
-.fee-when { font-size: 14px; color: var(--text-2); }
-.fee-when b { color: var(--text); font-weight: 600; }
-.fee-covers { font-size: 14px; color: var(--text-3); margin-top: 8px; }
+.forks { display: grid; gap: 16px; grid-template-columns: 1fr; align-items: start; }
+@media (min-width: 720px) { .forks { grid-template-columns: repeat(2, 1fr); } }
+.fork h3 { margin: 18px 0 8px; font-size: 17px; }
+.fork .btn { margin-top: 18px; }
 
 /* ---------- service hub ---------- */
 
@@ -280,17 +525,19 @@
 
 .svc-grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
 @media (min-width: 620px) { .svc-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 980px) { .svc-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 980px)  { .svc-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1080px) { .svc-grid-4 { grid-template-columns: repeat(4, 1fr); } }
 
 .svc-card { display: flex; flex-direction: column; text-decoration: none; }
 .svc-card h3 { margin-top: 18px; }
-.svc-card p { color: var(--text-3); font-size: 14px; margin-top: 8px; flex: 1; }
+.svc-card p { color: var(--text-2); font-size: 14.5px; margin-top: 8px; flex: 1; }
 .svc-foot {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line);
 }
 .svc-from { font-family: var(--font-head); font-size: 13.5px; font-weight: 700; color: var(--text-2); font-variant-numeric: tabular-nums; }
 .svc-inc { color: var(--blue); }
+.svc-soon { color: var(--text-3); font-weight: 600; }
 .svc-arrow { font-size: 18px; color: var(--blue); transition: transform .2s var(--ease); }
 .svc-card:hover .svc-arrow { transform: translateX(4px); }
 
@@ -344,10 +591,7 @@
   font-size: clamp(34px, 4.2vw, 46px); font-weight: 800;
   letter-spacing: -.03em; line-height: 1; font-variant-numeric: tabular-nums;
 }
-.ptier-unit {
-  font-size: 11.5px; font-weight: 600; letter-spacing: .08em;
-  text-transform: uppercase; color: var(--text-3);
-}
+.ptier-unit { font-size: 13px; font-weight: 500; color: var(--text-3); }
 .ptier-note { color: var(--text-3); font-size: 14.5px; max-width: 52ch; }
 .ptier-top .ptier-note { margin-left: auto; text-align: right; }
 @media (max-width: 700px) { .ptier-top .ptier-note { margin-left: 0; text-align: left; } }
@@ -395,9 +639,9 @@
 .cardshot-btn {
   display: inline-flex; align-items: center; gap: 7px;
   margin-top: 14px; padding: 7px 14px;
-  background: transparent; border: 1px solid var(--line-2);
+  background: transparent; border: 1px solid var(--line-ui);
   border-radius: var(--r-ctl); cursor: pointer;
-  font-size: 12.5px; font-weight: 600; color: var(--text-2);
+  font-size: 13.5px; font-weight: 600; color: var(--text-2);
   transition: color .18s var(--ease), border-color .18s var(--ease), background .18s var(--ease);
 }
 .cardshot-btn .ic { font-size: 14px; }
@@ -414,10 +658,7 @@
 }
 .ptier-cmp-shots .cardshot { margin-top: 8px; max-width: 100%; }
 .ptier-cmp-shots figcaption { display: none; }
-.ptier-cmp-label {
-  font-size: 11.5px; font-weight: 600; letter-spacing: .09em;
-  text-transform: uppercase; color: var(--text-3);
-}
+.ptier-cmp-label { font-size: 14px; font-weight: 600; color: var(--text); }
 
 /* the compare matrix reuses .addon's table rules without its card chrome */
 .ptier-panel .addon { background: transparent; border: 0; padding: 0; }
@@ -448,7 +689,7 @@
   border-radius: var(--r-card);
   padding: 20px 22px;
 }
-.aside-card h3 { font-size: 12px; font-weight: 600; letter-spacing: .11em; text-transform: uppercase; color: var(--text-3); margin-bottom: 14px; }
+.aside-card h3 { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 12px; }
 .aside-price { font-family: var(--font-head); font-size: 30px; font-weight: 800; letter-spacing: -.03em; line-height: 1; font-variant-numeric: tabular-nums; }
 .aside-note { font-size: 13.5px; color: var(--text-3); margin-top: 10px; }
 .aside-card .btn { width: 100%; margin-top: 16px; }
@@ -457,6 +698,38 @@
 .in-pack .ic { font-size: 16px; color: var(--blue); }
 .in-pack .no { color: var(--text-3); opacity: .5; }
 .in-pack b { color: var(--text); font-weight: 600; }
+.in-pack em { font-style: normal; color: var(--text-3); }
+.aside-card .tag-soon { margin-bottom: 4px; }
+.aside-unit { display: block; margin-top: 8px; font-size: 13px; font-weight: 500; color: var(--text-3); }
+
+/* A surcharge that attaches to either level above rather than replacing one.
+   Given its own row so it cannot be mistaken for a third bracket. */
+.svc-extra {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 15px 18px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-ctl);
+  font-size: 13.5px; line-height: 1.55; color: var(--text-3);
+}
+.svc-extra-p {
+  flex: none;
+  font-family: var(--font-head); font-size: 19px; font-weight: 800;
+  letter-spacing: -.02em; color: var(--gold); font-variant-numeric: tabular-nums;
+}
+.svc-extra b { color: var(--text); font-weight: 600; font-size: 14px; }
+
+/* How the same thing is priced when it rides inside a package instead. */
+.svc-pnote {
+  display: flex; align-items: flex-start; gap: 11px;
+  padding: 13px 16px;
+  background: rgba(61,168,248,.07);
+  border: 1px solid rgba(61,168,248,.26);
+  border-radius: var(--r-ctl);
+  font-size: 13.5px; line-height: 1.6; color: var(--text-2);
+}
+.svc-pnote .ic { flex: none; font-size: 16px; color: var(--blue); margin-top: 2px; }
+.svc-pnote b { color: var(--text); font-weight: 700; }
 
 /* ---------- faq ---------- */
 
@@ -471,7 +744,7 @@
 }
 .faq summary::-webkit-details-marker { display: none; }
 .faq summary:hover { color: var(--blue); }
-.faq summary:focus-visible { outline: 2px solid var(--blue-2); outline-offset: -2px; }
+.faq summary:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
 .faq summary::after {
   content: ''; flex: none; width: 10px; height: 10px;
   border-right: 2px solid var(--text-3); border-bottom: 2px solid var(--text-3);

@@ -1,0 +1,105 @@
+/* Lucid Detailing button styles.
+   Source of truth for the Button Styles section of the brand guidelines, and ready to drop
+   into the website. Requires Exo 2 (600) to be loaded.
+
+   Exo 2 SemiBold capitals with measured tracking and 6px corners: machined, not pill-shaped.
+   No glows, no lift on hover, no arrow glyphs. Light is the product, so the only light on a
+   button is its own fill.
+
+   Contrast (WCAG 2.1), all measured:
+   - Primary:     Ink #0D0D0F on Sky #6FAEE6          8.20:1   hover on Glint #9CCBF2   11.32:1
+                  (the old sheet put white on Sky: 2.37:1, which fails)
+   - Secondary:   Chrome #F2F4F7 on Ink                17.62:1  border Slate #647081 3.86:1 on Ink,
+                  3.58:1 on Carbon. On Navy use .ld-on-navy (Mist border, 5.70:1)
+   - Text:        Sky on Ink 8.20:1, on Carbon 7.60:1, on Navy 6.15:1
+   - On light:    White on Sky Deep #2B6497            6.23:1   hover on #224F78          8.54:1
+   - Focus ring:  Sky on dark grounds 8.20:1; Ink on Chrome 17.62:1
+                  (Sky on a light ground is 1.61:1, so it is never the ring there)
+
+   The .is-hover / .is-active / .is-focus / .is-disabled classes exist only so the guidelines
+   sheet can show each state statically. Real pages rely on :hover, :active and :focus-visible. */
+
+:root {
+  --ld-sky: #6FAEE6;
+  --ld-glint: #9CCBF2;
+  --ld-sky-deep: #2B6497;
+  --ld-sky-deeper: #224F78;
+  --ld-ink: #0D0D0F;
+  --ld-carbon: #12171E;
+  --ld-navy: #1E2A38;
+  --ld-slate: #647081;
+  --ld-mist: #9AA3AF;
+  --ld-fog: #D1D5DB;
+  --ld-chrome: #F2F4F7;
+}
+
+.ld-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 48px;
+  padding: 0 24px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  font-family: "Exo 2", system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, transform 100ms ease;
+}
+/* Icons are optional and lead the label; they come from icons/svg/mono (1.5px Tabler outline). */
+.ld-btn svg { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Sizes */
+.ld-btn--lg { height: 56px; padding: 0 30px; font-size: 15px; }
+.ld-btn--sm { height: 40px; padding: 0 16px; font-size: 13px; gap: 8px; }
+
+/* Primary: the one action per view (Book a detail). */
+.ld-btn--primary { background: var(--ld-sky); color: var(--ld-ink); }
+.ld-btn--primary:hover, .ld-btn--primary.is-hover { background: var(--ld-glint); }
+.ld-btn--primary:active, .ld-btn--primary.is-active { background: var(--ld-sky); transform: translateY(1px); }
+
+/* Secondary: the second action beside a Primary (See packages). */
+.ld-btn--secondary { background: transparent; color: var(--ld-chrome); border-color: var(--ld-slate); }
+.ld-btn--secondary:hover, .ld-btn--secondary.is-hover { border-color: var(--ld-chrome); background: rgba(242, 244, 247, 0.06); }
+.ld-btn--secondary:active, .ld-btn--secondary.is-active { transform: translateY(1px); }
+.ld-on-navy .ld-btn--secondary { border-color: var(--ld-mist); }
+
+/* Text: inline or tertiary actions (How a detail runs). */
+.ld-btn--text {
+  height: auto; padding: 6px 0; border: 0; border-radius: 0;
+  background: transparent; color: var(--ld-sky);
+  box-shadow: inset 0 -1px 0 currentColor;
+}
+.ld-btn--text:hover, .ld-btn--text.is-hover { color: var(--ld-glint); box-shadow: inset 0 -2px 0 currentColor; }
+
+/* On light: print pieces, invoices, anything on Chrome or white. Sky itself fails there. */
+.ld-btn--light { background: var(--ld-sky-deep); color: #FFFFFF; }
+.ld-btn--light:hover, .ld-btn--light.is-hover { background: var(--ld-sky-deeper); }
+.ld-btn--light:active, .ld-btn--light.is-active { background: var(--ld-sky-deeper); transform: translateY(1px); }
+
+/* Focus: Sky ring on dark grounds, Ink ring on light ones. */
+.ld-btn:focus-visible, .ld-btn.is-focus { outline: 2px solid var(--ld-sky); outline-offset: 3px; }
+.ld-on-light .ld-btn:focus-visible, .ld-on-light .ld-btn.is-focus { outline-color: var(--ld-ink); }
+
+/* Disabled */
+.ld-btn:disabled, .ld-btn.is-disabled {
+  background: var(--ld-navy);
+  color: var(--ld-slate);
+  border-color: transparent;
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+.ld-btn--text:disabled, .ld-btn--text.is-disabled { background: transparent; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ld-btn { transition: none; }
+  .ld-btn:active, .ld-btn.is-active { transform: none; }
+}

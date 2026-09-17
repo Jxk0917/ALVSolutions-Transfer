@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Lucid Detailing brand guidelines</title>
+<link rel="stylesheet" href="lucid-buttons.css">
+<style>
+  /* Source for lucid-detailing-brand-guidelines.png. Rendered by LD Brand/tools/build-guidelines.mjs.
+     Logos load from ../logo/png, icons from ../icons/svg, buttons from lucid-buttons.css,
+     fonts from Demo Detailer/LD Fonts, photographs from Demo Detailer. */
+  @font-face { font-family: "Exo 2"; src: url("../../LD Fonts/Exo_2/Exo2-VariableFont_wght.ttf"); font-weight: 100 900; }
+  @font-face { font-family: "Barlow Condensed"; src: url("../../LD Fonts/Barlow_Condensed/BarlowCondensed-SemiBold.ttf"); font-weight: 600; }
+  @font-face { font-family: "Barlow Condensed"; src: url("../../LD Fonts/Barlow_Condensed/BarlowCondensed-Bold.ttf"); font-weight: 700; }
+  @font-face { font-family: "Inter"; src: url("../../LD Fonts/Inter/Inter-VariableFont_opsz,wght.ttf"); font-weight: 100 900; }
+
+  :root {
+    --sky: #6FAEE6;
+    --glint: #9CCBF2;
+    --sky-deep: #2B6497;
+    --steel: #6E869D;
+    --ink: #0D0D0F;
+    --carbon: #12171E;
+    --navy: #1E2A38;
+    --slate: #647081;
+    --mist: #9AA3AF;
+    --fog: #D1D5DB;
+    --chrome: #F2F4F7;
+    --hairline: rgba(209,213,219,0.12);
+  }
+
+  html, body { margin: 0; background: var(--ink); }
+
+  .sheet {
+    width: 1600px;
+    box-sizing: border-box;
+    padding: 0 96px 96px;
+    background: var(--ink);
+    font-family: "Inter", sans-serif;
+    color: var(--fog);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Cover: a car under inspection tubes. Light is the product, so the sheet opens on it. */
+  .cover { position: relative; height: 760px; margin: 0 -96px; overflow: hidden; display: flex; align-items: flex-end; }
+  .cover > img.photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
+  .cover::after {
+    content: ""; position: absolute; inset: 0;
+    background:
+      linear-gradient(90deg, rgba(13,13,15,0.96) 0%, rgba(13,13,15,0.86) 34%, rgba(13,13,15,0.35) 62%, rgba(13,13,15,0.2) 100%),
+      linear-gradient(180deg, rgba(13,13,15,0.2) 50%, var(--ink) 100%);
+  }
+  .cover-body { position: relative; z-index: 1; padding: 0 96px 88px; }
+  .cover-body img { width: 360px; display: block; margin-left: -10px; }
+  .cover h1 { margin: 44px 0 0; font-family: "Exo 2", sans-serif; font-weight: 700; font-size: 136px; line-height: 0.94; letter-spacing: -0.015em; color: var(--chrome); }
+
+  section { padding: 96px 0; border-top: 1px solid var(--hairline); }
+  .cover + section { border-top: 0; padding-top: 72px; }
+  h2 { margin: 0 0 40px; font-family: "Exo 2", sans-serif; font-weight: 600; font-size: 44px; line-height: 1.05; color: var(--chrome); }
+
+  .label { margin-top: 14px; font-family: "Exo 2", sans-serif; font-size: 17px; font-weight: 600; color: var(--chrome); }
+  .label span { margin-left: 10px; font-family: "Inter", sans-serif; font-size: 16px; font-weight: 400; color: var(--mist); }
+  .spec-line { margin: -16px 0 30px; font-size: 18px; color: var(--mist); max-width: 70ch; }
+
+  .panel { border-radius: 12px; background: var(--carbon); box-shadow: inset 0 0 0 1px var(--hairline); display: grid; place-items: center; }
+
+  /* Main logo */
+  .main-panel { height: 500px; }
+  .main-panel img { width: 700px; display: block; }
+
+  .rules { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 20px; margin-top: 20px; }
+  .rule-panel { height: 300px; }
+
+  /* Clear space: x is the cap height of LUCID. */
+  .clear { --x: 25px; position: relative; padding: var(--x); background: rgba(111,174,230,0.08); outline: 1px dashed rgba(111,174,230,0.6); }
+  .clear img { width: 320px; display: block; outline: 1px dashed rgba(209,213,219,0.35); }
+  .clear i { position: absolute; font-style: normal; font-family: "Exo 2", sans-serif; font-size: 15px; font-weight: 600; color: var(--sky); }
+  .clear i.t { top: 0; left: 50%; height: var(--x); display: grid; place-items: center; transform: translateX(-50%); }
+  .clear i.l { left: 0; top: 50%; width: var(--x); display: grid; place-items: center; transform: translateY(-50%); }
+
+  .min { display: flex; align-items: flex-end; gap: 48px; }
+  .min > div { display: flex; flex-direction: column; align-items: center; }
+  .min .box { height: 190px; display: flex; align-items: flex-end; }
+  .min .label { margin-top: 18px; font-size: 15px; }
+
+  /* Variations */
+  .variants { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+  .swatch { height: 240px; border-radius: 12px; display: grid; place-items: center; overflow: hidden; }
+  .swatch img { width: 270px; display: block; }
+  .wide { grid-column: span 2; }
+  .wide .swatch img { width: 480px; }
+  .on-ink { background: var(--ink); box-shadow: inset 0 0 0 1px rgba(209,213,219,0.2); }
+  .on-carbon { background: var(--carbon); box-shadow: inset 0 0 0 1px var(--hairline); }
+  .on-chrome { background: var(--chrome); }
+  .on-white { background: #FFFFFF; }
+  /* The bay wall behind the BMW: a real photo, but an even tone the one-color logo can sit on. */
+  .on-photo { background: linear-gradient(rgba(13,13,15,0.5), rgba(13,13,15,0.5)), url("../../Bmw M4 paint Correction.webp") 50% 6% / 440% auto; }
+  .sizes { display: flex; align-items: flex-end; gap: 24px; }
+  .swatch .sizes img { display: block; width: auto; }
+
+  /* Typography */
+  .families { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) minmax(0, 1fr); gap: 20px; }
+  .family-card { border-radius: 12px; background: var(--carbon); box-shadow: inset 0 0 0 1px var(--hairline); padding: 36px 36px 32px; }
+  .family { color: var(--chrome); line-height: 1.1; }
+  .family-card .role { margin-top: 16px; font-family: "Exo 2", sans-serif; font-size: 17px; font-weight: 600; color: var(--chrome); }
+  .family-card .role span { display: block; margin-top: 4px; font-family: "Inter", sans-serif; font-weight: 400; font-size: 16px; color: var(--mist); }
+
+  .scale { margin-top: 20px; border-radius: 12px; background: var(--carbon); box-shadow: inset 0 0 0 1px var(--hairline); padding: 48px; display: grid; grid-template-columns: 440px minmax(0, 1fr); column-gap: 48px; row-gap: 52px; align-items: start; }
+  .spec { font-size: 16px; line-height: 1.5; color: var(--mist); }
+  .spec b { display: block; font-family: "Exo 2", sans-serif; font-size: 17px; font-weight: 600; color: var(--chrome); margin-bottom: 2px; }
+  .t-hero { font-family: "Exo 2"; font-weight: 700; font-size: 88px; line-height: 1; letter-spacing: -0.01em; color: var(--chrome); }
+  .t-h2 { font-family: "Exo 2"; font-weight: 600; font-size: 48px; line-height: 1.08; color: var(--chrome); }
+  .t-spec { display: flex; align-items: baseline; gap: 28px; font-family: "Barlow Condensed"; font-weight: 600; font-size: 24px; line-height: 1.1; letter-spacing: 0.04em; text-transform: uppercase; color: var(--chrome); }
+  .t-spec span { color: var(--mist); }
+  .t-price { font-family: "Barlow Condensed"; font-weight: 700; font-size: 72px; line-height: 0.95; letter-spacing: 0.01em; color: var(--chrome); }
+  .t-body { font-size: 17px; font-weight: 400; line-height: 1.65; color: var(--fog); max-width: 62ch; }
+  .t-ui { display: flex; gap: 36px; font-family: "Exo 2"; font-size: 14px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--chrome); padding-top: 4px; }
+  .t-eyebrow { font-family: "Exo 2"; font-size: 13px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sky); padding-top: 4px; }
+
+  /* Colors */
+  .colors { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+  .colors + .colors { margin-top: 40px; }
+  .chip { height: 132px; border-radius: 12px; }
+  .ring { box-shadow: inset 0 0 0 1px rgba(209,213,219,0.22); }
+  .colors .label { display: flex; justify-content: space-between; align-items: baseline; }
+  .colors .label span { font-family: "Barlow Condensed", sans-serif; font-size: 19px; font-weight: 600; letter-spacing: 0.04em; color: var(--fog); }
+  .note { margin-top: 4px; font-size: 15.5px; line-height: 1.45; color: var(--mist); }
+
+  /* Icons */
+  .icons { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 14px; }
+  .icon { height: 118px; border-radius: 12px; background: var(--carbon); box-shadow: inset 0 0 0 1px var(--hairline); display: grid; place-items: center; }
+  .icon.hot { background: var(--sky); box-shadow: none; }
+  .icon img { width: 44px; height: 44px; display: block; }
+  .icons .label { font-size: 14px; text-align: center; }
+
+  /* Buttons */
+  .buttons { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+  .buttons + .buttons { margin-top: 32px; }
+  .btn-cell { height: 150px; border-radius: 12px; background: var(--ink); box-shadow: inset 0 0 0 1px rgba(209,213,219,0.2); display: grid; place-items: center; }
+  .btn-cell.light { background: var(--chrome); box-shadow: none; }
+</style>
+</head>
+<body>
+<main class="sheet" id="sheet">
+
+  <header class="cover">
+    <img class="photo" src="../../Bmw M4 paint Correction.webp" alt="">
+    <div class="cover-body">
+      <img src="../logo/png/lucid-logo-full.png" alt="Lucid Detailing">
+      <h1>Brand<br>guidelines</h1>
+    </div>
+  </header>
+
+  <section>
+    <h2>Main logo</h2>
+    <div class="panel main-panel"><img src="../logo/png/lucid-logo-full.png" alt="Lucid Detailing main logo"></div>
+    <div class="rules">
+      <div>
+        <div class="panel rule-panel">
+          <div class="clear">
+            <i class="t">x</i><i class="l">x</i>
+            <img src="../logo/png/lucid-logo-full-512.png" alt="">
+          </div>
+        </div>
+        <div class="label">Clear space<span>x = cap height of LUCID, on every side</span></div>
+      </div>
+      <div>
+        <div class="panel rule-panel">
+          <div class="min">
+            <div><div class="box"><img src="../logo/png/lucid-logo-full-512.png" alt="" width="400"></div><div class="label">Full 400 px</div></div>
+            <div><div class="box"><img src="../logo/png/lucid-lockup-full-256.png" alt="" width="180"></div><div class="label">Lockup 180 px</div></div>
+            <div><div class="box"><img src="../logo/png/lucid-favicon-32.png" alt="" width="32"></div><div class="label">Favicon</div></div>
+          </div>
+        </div>
+        <div class="label">Minimum size<span>Below these, step down a version</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Logo variations</h2>
+    <div class="variants">
+      <div>
+        <div class="swatch on-ink"><img src="../logo/png/lucid-logo-full-512.png" alt=""></div>
+        <div class="label">Full<span>Ink, Carbon, Navy</span></div>
+      </div>
+      <div>
+        <div class="swatch on-chrome"><img src="../logo/png/lucid-logo-light-512.png" alt=""></div>
+        <div class="label">Light<span>Chrome, white, print</span></div>
+      </div>
+      <div>
+        <div class="swatch on-photo"><img src="../logo/png/lucid-logo-chrome-512.png" alt=""></div>
+        <div class="label">One color Chrome<span>Photos, vinyl</span></div>
+      </div>
+      <div>
+        <div class="swatch on-white"><img src="../logo/png/lucid-logo-ink-512.png" alt=""></div>
+        <div class="label">One color Ink<span>Stamps, receipts</span></div>
+      </div>
+      <div class="wide">
+        <div class="swatch on-carbon"><img src="../logo/png/lucid-lockup-full.png" alt=""></div>
+        <div class="label">Lockup<span>Site header and anything under 400 px wide</span></div>
+      </div>
+      <div class="wide">
+        <div class="swatch on-carbon">
+          <div class="sizes">
+            <img src="../logo/png/lucid-favicon-512.png" alt="" width="128" height="128">
+            <img src="../logo/png/lucid-favicon-180.png" alt="" width="64" height="64">
+            <img src="../logo/png/lucid-favicon-32.png" alt="" width="32" height="32">
+          </div>
+        </div>
+        <div class="label">Favicon &amp; app icon</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Typography</h2>
+    <div class="families">
+      <div class="family-card">
+        <div class="family" style="font-family:'Exo 2';font-weight:700;font-size:96px;letter-spacing:-0.01em">Exo 2</div>
+        <div class="role">Display, headings, navigation, buttons, eyebrows<span>SemiBold 600, Bold 700</span></div>
+      </div>
+      <div class="family-card">
+        <div class="family" style="font-family:'Barlow Condensed';font-weight:600;font-size:96px;letter-spacing:0.01em;text-transform:uppercase">Barlow</div>
+        <div class="role">Barlow Condensed: prices, times, specs<span>SemiBold 600, Bold 700</span></div>
+      </div>
+      <div class="family-card">
+        <div class="family" style="font-family:'Inter';font-weight:500;font-size:96px;letter-spacing:-0.025em">Inter</div>
+        <div class="role">Body copy, forms, captions<span>Regular 400 to Bold 700</span></div>
+      </div>
+    </div>
+
+    <div class="scale">
+      <div class="spec"><b>Hero</b>Exo 2 700, 88 px, line 1.0, tracking -1%, sentence case</div>
+      <div class="t-hero">Light doesn&rsquo;t lie.</div>
+      <div class="spec"><b>Section heading</b>Exo 2 600, 48 px, line 1.08</div>
+      <div class="t-h2">Six services, one standard.</div>
+      <div class="spec"><b>Automotive spec</b>Barlow Condensed 600, 20 to 24 px, uppercase, tracking 4%</div>
+      <div class="t-spec">Elite Ceramic <span>2 days on site</span> <span>Multi-stage correction</span></div>
+      <div class="spec"><b>Price</b>Barlow Condensed 700, 56 to 72 px, line 0.95</div>
+      <div class="t-price">$349</div>
+      <div class="spec"><b>Body</b>Inter 400, 17 px, line 1.65, max 65 characters. Form fields 16 px</div>
+      <div class="t-body">Machine polishing levels the clear coat until there is nothing left for the light to find. Every panel is checked under the lamp before handover.</div>
+      <div class="spec"><b>Navigation &amp; buttons</b>Exo 2 600, 14 px, uppercase, tracking 8%</div>
+      <div class="t-ui"><span>Services</span><span>Packages</span><span>Book a detail</span></div>
+      <div class="spec"><b>Eyebrow</b>Exo 2 600, 13 px, uppercase, tracking 14%, Sky. One per three sections</div>
+      <div class="t-eyebrow">Paint correction</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Brand colors</h2>
+    <div class="colors">
+      <div><div class="chip" style="background:#6FAEE6"></div><div class="label">Sky<span>#6FAEE6</span></div><div class="note">Actions and focus</div></div>
+      <div><div class="chip" style="background:#9CCBF2"></div><div class="label">Glint<span>#9CCBF2</span></div><div class="note">Hover on Sky</div></div>
+      <div><div class="chip" style="background:#2B6497"></div><div class="label">Sky Deep<span>#2B6497</span></div><div class="note">Sky on light grounds</div></div>
+      <div><div class="chip" style="background:#6E869D"></div><div class="label">Steel<span>#6E869D</span></div><div class="note">Logo only</div></div>
+    </div>
+    <div class="colors">
+      <div><div class="chip ring" style="background:#0D0D0F"></div><div class="label">Ink<span>#0D0D0F</span></div><div class="note">Page background</div></div>
+      <div><div class="chip ring" style="background:#12171E"></div><div class="label">Carbon<span>#12171E</span></div><div class="note">Raised bands</div></div>
+      <div><div class="chip ring" style="background:#1E2A38"></div><div class="label">Navy<span>#1E2A38</span></div><div class="note">Cards</div></div>
+      <div><div class="chip" style="background:#647081"></div><div class="label">Slate<span>#647081</span></div><div class="note">Borders, never text</div></div>
+    </div>
+    <div class="colors">
+      <div><div class="chip" style="background:#9AA3AF"></div><div class="label">Mist<span>#9AA3AF</span></div><div class="note">Secondary text</div></div>
+      <div><div class="chip" style="background:#D1D5DB"></div><div class="label">Fog<span>#D1D5DB</span></div><div class="note">Body text</div></div>
+      <div><div class="chip" style="background:#F2F4F7"></div><div class="label">Chrome<span>#F2F4F7</span></div><div class="note">Headings, print ground</div></div>
+      <div><div class="chip ring" style="background:#0D0D0F;background-image:linear-gradient(transparent 49.5%,rgba(209,213,219,0.12) 49.5%,rgba(209,213,219,0.12) 50.5%,transparent 50.5%)"></div><div class="label">Hairline<span>Fog 12%</span></div><div class="note">Dividers</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Iconography</h2>
+    <p class="spec-line">Tabler outline, 1.5 px stroke. Sky tile for the main action.</p>
+    <div class="icons">
+      <div><div class="icon"><img src="../icons/svg/fog/lucid-icon-exterior.svg" alt=""></div><div class="label">Exterior</div></div>
+      <div><div class="icon"><img src="../icons/svg/fog/lucid-icon-interior.svg" alt=""></div><div class="label">Interior</div></div>
+      <div><div class="icon"><img src="../icons/svg/fog/lucid-icon-correction.svg" alt=""></div><div class="label">Correction</div></div>
+      <div><div class="icon"><img src="../icons/svg/fog/lucid-icon-ceramic.svg" alt=""></div><div class="label">Ceramic</div></div>
+      <div><div class="icon"><img src="../icons/svg/fog/lucid-icon-wheels.svg" alt=""></div><div class="label">Wheels</div></div>
+      <div><div class="icon"><img src="../icons/svg/fog/lucid-icon-glass.svg" alt=""></div><div class="label">Glass</div></div>
+      <div><div class="icon"><img src="../icons/svg/fog/lucid-icon-engine.svg" alt=""></div><div class="label">Engine bay</div></div>
+      <div><div class="icon"><img src="../icons/svg/fog/lucid-icon-mobile.svg" alt=""></div><div class="label">Mobile</div></div>
+      <div><div class="icon hot"><img src="../icons/svg/ink/lucid-icon-book.svg" alt=""></div><div class="label">Book</div></div>
+      <div><div class="icon"><img src="../icons/svg/fog/lucid-icon-call.svg" alt=""></div><div class="label">Call</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Button styles</h2>
+    <div class="buttons">
+      <div><div class="btn-cell"><span class="ld-btn ld-btn--primary ld-btn--lg">Book a detail</span></div><div class="label">Primary</div></div>
+      <div><div class="btn-cell"><span class="ld-btn ld-btn--secondary ld-btn--lg">See packages</span></div><div class="label">Secondary</div></div>
+      <div><div class="btn-cell"><span class="ld-btn ld-btn--text ld-btn--lg">How a detail runs</span></div><div class="label">Text</div></div>
+      <div class="ld-on-light"><div class="btn-cell light"><span class="ld-btn ld-btn--light ld-btn--lg">Book a detail</span></div><div class="label">On light<span>Sky Deep</span></div></div>
+    </div>
+    <div class="buttons">
+      <div><div class="btn-cell"><span class="ld-btn ld-btn--primary ld-btn--lg is-hover">Book a detail</span></div><div class="label">Hover<span>Sky lifts to Glint</span></div></div>
+      <div><div class="btn-cell"><span class="ld-btn ld-btn--primary ld-btn--lg is-focus">Book a detail</span></div><div class="label">Keyboard focus<span>Sky ring</span></div></div>
+      <div class="ld-on-light"><div class="btn-cell light"><span class="ld-btn ld-btn--light ld-btn--lg is-focus">Book a detail</span></div><div class="label">Focus on light<span>Ink ring</span></div></div>
+      <div><div class="btn-cell"><span class="ld-btn ld-btn--primary ld-btn--lg is-disabled">Book a detail</span></div><div class="label">Disabled</div></div>
+    </div>
+  </section>
+
+</main>
+</body>
+</html>

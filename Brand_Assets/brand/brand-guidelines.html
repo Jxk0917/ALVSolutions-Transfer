@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AlvSolutions brand guidelines</title>
+<link rel="stylesheet" href="alv-buttons.css">
+<style>
+  /* Source for alvsolutions-brand-guidelines.png. Rendered by Brand_Assets/tools/build-guidelines.mjs.
+     Logos load from ../logo/svg, icons from ../icons/svg, buttons from alv-buttons.css. */
+  @font-face { font-family: "Manrope"; src: url("../ALVS Fonts/Geist/ManRope/Manrope-VariableFont_wght.ttf"); font-weight: 200 800; }
+  @font-face { font-family: "Geist"; src: url("../ALVS Fonts/Geist/Geist-VariableFont_wght.ttf"); font-weight: 100 900; }
+
+  :root {
+    --ink: #070C14;
+    --surface: #0E1826;
+    --raised: #14202F;
+    --edge: rgba(125,166,214,0.13);
+    --mist: #EDF2F8;
+    --cloud: #B4C2D2;
+    --slate: #8698AC;
+    --blue: #3DA8F8;
+    --deep: #1A72C6;
+    --navy: #072753;
+    --gold: #FFC811;
+  }
+
+  html, body { margin: 0; background: var(--ink); }
+
+  .sheet {
+    width: 1600px;
+    box-sizing: border-box;
+    padding: 88px 96px 96px;
+    background: var(--ink);
+    font-family: "Geist", sans-serif;
+    color: var(--mist);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Wordmark: always live Manrope ExtraBold, never the letters from the old raster logo. */
+  .lockup { display: inline-flex; align-items: center; gap: 0.42em; font-family: "Manrope", sans-serif; font-weight: 800; letter-spacing: -0.03em; line-height: 1; white-space: nowrap; }
+  .lockup img { height: 1.42em; width: auto; display: block; }
+  .lockup b { font-weight: 800; }
+  .lockup .s { color: var(--blue); }
+  .lockup.light { color: var(--navy); }
+  .lockup.light .s { color: var(--deep); }
+
+  .cover { padding-bottom: 72px; }
+  .cover .lockup { font-size: 30px; }
+  .cover h1 { margin: 40px 0 0; font-family: "Manrope", sans-serif; font-size: 112px; line-height: 0.94; font-weight: 800; letter-spacing: -0.035em; }
+
+  section { padding: 56px 0; border-top: 1px solid var(--edge); }
+  h2 { margin: 0 0 32px; font-family: "Manrope", sans-serif; font-size: 36px; line-height: 1; font-weight: 800; letter-spacing: -0.025em; }
+  h3 { margin: 0; font-family: "Manrope", sans-serif; font-size: 20px; font-weight: 700; letter-spacing: -0.012em; }
+
+  .label { margin-top: 14px; font-size: 17px; font-weight: 600; }
+  .label span { margin-left: 10px; font-weight: 400; color: var(--slate); }
+  .note { margin-top: 4px; font-size: 15px; line-height: 1.45; color: var(--slate); }
+
+  /* Main logo */
+  .main-panel { height: 480px; border-radius: 16px; background: var(--surface); display: grid; place-items: center; }
+  .stacked { display: flex; flex-direction: column; align-items: center; font-family: "Manrope", sans-serif; }
+  .stacked img { width: 300px; height: auto; display: block; }
+  .stacked .word { margin-top: 30px; font-size: 80px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
+  .stacked .word .s { color: var(--blue); }
+  .stacked .tag { margin-top: 18px; font-family: "Geist", sans-serif; font-size: 25px; font-weight: 500; color: var(--cloud); letter-spacing: 0.005em; }
+
+  .rules { display: grid; grid-template-columns: 3fr 2fr; gap: 20px; margin-top: 20px; }
+  .rule-panel { height: 300px; border-radius: 16px; background: var(--surface); display: grid; place-items: center; }
+
+  /* Clear space: x is half the mark's height. The tinted band is the protected zone. */
+  .clear { --x: 37px; position: relative; padding: var(--x); background: rgba(61,168,248,0.09); outline: 1px dashed rgba(61,168,248,0.55); }
+  .clear .lockup { font-size: 52px; outline: 1px dashed rgba(237,242,248,0.35); background: var(--surface); }
+  .clear i { position: absolute; font-style: normal; font-size: 19px; font-weight: 600; color: var(--blue); }
+  .clear i.t { top: 0; left: 50%; height: var(--x); display: grid; place-items: center; transform: translateX(-50%); }
+  .clear i.l { left: 0; top: 50%; width: var(--x); display: grid; place-items: center; transform: translateY(-50%); }
+
+  .min { display: flex; align-items: flex-end; gap: 56px; }
+  .min > div { display: flex; flex-direction: column; align-items: center; }
+  .min .box { height: 64px; display: flex; align-items: flex-end; }
+  .min .label { margin-top: 18px; font-size: 15px; }
+
+  /* Variations */
+  .variants { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .swatch { height: 220px; border-radius: 12px; display: grid; place-items: center; background: var(--surface); }
+  .wide { grid-column: span 2; }
+  .wide .lockup { font-size: 50px; }
+  .on-light { background: #FFFFFF; }
+  .on-deep { background: var(--deep); }
+  .on-mist { background: var(--mist); }
+  .sizes { display: flex; align-items: flex-end; gap: 22px; }
+
+  /* Typography */
+  .families { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .family-card { border-radius: 16px; background: var(--surface); padding: 40px 44px 40px; }
+  .family { font-size: 112px; line-height: 0.95; letter-spacing: -0.035em; }
+  .family-card .note { margin-top: 18px; font-size: 17px; }
+  .weights { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 36px; }
+  .weights div { font-size: 28px; line-height: 1.1; }
+  .weights span { display: block; margin-top: 6px; font-family: "Geist", sans-serif; font-size: 15px; font-weight: 400; letter-spacing: 0; color: var(--slate); }
+
+  .scale { margin-top: 20px; border-radius: 16px; background: var(--surface); padding: 44px; display: grid; grid-template-columns: 420px 1fr; column-gap: 48px; row-gap: 40px; align-items: start; }
+  .scale .spec { font-size: 15px; line-height: 1.5; color: var(--slate); }
+  .scale .spec b { display: block; font-size: 17px; font-weight: 600; color: var(--mist); }
+  .t-h1 { font-family: "Manrope"; font-size: 54px; font-weight: 800; line-height: 1.06; letter-spacing: -0.028em; }
+  .t-h2 { font-family: "Manrope"; font-size: 43px; font-weight: 800; line-height: 1.12; letter-spacing: -0.025em; }
+  .t-h3 { font-family: "Manrope"; font-size: 18.5px; font-weight: 700; line-height: 1.35; letter-spacing: -0.012em; }
+  .t-lead { font-size: 17px; font-weight: 450; line-height: 1.72; color: var(--cloud); max-width: 52ch; }
+  .t-body { font-size: 15.5px; font-weight: 400; line-height: 1.7; color: var(--cloud); max-width: 60ch; }
+  .t-ui { font-size: 14.5px; font-weight: 600; }
+
+  /* Colors */
+  .colors { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
+  .colors + .colors { margin-top: 28px; }
+  .chip { height: 150px; border-radius: 12px; }
+  .ring { box-shadow: inset 0 0 0 1px rgba(237,242,248,0.14); }
+  .colors .label { display: flex; justify-content: space-between; }
+  .colors .label span { font-weight: 600; color: var(--mist); letter-spacing: 0.02em; }
+  .colors .note { font-size: 14.5px; }
+
+  /* Icons */
+  .icons { display: grid; grid-template-columns: repeat(9, 1fr); gap: 16px; }
+  .icon { height: 132px; border-radius: 12px; background: var(--surface); display: grid; place-items: center; }
+  .icon i { width: 76px; height: 76px; border-radius: 14px; display: grid; place-items: center; background: rgba(61,168,248,0.10); box-shadow: inset 0 0 0 1px rgba(61,168,248,0.20); }
+  .icon i.gold { background: rgba(255,200,17,0.10); box-shadow: inset 0 0 0 1px rgba(255,200,17,0.22); }
+  .icon img { width: 40px; height: 40px; display: block; }
+  .icons .label { font-size: 15px; text-align: center; }
+  .spec-line { margin: -16px 0 28px; font-size: 17px; color: var(--slate); }
+
+  /* Buttons */
+  .buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .buttons + .buttons { margin-top: 28px; }
+  .btn-cell { height: 150px; border-radius: 12px; background: var(--ink); box-shadow: inset 0 0 0 1px var(--edge); display: grid; place-items: center; }
+</style>
+</head>
+<body>
+<main class="sheet" id="sheet">
+
+  <header class="cover">
+    <div class="lockup"><img src="../logo/svg/alv-mark-reverse.svg" alt=""><b>Alv<span class="s">Solutions</span></b></div>
+    <h1>Brand<br>Guidelines</h1>
+  </header>
+
+  <section>
+    <h2>Main Logo</h2>
+    <div class="main-panel">
+      <div class="stacked">
+        <img src="../logo/svg/alv-mark-reverse.svg" alt="AlvSolutions main logo">
+        <div class="word">Alv<span class="s">Solutions</span></div>
+        <div class="tag">Professional Business Websites</div>
+      </div>
+    </div>
+    <div class="rules">
+      <div>
+        <div class="rule-panel">
+          <div class="clear">
+            <i class="t">x</i><i class="l">x</i>
+            <div class="lockup"><img src="../logo/svg/alv-mark-reverse.svg" alt=""><b>Alv<span class="s">Solutions</span></b></div>
+          </div>
+        </div>
+        <div class="label">Clear Space<span>x = half the height of the mark, kept free on every side</span></div>
+      </div>
+      <div>
+        <div class="rule-panel">
+          <div class="min">
+            <div><div class="box"><div class="lockup" style="font-size:17px"><img src="../logo/svg/alv-mark-reverse.svg" alt=""><b>Alv<span class="s">Solutions</span></b></div></div><div class="label">130 px</div></div>
+            <div><div class="box"><img src="../logo/svg/alv-mark-reverse.svg" alt="" width="38" height="24"></div><div class="label">24 px</div></div>
+            <div><div class="box"><img src="../logo/svg/alv-favicon.svg" alt="" width="16" height="16"></div><div class="label">16 px</div></div>
+          </div>
+        </div>
+        <div class="label">Minimum Size<span>Lockup, mark, favicon</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Logo Variations</h2>
+    <div class="variants">
+      <div class="wide">
+        <div class="swatch"><div class="lockup"><img src="../logo/svg/alv-mark-reverse.svg" alt=""><b>Alv<span class="s">Solutions</span></b></div></div>
+        <div class="label">Horizontal, Dark<span>Website, social, dark print</span></div>
+      </div>
+      <div class="wide">
+        <div class="swatch on-light"><div class="lockup light"><img src="../logo/svg/alv-mark.svg" alt=""><b>Alv<span class="s">Solutions</span></b></div></div>
+        <div class="label">Horizontal, Light<span>Business cards, email, documents</span></div>
+      </div>
+      <div>
+        <div class="swatch on-deep"><img src="../logo/svg/alv-mark-white.svg" alt="" width="172" height="110"></div>
+        <div class="label">White</div>
+      </div>
+      <div>
+        <div class="swatch on-mist"><img src="../logo/svg/alv-mark-navy.svg" alt="" width="172" height="110"></div>
+        <div class="label">One Colour Navy</div>
+      </div>
+      <div>
+        <div class="swatch"><img src="../logo/svg/alv-badge.svg" alt="" width="132" height="132"></div>
+        <div class="label">App Badge</div>
+      </div>
+      <div>
+        <div class="swatch"><div class="sizes"><img src="../logo/svg/alv-favicon.svg" alt="" width="64" height="64"><img src="../logo/svg/alv-favicon.svg" alt="" width="32" height="32"><img src="../logo/svg/alv-favicon.svg" alt="" width="16" height="16"></div></div>
+        <div class="label">Favicon</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Typography</h2>
+    <div class="families">
+      <div class="family-card">
+        <div class="family" style="font-family:Manrope;font-weight:800">Manrope</div>
+        <div class="note">Headings and the wordmark</div>
+        <div class="weights" style="font-family:Manrope">
+          <div style="font-weight:800">ExtraBold<span>800</span></div>
+          <div style="font-weight:700">Bold<span>700</span></div>
+          <div style="font-weight:600">SemiBold<span>600</span></div>
+        </div>
+      </div>
+      <div class="family-card">
+        <div class="family" style="font-weight:500">Geist</div>
+        <div class="note">Body copy and interface</div>
+        <div class="weights">
+          <div style="font-weight:600">SemiBold<span>600</span></div>
+          <div style="font-weight:500">Medium<span>500</span></div>
+          <div style="font-weight:400">Regular<span>400</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scale">
+      <div class="spec"><b>Heading 1</b>Manrope 800, 54 px, line 1.06, tracking -2.8%</div>
+      <div class="t-h1">Websites that bring in work.</div>
+      <div class="spec"><b>Heading 2</b>Manrope 800, 43 px, line 1.12, tracking -2.5%</div>
+      <div class="t-h2">Everything you need to run a business online.</div>
+      <div class="spec"><b>Heading 3</b>Manrope 700, 18.5 px, line 1.35, tracking -1.2%</div>
+      <div class="t-h3">Booking integration</div>
+      <div class="spec"><b>Lead</b>Geist 450, 17 px, line 1.72, Cloud</div>
+      <div class="t-lead">I build fast, professional sites for small businesses. Flat pricing, and you are live in about a week.</div>
+      <div class="spec"><b>Body</b>Geist 400, 15.5 px, line 1.7, max 60 characters</div>
+      <div class="t-body">Let clients book appointments straight from your site, 24/7. No phone tag, no back and forth.</div>
+      <div class="spec"><b>Interface</b>Geist 600, 14.5 px, buttons, labels, navigation</div>
+      <div class="t-ui">Start a project</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Brand Colors</h2>
+    <div class="colors">
+      <div><div class="chip" style="background:#3DA8F8"></div><div class="label">Alv Blue<span>#3DA8F8</span></div><div class="note">Accents, links, icons on dark</div></div>
+      <div><div class="chip" style="background:#1A72C6"></div><div class="label">Deep Blue<span>#1A72C6</span></div><div class="note">Primary buttons, white text 4.9:1</div></div>
+      <div><div class="chip" style="background:linear-gradient(135deg,#0BA2E4,#005CC5)"></div><div class="label">Gradient<span>#005CC5 / #0BA2E4</span></div><div class="note">Logo mark only</div></div>
+      <div><div class="chip ring" style="background:#072753"></div><div class="label">Logo Navy<span>#072753</span></div><div class="note">Mark and wordmark on light</div></div>
+      <div><div class="chip" style="background:#FFC811"></div><div class="label">Gold<span>#FFC811</span></div><div class="note">Hover, focus, prices, one pick</div></div>
+    </div>
+    <div class="colors">
+      <div><div class="chip ring" style="background:#070C14"></div><div class="label">Ink<span>#070C14</span></div><div class="note">Page background</div></div>
+      <div><div class="chip ring" style="background:#0E1826"></div><div class="label">Surface<span>#0E1826</span></div><div class="note">Cards and panels</div></div>
+      <div><div class="chip" style="background:#EDF2F8"></div><div class="label">Mist<span>#EDF2F8</span></div><div class="note">Headings on dark, 17.4:1</div></div>
+      <div><div class="chip" style="background:#B4C2D2"></div><div class="label">Cloud<span>#B4C2D2</span></div><div class="note">Body text on dark</div></div>
+      <div><div class="chip" style="background:#8698AC"></div><div class="label">Slate<span>#8698AC</span></div><div class="note">Captions and meta, 6.6:1</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Iconography</h2>
+    <p class="spec-line">Tabler Icons, outline, 1.75 stroke, round caps. Blue by default, Gold for the one item that matters most.</p>
+    <div class="icons">
+      <div><div class="icon"><i><img src="../icons/svg/blue/alv-icon-websites.svg" alt=""></i></div><div class="label">Websites</div></div>
+      <div><div class="icon"><i><img src="../icons/svg/blue/alv-icon-restaurants.svg" alt=""></i></div><div class="label">Restaurants</div></div>
+      <div><div class="icon"><i><img src="../icons/svg/blue/alv-icon-booking.svg" alt=""></i></div><div class="label">Booking</div></div>
+      <div><div class="icon"><i><img src="../icons/svg/blue/alv-icon-search.svg" alt=""></i></div><div class="label">Search</div></div>
+      <div><div class="icon"><i><img src="../icons/svg/blue/alv-icon-mobile.svg" alt=""></i></div><div class="label">Mobile</div></div>
+      <div><div class="icon"><i><img src="../icons/svg/blue/alv-icon-support.svg" alt=""></i></div><div class="label">Support</div></div>
+      <div><div class="icon"><i><img src="../icons/svg/blue/alv-icon-cards.svg" alt=""></i></div><div class="label">Cards</div></div>
+      <div><div class="icon"><i><img src="../icons/svg/blue/alv-icon-apparel.svg" alt=""></i></div><div class="label">Apparel</div></div>
+      <div><div class="icon"><i class="gold"><img src="../icons/svg/gold/alv-icon-pricing.svg" alt=""></i></div><div class="label">Pricing</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Button Styles</h2>
+    <div class="buttons">
+      <div><div class="btn-cell"><span class="alv-btn alv-btn--primary alv-btn--lg">Start a project</span></div><div class="label">Primary</div></div>
+      <div><div class="btn-cell"><span class="alv-btn alv-btn--gold alv-btn--lg">Start with Growth</span></div><div class="label">Gold<span>Recommended pick</span></div></div>
+      <div><div class="btn-cell"><span class="alv-btn alv-btn--ghost alv-btn--lg">See packages</span></div><div class="label">Ghost</div></div>
+      <div><div class="btn-cell"><span class="alv-btn alv-btn--text alv-btn--lg">Compare packages</span></div><div class="label">Text</div></div>
+    </div>
+    <div class="buttons">
+      <div><div class="btn-cell"><span class="alv-btn alv-btn--primary alv-btn--lg is-hover">Start a project</span></div><div class="label">Hover<span>Every button turns Gold</span></div></div>
+      <div><div class="btn-cell"><span class="alv-btn alv-btn--ghost alv-btn--lg is-hover">See packages</span></div><div class="label">Ghost Hover</div></div>
+      <div><div class="btn-cell"><span class="alv-btn alv-btn--primary alv-btn--lg is-focus">Start a project</span></div><div class="label">Keyboard Focus</div></div>
+      <div><div class="btn-cell"><span class="alv-btn alv-btn--primary alv-btn--lg is-disabled">Start a project</span></div><div class="label">Disabled</div></div>
+    </div>
+  </section>
+
+</main>
+</body>
+</html>

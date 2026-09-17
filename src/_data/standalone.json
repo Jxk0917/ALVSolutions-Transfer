@@ -1,0 +1,72 @@
+[
+  {
+    "slug": "pages-and-content",
+    "name": "Pages and content",
+    "icon": "browser",
+    "blurb": "Added to a site I built, or to one you already have.",
+    "items": [
+      { "name": "Extra page, beyond your package",   "price": 125, "note": "Same design system as the rest of the site." },
+      { "name": "Menu or services page, simple",     "price": 150, "note": "Under 20 items, a list you already have written." },
+      { "name": "Menu or services page, complex",    "price": 275, "note": "20+ items, categories, prices and photos." },
+      { "name": "Catering or quote page, simple",    "price": 150, "note": "An enquiry form and your contact details." },
+      { "name": "Catering or quote page, complex",   "price": 275, "note": "Packages, pricing tiers and a detailed request form." }
+    ]
+  },
+  {
+    "slug": "booking-and-ordering",
+    "name": "Booking and ordering",
+    "icon": "calendar",
+    "blurb": "Taking the transaction off the phone.",
+    "items": [
+      { "name": "Booking integration, standard",     "price": 175, "note": "One service type on a platform you already use." },
+      { "name": "Booking integration, complex",      "price": 300, "note": "Multiple services, staff or locations, configured for you." },
+      { "name": "Booking with payment or deposits",  "price": { "plus": 150 }, "note": "Added to either booking option above." },
+      { "name": "Delivery platform links",           "price": 50,  "note": "DoorDash, Uber Eats and the rest, wired in." },
+      { "name": "Online ordering, full integration", "price": { "from": 400 }, "note": "Quoted individually. The platform and your menu size decide it." }
+    ]
+  },
+  {
+    "slug": "getting-found",
+    "name": "Getting found",
+    "icon": "search",
+    "blurb": "The listings people actually search, set up in your own accounts.",
+    "items": [
+      { "name": "Google Business Profile setup",     "price": 200, "note": "Standalone. Included as setup assistance in Standard and Complete." },
+      { "name": "Professional email setup",          "price": 75,  "note": "you@yourbusiness.com instead of a Gmail address." }
+    ]
+  },
+  {
+    "slug": "brand-and-print",
+    "name": "Brand and print",
+    "icon": "card",
+    "blurb": "The same brand as the site, on paper and on your team.",
+    "items": [
+      { "name": "Logo sourcing and setup assistance","price": 75,  "note": "No logo yet? This is me handling it with you." },
+      { "name": "Business card, basic",              "price": 85,  "note": "Front design. Print-ready files for any printer." },
+      { "name": "Business card, premium",            "price": 165, "note": "Front and back, thick stock, QR code, delivered." },
+      { "name": "T-shirt design",                    "price": { "soon": true }, "note": "Not open for orders yet. Ask and I will tell you when it is." }
+    ]
+  },
+  {
+    "slug": "changes-after-launch",
+    "name": "Changes after launch",
+    "icon": "refresh",
+    "blurb": "Only for work beyond what your care plan already covers.",
+    "items": [
+      { "name": "Website update, minor",             "price": 30,  "note": "Under 15 minutes. Hours, a phone number, one photo." },
+      { "name": "Website update, moderate",          "price": 60,  "note": "15 to 30 minutes. A handful of changes across the site." },
+      { "name": "Website update, substantial",       "price": 100, "note": "30 to 60 minutes. A section rewritten, photos throughout." },
+      { "name": "Extra revision round",              "price": 50,  "note": "Beyond the rounds included in your package." }
+    ]
+  },
+  {
+    "slug": "project-extras",
+    "name": "Project extras",
+    "icon": "clock",
+    "blurb": "Neither applies unless you ask for it, and I quote the exact figure first.",
+    "items": [
+      { "name": "Content preparation and onboarding","price": { "from": 100, "to": 175 }, "note": "For when you have no copy, photos or logo ready to hand over." },
+      { "name": "Rush delivery",                     "price": { "from": 150, "to": 250 }, "note": "Your project moves to the front of the queue." }
+    ]
+  }
+]

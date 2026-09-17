@@ -1,0 +1,107 @@
+/* Hacienda Grill button styles.
+   Source of truth for the Button Styles section of the brand guidelines, and ready to drop
+   into the website. Requires Montserrat (700) to be loaded.
+
+   Signage lettering: uppercase Montserrat Bold with open tracking, square-ish 4px corners
+   (the logo is a cut sign, not a pill). No coloured shadows: the fill carries the weight.
+
+   Contrast (WCAG 2.1), all measured:
+   - Primary:    #FFFFFF on Chili #C81010          5.94:1   hover on Adobe #9E0C0C  8.36:1
+   - Secondary:  #FFFFFF on Agave #5A7A1C          4.96:1   hover on #4E6B17        6.11:1
+                 (the old #6B8E23 measured 3.81:1 with white, which fails)
+   - Outline:    Charcoal #231F20 on Paper #FDFAF2 15.63:1  border is the same colour
+   - On dark:    Cream #F7F1E1 on Ink #140C08      17.15:1
+   - Text:       Chili on Paper                    5.69:1
+   - Focus ring: Charcoal on light 15.6:1; Sun Gold #F2C230 on Ink 11.5:1.
+                 (the site's old orange ring was 2.24:1 on Paper, which fails)
+
+   The .is-hover / .is-active / .is-focus / .is-disabled classes exist only so the guidelines
+   sheet can show each state statically. Real pages rely on :hover, :active and :focus-visible. */
+
+:root {
+  --hg-chili: #C81010;
+  --hg-adobe: #9E0C0C;
+  --hg-agave: #5A7A1C;
+  --hg-agave-deep: #4E6B17;
+  --hg-gold: #F2C230;
+  --hg-ink: #140C08;
+  --hg-charcoal: #231F20;
+  --hg-cream: #F7F1E1;
+  --hg-paper: #FDFAF2;
+  --hg-disabled-bg: #ECE4D2;
+  --hg-disabled-text: #8C7C6A;
+}
+
+.hg-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 48px;
+  padding: 0 26px;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  font-family: "Montserrat", system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, transform 100ms ease;
+}
+.hg-btn svg { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Sizes */
+.hg-btn--lg { height: 56px; padding: 0 32px; font-size: 15px; }
+.hg-btn--sm { height: 40px; padding: 0 18px; font-size: 13px; gap: 8px; }
+
+/* Primary: the one action per view (Order now). */
+.hg-btn--primary { background: var(--hg-chili); color: #FFFFFF; }
+.hg-btn--primary:hover, .hg-btn--primary.is-hover { background: var(--hg-adobe); }
+.hg-btn--primary:active, .hg-btn--primary.is-active { background: var(--hg-adobe); transform: translateY(1px); }
+
+/* Secondary: the second action beside a Primary (View menu). */
+.hg-btn--secondary { background: var(--hg-agave); color: #FFFFFF; }
+.hg-btn--secondary:hover, .hg-btn--secondary.is-hover { background: var(--hg-agave-deep); }
+.hg-btn--secondary:active, .hg-btn--secondary.is-active { background: var(--hg-agave-deep); transform: translateY(1px); }
+
+/* Outline: low-emphasis actions on Paper or Cream (Book a table). */
+.hg-btn--outline { background: transparent; color: var(--hg-charcoal); border-color: var(--hg-charcoal); }
+.hg-btn--outline:hover, .hg-btn--outline.is-hover { background: var(--hg-charcoal); color: var(--hg-cream); }
+.hg-btn--outline:active, .hg-btn--outline.is-active { transform: translateY(1px); }
+
+/* Outline on dark: the same role on Ink, photography or the hero. */
+.hg-btn--outline-light { background: transparent; color: var(--hg-cream); border-color: var(--hg-cream); }
+.hg-btn--outline-light:hover, .hg-btn--outline-light.is-hover { background: var(--hg-cream); color: var(--hg-ink); }
+.hg-btn--outline-light:active, .hg-btn--outline-light.is-active { transform: translateY(1px); }
+
+/* Text: inline or tertiary actions (Our story). */
+.hg-btn--text {
+  height: auto; padding: 6px 0; border: 0; border-radius: 0;
+  background: transparent; color: var(--hg-chili);
+  box-shadow: inset 0 -2px 0 var(--hg-chili);
+}
+.hg-btn--text:hover, .hg-btn--text.is-hover { color: var(--hg-adobe); box-shadow: inset 0 -2px 0 var(--hg-adobe); }
+
+/* Focus: Charcoal ring on light surfaces, Sun Gold on dark ones. */
+.hg-btn:focus-visible, .hg-btn.is-focus { outline: 3px solid var(--hg-charcoal); outline-offset: 3px; }
+.hg-on-dark .hg-btn:focus-visible, .hg-on-dark .hg-btn.is-focus { outline-color: var(--hg-gold); }
+
+/* Disabled */
+.hg-btn:disabled, .hg-btn.is-disabled {
+  background: var(--hg-disabled-bg);
+  color: var(--hg-disabled-text);
+  border-color: transparent;
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+.hg-btn--text:disabled, .hg-btn--text.is-disabled { background: transparent; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hg-btn { transition: none; }
+  .hg-btn:active, .hg-btn.is-active { transform: none; }
+}

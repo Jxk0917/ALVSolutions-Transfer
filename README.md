@@ -22,17 +22,36 @@ stale files and every new route 404s, which looks exactly like a build failure.
 ```
 src/
   index.html              home
-  packages/               index.html (tiers, chart, fees) + add-ons.html
+  packages/               index.html (build tiers, care plans, chart)
+                          for-your-business.html (the four trade builds)
+                          add-ons.html (page add-ons + power features)
+  pricing.html            the full standalone price list
+  policies.html           plain-English terms + FAQ
   services/               index.html (hub) + service.njk → 8 pages
   work.html about.html contact.html
   stub.njk                → the legal pages
-  _data/                  site · packages · addons · fees · services · stubs
+  _data/                  site · packages · careplans · bundles · addons
+                          standalone · policies · services · stubs
   _includes/layouts       base.njk
   _includes/components    nav, footer, pagehead, cta-band, process-steps,
                           contact-section, price-matrix, tier-cards,
-                          addon-block, fee-list, service-card, icon-sprite
+                          care-cards, bundle-cards, addon-class, price-list,
+                          pricing-tiers, service-card, icon-sprite
   assets/                 styles.css, pages.css, main.js, shader.js, images
 ```
+
+## The offer, in one paragraph
+
+A build is a **one-time** price (Foundation $650 / Standard $1,050 / Complete
+$1,450) and a care plan is a **separate, required monthly** one (Host $45 /
+Grow $95). Standard and Complete include a number of *picks* from two lists:
+eight page add-ons at $125 and seven power features at $225. The four trade
+builds in `bundles.json` are those same packages with the picks already made —
+that relationship is stated on every bundle card and is why `basedOn` exists.
+
+Three components share one token vocabulary for the picks: a **blue square** is
+a page add-on, a **gold diamond** is a power feature. The gold one is rotated
+rather than only recoloured, so the two stay distinguishable without colour.
 
 `Demo Restaurant/` and `Demo Detailer/` are standalone sites with their own
 brand and CSS. They live outside `src/`, are copied verbatim into the build, and
@@ -51,9 +70,22 @@ An unsupplied value is `null` in the data, never a guess and never an empty
 string. The `price` filter renders it as a visible `$—` marked
 `PLACEHOLDER`, so it reads as unfinished rather than as free.
 
-`node check-site.mjs` counts them. **Seven blanks are outstanding**: business
-card basic and premium, T-shirt basic and premium, onboarding, extra revision
-round, rush delivery.
+**There are currently zero placeholders.** Every price on the site is real.
+
+The `money` filter handles the four shapes a flat number cannot express, and
+none of them is a placeholder — they are all deliberate values:
+
+| data | renders |
+|---|---|
+| `150` | `$150` |
+| `{ "plus": 150 }` | `+$150` (a surcharge on something else) |
+| `{ "from": 400 }` | `From $400` (a floor under a quote) |
+| `{ "from": 100, "to": 175 }` | `$100 – $175` |
+| `{ "soon": true }` | a `Coming soon` tag |
+| `null` | `PLACEHOLDER` |
+
+T-shirt design is `{ "soon": true }` on purpose: the pricing is not settled, and
+a marked "coming soon" is honest where an invented number is not.
 
 ## Deployment
 
@@ -89,12 +121,10 @@ certificate exists.
 
 ## Not done yet
 
-- **Home page rewiring.** The home page is unchanged from before the migration
-  apart from the nav and footer. Its service cards still scroll to `#services`
-  instead of linking to the eight service pages, and its icons are still inlined
-  rather than using the sprite. That work needs sign-off first.
-- **`index.html` in the project root** is the pre-Eleventy original, kept as the
-  baseline for `compare-build.mjs`. Delete it when the home rewiring lands.
+- **`index.html` in the project root** is the pre-Eleventy original. The home
+  page has now been rewired (its cells link to the service pages and its icons
+  come from the sprite), so this baseline no longer matches anything and
+  `compare-build.mjs` has nothing useful to say. Both can be deleted.
 - **The contact form still opens a mailto.** It is one shared component now, so
   switching to a form endpoint means editing `contact-section.njk` and the
   handler at the bottom of `assets/main.js` — two places, once.

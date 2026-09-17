@@ -13,8 +13,8 @@
     "section": "Legal",
     "name": "Terms",
     "heading": "Terms of service.",
-    "blurb": "Deposit, revision rounds, ownership and rush work.",
-    "body": "The commercial terms are settled and published on the pricing pages — flat price agreed up front, a deposit to begin, revision rounds per package, and named fees for anything beyond them. Turning that into terms of service needs wording written for the business, not a template pasted from another company.",
-    "cta": { "label": "See the pricing instead", "url": "/packages/" }
+    "blurb": "Deposit, revision rounds, ownership and cancellation.",
+    "body": "The commercial terms are settled and published in plain English on the policies page: a 50% deposit to begin and 50% at launch, revision rounds per package, a 3-month minimum on care plans, and a named price for anything beyond them. Turning that into terms of service needs wording written for this business rather than a template pasted from another company.",
+    "cta": { "label": "Read the plain-English policies", "url": "/policies/" }
   }
 ]

@@ -17,7 +17,6 @@ eleventyComputed:
 #}
 
 {%- set ph = {
-  eyebrow: stub.section,
   heading: stub.heading,
   lead: stub.blurb,
   crumbs: [{ label: stub.section }, { label: stub.name }]
@@ -36,7 +35,6 @@ eleventyComputed:
         <div class="hero-actions">
           <a class="btn btn-ghost" href="{{ stub.cta.url }}">
             {{ stub.cta.label }}
-            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg>
           </a>
         </div>
       </div>

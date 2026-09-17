@@ -1,0 +1,83 @@
+---
+layout: layouts/base.njk
+permalink: /policies/
+title: Policies
+description: How AlvSolutions handles domains, Google Business Profiles, payment, cancellation, scope changes and missing logos or photos. Written in plain English.
+---
+
+{%- set ph = {
+  heading: "The terms, in<br />words you can read.",
+  lead: "Who owns what, when money changes hands, and what happens if you want to stop. None of this is buried in a contract you sign without reading, because a client who is surprised later is a client I have failed.",
+  crumbs: [{ label: "Policies" }],
+  actions: [
+    { label: "Start a project", url: "/contact/" },
+    { label: "See the price list", url: "/pricing/", style: "btn-ghost" }
+  ]
+} -%}
+{% include "components/pagehead.njk" %}
+
+<main id="main">
+
+  <!-- ══════════════ POLICIES ══════════════ -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="policies">
+        {%- for p in policies.policies %}
+        <article class="policy reveal" id="{{ p.slug }}" style="--d:{{ loop.index0 % 3 }}">
+          <div class="ic-box">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-{{ p.icon }}"/></svg>
+          </div>
+          <h2>{{ p.title }}</h2>
+          <p>{{ p.body }}</p>
+        </article>
+        {%- endfor %}
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════ FAQ ══════════════ -->
+  <section class="sec band sec-line" id="faq">
+    <div class="wrap wrap-mid">
+      <div class="sec-head reveal" style="margin-bottom: 30px;">
+        <h2>Questions people actually ask.</h2>
+      </div>
+      <div class="faq reveal">
+        {%- for item in policies.faq %}
+        <details>
+          <summary>{{ item.q }}</summary>
+          <div class="faq-a">{{ item.a }}</div>
+        </details>
+        {%- endfor %}
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════ LEGAL ══════════════ -->
+  <section class="sec sec-line">
+    <div class="wrap wrap-mid">
+      <div class="sec-head reveal" style="margin-bottom: 22px;">
+        <h2 style="font-size: clamp(21px, 2.2vw, 26px);">The formal versions</h2>
+        <p class="lead">
+          These policies are how the business actually works. The signed paperwork says
+          the same thing in longer sentences, and is still being written for this
+          business rather than copied from another one.
+        </p>
+      </div>
+      <div class="hero-actions reveal">
+        {%- for link in site.legalLinks %}
+        {%- if link.url != "/policies/" %}
+        <a class="btn btn-ghost btn-sm" href="{{ link.url }}">{{ link.label }}</a>
+        {%- endif %}
+        {%- endfor %}
+      </div>
+    </div>
+  </section>
+
+
+  {%- set ctaHeading = "Anything here you want changed?" %}
+  {%- set ctaLead = "Ask before you sign, not after. If something on this page does not work for your business, say so and I will tell you straight whether it can move." %}
+  {% include "components/cta-band.njk" %}
+
+</main>

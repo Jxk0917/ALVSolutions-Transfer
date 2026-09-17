@@ -1,0 +1,36 @@
+{
+  "_comment": "The monthly product. Required with every build — that is not an upsell framing, it is the actual terms, so every surface that shows a build price has to show this too.",
+
+  "required": "Every build includes a care plan. The site is hosted, secured and backed up on mine, and small changes are handled without a separate invoice.",
+  "minimum": "3-month minimum on all care plans. Cancel any time after that with 30 days' notice.",
+
+  "plans": [
+    {
+      "slug": "host",
+      "name": "Host",
+      "price": 45,
+      "for": "A site that needs to stay online, current and secure.",
+      "includes": [
+        "Hosting, SSL and daily backups",
+        "Uptime monitoring",
+        "Up to 15 minutes of minor edits a month",
+        "Text, hours, photo swaps and contact details"
+      ]
+    },
+    {
+      "slug": "grow",
+      "name": "Grow",
+      "price": 95,
+      "popular": true,
+      "builds": "Host",
+      "for": "A business that wants the site and the Google listing both worked on.",
+      "includes": [
+        "4 updates a month",
+        "3-business-day turnaround",
+        "Google Business Profile posts and review responses",
+        "Listing details kept current",
+        "A monthly performance report"
+      ]
+    }
+  ]
+}

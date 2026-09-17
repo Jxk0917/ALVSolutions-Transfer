@@ -1,6 +1,6 @@
 {#
   Inner-page head. Set `ph` before including:
-    ph = { eyebrow, heading, lead, crumbs: [{label,url}], actions: [{label,url,style}],
+    ph = { heading, lead, crumbs: [{label,url}], actions: [{label,url,style}],
            back: {label, url, showIf} }
 
   Deliberately not the home hero: that one carries a browser mockup and a
@@ -35,10 +35,6 @@
     </nav>
     {%- endif %}
 
-    {%- if ph.eyebrow %}
-    <span class="eyebrow">{{ ph.eyebrow }}</span>
-    {%- endif %}
-
     <h1>{{ ph.heading | safe }}</h1>
 
     {%- if ph.lead %}
@@ -58,7 +54,6 @@
       {%- for a in ph.actions %}
       <a class="btn {{ a.style | default('btn-primary') }}" href="{{ a.url }}">
         {{ a.label }}
-        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg>
       </a>
       {%- endfor %}
     </div>

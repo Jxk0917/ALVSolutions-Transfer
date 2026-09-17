@@ -1,0 +1,100 @@
+/* AlvSolutions button styles.
+   Source of truth for the Button Styles section of the brand guidelines, and ready to
+   drop into the website. Requires Geist (600) to be loaded.
+
+   The brand gesture: every button turns Gold when it is highlighted. That is the one
+   place Gold moves; at rest, blue carries the page.
+
+   Contrast (WCAG 2.1), all measured:
+   - Primary label #FFFFFF on Deep Blue #1A72C6: 4.92:1. Mist #EDF2F8 is only 4.37:1, so the label is pure white.
+   - Primary pressed #FFFFFF on #155FA8: 6.49:1.
+   - Highlight label Ink #070C14 on Gold #FFC811: 12.62:1.
+   - Ghost label Mist on Ink: 17.41:1. Ghost border rgba(125,166,214,.60) on Ink reads 3.43:1 (3:1 needed for UI boundaries).
+   - Text button Alv Blue #3DA8F8 on Ink: 7.61:1.
+   - Focus ring Gold on Ink: 12.62:1.
+
+   Changes from the current website (src/assets/styles.css):
+   - The 28px gold glow on hover is gone. The fill change is the signal; the glow read as effect.
+   - Ghost border raised from .24 alpha (1.6:1 on Ink, invisible to many) to .60.
+
+   The .is-hover / .is-active / .is-focus / .is-disabled classes exist only so the guidelines
+   sheet can show each state statically. Real pages rely on :hover, :active and :focus-visible. */
+
+:root {
+  --alv-blue: #3DA8F8;
+  --alv-deep: #1A72C6;
+  --alv-deep-pressed: #155FA8;
+  --alv-gold: #FFC811;
+  --alv-gold-hover: #FFD84A;
+  --alv-gold-pressed: #F0B800;
+  --alv-ink: #070C14;
+  --alv-mist: #EDF2F8;
+  --alv-outline: rgba(125, 166, 214, 0.60);
+  --alv-disabled-bg: #14202F;
+  --alv-disabled-text: #62748A;
+}
+
+.alv-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 46px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 10px;
+  font-family: "Geist", system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.002em;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 180ms cubic-bezier(.22,.61,.36,1), box-shadow 180ms cubic-bezier(.22,.61,.36,1), color 180ms cubic-bezier(.22,.61,.36,1), transform 120ms ease;
+}
+.alv-btn svg { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Sizes */
+.alv-btn--lg { height: 54px; padding: 0 28px; font-size: 16px; }
+.alv-btn--sm { height: 38px; padding: 0 16px; font-size: 14px; gap: 6px; }
+.alv-btn--sm svg { width: 16px; height: 16px; }
+
+/* Primary: one per view, for the main action (Start a project). */
+.alv-btn--primary { background: var(--alv-deep); color: #FFFFFF; }
+.alv-btn--primary:hover, .alv-btn--primary.is-hover { background: var(--alv-gold); color: var(--alv-ink); }
+.alv-btn--primary:active, .alv-btn--primary.is-active { background: var(--alv-gold-pressed); color: var(--alv-ink); transform: translateY(1px); }
+
+/* Gold: the recommended choice in a set, such as the popular package. Never next to a Primary. */
+.alv-btn--gold { background: var(--alv-gold); color: var(--alv-ink); }
+.alv-btn--gold:hover, .alv-btn--gold.is-hover { background: var(--alv-gold-hover); }
+.alv-btn--gold:active, .alv-btn--gold.is-active { background: var(--alv-gold-pressed); transform: translateY(1px); }
+
+/* Ghost: secondary actions beside a Primary (See packages). */
+.alv-btn--ghost { background: transparent; color: var(--alv-mist); box-shadow: inset 0 0 0 1px var(--alv-outline); }
+.alv-btn--ghost:hover, .alv-btn--ghost.is-hover { color: var(--alv-gold); background: rgba(255, 200, 17, 0.08); box-shadow: inset 0 0 0 1px rgba(255, 200, 17, 0.55); }
+.alv-btn--ghost:active, .alv-btn--ghost.is-active { background: rgba(255, 200, 17, 0.14); transform: translateY(1px); }
+
+/* Text: inline or tertiary actions. */
+.alv-btn--text { background: transparent; color: var(--alv-blue); padding: 0 4px; height: auto; }
+.alv-btn--text:hover, .alv-btn--text.is-hover { color: var(--alv-gold); text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1.5px; }
+.alv-btn--text:active, .alv-btn--text.is-active { color: var(--alv-gold-pressed); }
+
+/* Focus: one ring for every variant. */
+.alv-btn:focus-visible, .alv-btn.is-focus { outline: 2px solid var(--alv-gold); outline-offset: 3px; }
+
+/* Disabled */
+.alv-btn:disabled, .alv-btn.is-disabled {
+  background: var(--alv-disabled-bg);
+  color: var(--alv-disabled-text);
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+  text-decoration: none;
+}
+.alv-btn--text:disabled, .alv-btn--text.is-disabled { background: transparent; }
+
+@media (prefers-reduced-motion: reduce) {
+  .alv-btn { transition: none; }
+  .alv-btn:active, .alv-btn.is-active { transform: none; }
+}

@@ -21,9 +21,15 @@
 
   /* ============================================================
      DESIGN TOKENS
-     Palette is the official brand palette (Brand_Assets/Brand Guidelines.png).
+     Source of truth: Brand_Assets/brand/ (alvsolutions-brand-guidelines.png,
+     alv-buttons.css) and Brand_Assets/README.md.
      Typography per the brand guide: Manrope for headings (ExtraBold display,
      Bold subheadings) and Geist for body and interface text.
+
+     COLOUR RULES (from the guide):
+       Blue carries the page. Gold moves: hover, focus, prices and the one
+       recommended pick in a set. Never a decorative tint on an ordinary card.
+       Headings Mist (--text), body Cloud (--text-2), captions Slate (--text-3).
 
      RADIUS RULE (applied everywhere, no exceptions):
        --r-xs    6px  inner chrome: url bar, scrollbar
@@ -37,15 +43,18 @@
     --ink-2:     #0A111C;
     --surface:   #0E1826;
     --surface-2: #14202F;
-    --line:      rgba(125,166,214,.13);
-    --line-2:    rgba(125,166,214,.24);
+    --line:      rgba(125,166,214,.13);  /* dividers, card edges (decorative) */
+    --line-2:    rgba(125,166,214,.24);  /* frames, stronger dividers (decorative) */
+    --line-ui:   rgba(125,166,214,.60);  /* control boundaries: 3.0-3.4:1 on every surface */
 
     /* brand */
-    --blue:      #3DA8F8;
-    --blue-2:    #30ABFB;
-    --blue-deep: #1A72C6;  /* button fill: 4.9:1 with white text */
-    --navy:      #0D1B2A;
-    --gold:      #FFC811;
+    --blue:         #3DA8F8;  /* Alv Blue: accents, links, icons. 7.6:1 on ink */
+    --blue-deep:    #1A72C6;  /* Deep Blue: button fill, 4.92:1 with white text */
+    --blue-pressed: #155FA8;
+    --logo-navy:    #072753;
+    --gold:         #FFC811;  /* ink label 12.6:1 */
+    --gold-hover:   #FFD84A;
+    --gold-pressed: #F0B800;
 
     /* text, all AA or better on --ink */
     --text:      #EDF2F8;  /* 17.0:1 */
@@ -137,50 +146,44 @@
     border: 1px solid rgba(61,168,248,.20);
     color: var(--blue);
   }
+  /* Gold icon tile: only for the price or the one recommended item in a set. */
   .ic-box.gold { background: rgba(255,200,17,.10); border-color: rgba(255,200,17,.22); color: var(--gold); }
 
   /* ---------- controls ---------- */
+  /* Buttons follow Brand_Assets/brand/alv-buttons.css: three fixed heights
+     (38 / 46 / 54), 10px radius, Geist 600. The brand gesture is that every
+     button turns Gold when highlighted; the fill change is the whole signal,
+     so there is no glow. Labels say where they go, so they carry no trailing
+     arrow unless the arrow adds meaning (a new tab, a step forward). */
   .btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    min-height: 46px; padding: 0 22px;
     white-space: nowrap;
-    font-size: 14.5px; font-weight: 600; letter-spacing: -.002em;
-    padding: 12px 22px; border-radius: var(--r-ctl);
+    font-size: 15px; font-weight: 600; line-height: 1; letter-spacing: -.002em;
+    border-radius: var(--r-ctl);
     border: 1px solid transparent; cursor: pointer; text-decoration: none;
-    transition: background .18s var(--ease), border-color .18s var(--ease),
-                transform .18s var(--ease), color .18s var(--ease),
-                box-shadow .28s var(--ease);
+    transition: background-color .18s var(--ease), border-color .18s var(--ease),
+                transform .12s var(--ease), color .18s var(--ease);
   }
-  .btn .ic { font-size: 17px; }
+  .btn .ic { font-size: 18px; }
 
-  /* Every button turns gold on highlight — this is the one that shouts
-     loudest doing it, nav, hero, footer, every closing band. It carries a
-     resting shadow at zero alpha (not `none`) purely so the hover state has
-     something of matching shape to animate *from*: interpolating a shadow's
-     own opacity reliably fades, where animating from no shadow at all can
-     jump straight to full strength in some engines. Gold on ink measures
-     12.6:1, the same pairing as the popular-tier button. */
-  .btn-primary {
-    background: var(--blue-deep); color: #fff;
-    box-shadow: 0 0 0 1px rgba(255,200,17,0), 0 0 28px 3px rgba(255,200,17,0);
-  }
-  .btn-primary:hover,
-  .btn-primary:focus-visible {
-    background: var(--gold);
-    color: var(--ink);
-    box-shadow: 0 0 0 1px rgba(255,200,17,.55), 0 0 28px 3px rgba(255,200,17,.45);
-  }
+  /* Primary: one per view. White on Deep Blue 4.92:1, ink on Gold 12.6:1. */
+  .btn-primary { background: var(--blue-deep); color: #fff; }
+  .btn-primary:hover { background: var(--gold); color: var(--ink); }
+  .btn-primary:active { background: var(--gold-pressed); color: var(--ink); }
 
-  /* Ghost reads as an outline the rest of the time, gold the moment it's
-     highlighted — same rule as every other button, just without a fill. */
-  .btn-ghost { background: transparent; color: var(--text); border-color: var(--line-2); }
-  .btn-ghost:hover,
-  .btn-ghost:focus-visible {
+  /* Ghost: secondary actions beside a Primary. The border is --line-ui, which
+     clears 3:1 for a control boundary; the old .24 alpha measured 1.5:1. */
+  .btn-ghost { background: transparent; color: var(--text); border-color: var(--line-ui); }
+  .btn-ghost:hover {
     border-color: rgba(255,200,17,.55);
     background: rgba(255,200,17,.08);
     color: var(--gold);
   }
-  .btn-sm { padding: 9px 17px; font-size: 13.5px; }
-  .btn-lg { padding: 15px 28px; font-size: 15.5px; }
+  .btn-ghost:active { background: rgba(255,200,17,.14); }
+  .btn-sm { min-height: 38px; padding: 0 16px; font-size: 14px; gap: 6px; }
+  .btn-sm .ic { font-size: 16px; }
+  .btn-lg { min-height: 54px; padding: 0 28px; font-size: 16px; }
   .btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 
   .pill {
@@ -208,10 +211,8 @@
     border-radius: var(--r-ctl);
     padding: 13px 14px;
   }
-  .tile-gold { background: rgba(255,200,17,.055); border-color: rgba(255,200,17,.20); }
-  .tile-label { font-size: 10.5px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--blue); margin-bottom: 5px; }
-  .tile-gold .tile-label { color: var(--gold); }
-  .tile p { font-size: 12.5px; line-height: 1.5; color: var(--text-2); }
+  .tile-label { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+  .tile p { font-size: 13.5px; line-height: 1.5; color: var(--text-2); }
 
   /* ============================================================
      NAV
@@ -232,7 +233,9 @@
   .wordmark { font-family: var(--font-head); font-size: 19px; font-weight: 800; letter-spacing: -.03em; color: var(--text); line-height: 1; }
   .wordmark span { color: var(--blue); }
 
-  .nav-links { display: none; align-items: center; gap: 30px; }
+  /* Six links plus the brand and the CTA. The gap opens up once there is room
+     for it; below that the row would push the CTA off the end. */
+  .nav-links { display: none; align-items: center; gap: 24px; }
   .nav-link {
     font-size: 14px; font-weight: 500; color: var(--text-2);
     text-decoration: none; position: relative; padding-block: 4px;
@@ -246,18 +249,18 @@
   }
   .nav-link:hover { color: var(--text); }
   .nav-link:hover::after { transform: scaleX(1); }
-  .nav-link:focus-visible { outline: 2px solid var(--blue-2); outline-offset: 4px; border-radius: 3px; }
+  .nav-link:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; border-radius: 3px; }
   .nav-cta { display: none; }
 
   .burger {
     display: grid; place-items: center;
     width: 40px; height: 40px; font-size: 22px;
-    background: transparent; border: 1px solid var(--line-2);
+    background: transparent; border: 1px solid var(--line-ui);
     border-radius: var(--r-ctl); color: var(--text); cursor: pointer;
     transition: border-color .18s var(--ease), background .18s var(--ease);
   }
   .burger:hover { border-color: rgba(61,168,248,.5); background: rgba(61,168,248,.07); }
-  .burger:focus-visible { outline: 2px solid var(--blue-2); outline-offset: 3px; }
+  .burger:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
   .burger .ic-close { display: none; }
   .burger[aria-expanded="true"] .ic-open { display: none; }
   .burger[aria-expanded="true"] .ic-close { display: block; }
@@ -268,12 +271,13 @@
   .mob-menu a.nav-link::after { display: none; }
   .mob-menu .btn { width: 100%; margin-top: 18px; }
 
-  @media (min-width: 900px) {
+  @media (min-width: 980px) {
     .nav-links { display: flex; }
     .nav-cta   { display: inline-flex; }
     .burger    { display: none; }
     .mob-menu  { display: none !important; }
   }
+  @media (min-width: 1140px) { .nav-links { gap: 30px; } }
 
   /* ============================================================
      HERO  -  asymmetric split, real work as the visual
@@ -345,7 +349,7 @@
   .frame-link .stage { transition: border-color .25s var(--ease), box-shadow .25s var(--ease); }
   .frame-link:hover .stage,
   .frame-link:focus-visible .stage { border-color: rgba(61,168,248,.55); }
-  .frame-link:focus-visible { outline: 2px solid var(--blue-2); outline-offset: 6px; }
+  .frame-link:focus-visible { outline: 2px solid var(--gold); outline-offset: 6px; }
 
   .shot-hint {
     position: absolute; right: 18px; bottom: 18px; z-index: 2;
@@ -369,7 +373,7 @@
   .inc-item:first-child { border-top: 0; }
   .inc-item .ic { font-size: 19px; color: var(--blue); margin-bottom: 12px; }
   .inc-item h3 { font-size: 15.5px; margin-bottom: 5px; }
-  .inc-item p { font-size: 13.5px; line-height: 1.6; color: var(--text-3); }
+  .inc-item p { font-size: 14px; line-height: 1.6; color: var(--text-2); }
   .inc-item.is-gold .ic, .inc-item.is-gold h3 { color: var(--gold); }
 
   @media (min-width: 700px) {
@@ -387,7 +391,7 @@
   .bento { display: grid; grid-template-columns: 1fr; gap: 14px; }
   .bento .card { display: flex; flex-direction: column; }
   .bento h3 { margin: 16px 0 8px; }
-  .bento p  { font-size: 14px; line-height: 1.65; color: var(--text-3); }
+  .bento p  { font-size: 14.5px; line-height: 1.65; color: var(--text-2); }
   .bento .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 16px; }
 
   .inc-list { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 10px; }
@@ -444,11 +448,91 @@
     #svc-shader { opacity: .5; filter: blur(30px); }
   }
 
+  /* Every bento cell is a link to the service page it describes, so the whole
+     card is the target rather than a "learn more" at the bottom of it. */
+  .bento a.card { text-decoration: none; color: inherit; }
+  .bento a.card:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
   .sec-close {
     margin-top: 32px; padding-top: 28px; border-top: 1px solid var(--line);
     display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px;
   }
   .sec-close p { font-size: 14.5px; color: var(--text-2); max-width: 46ch; }
+
+  /* ============================================================
+     PRICING RAIL  -  the packages at a glance, on the home page
+     Three prices side by side and nothing else. The full cards, the
+     comparison chart and the care plans live on /packages/; repeating
+     them here would make the home page a second pricing page.
+     ============================================================ */
+  .rail { display: grid; gap: 12px; grid-template-columns: 1fr; }
+  @media (min-width: 640px) { .rail { grid-template-columns: repeat(3, 1fr); } }
+
+  .rail-item {
+    position: relative;
+    display: grid; gap: 6px; align-content: start;
+    padding: 22px 22px 20px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    text-decoration: none;
+    transition: border-color .25s var(--ease), background .25s var(--ease);
+  }
+  .rail-item:hover { border-color: rgba(61,168,248,.34); background: var(--surface-2); }
+  .rail-item:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  .rail-item.pop {
+    border-color: rgba(255,200,17,.42);
+    background: linear-gradient(180deg, rgba(255,200,17,.055), transparent 46%), var(--surface);
+  }
+  .rail-badge {
+    position: absolute; top: -11px; left: 22px;
+    font-size: 12px; font-weight: 600;
+    color: var(--ink); background: var(--gold);
+    border-radius: 999px; padding: 3px 11px;
+  }
+  .rail-name { font-family: var(--font-head); font-size: 15px; font-weight: 700; color: var(--text-2); }
+  .rail-price {
+    font-family: var(--font-head); font-size: 34px; font-weight: 800;
+    letter-spacing: -.035em; line-height: 1.05;
+    font-variant-numeric: tabular-nums;
+  }
+  .rail-item.pop .rail-price { color: var(--gold); }
+  .rail-note { font-size: 13.5px; color: var(--text-3); }
+
+  .rail-foot {
+    display: flex; align-items: flex-start; gap: 11px;
+    margin-top: 16px; padding: 13px 16px;
+    background: rgba(61,168,248,.07);
+    border: 1px solid rgba(61,168,248,.26);
+    border-radius: var(--r-ctl);
+    font-size: 13.5px; line-height: 1.6; color: var(--text-2);
+  }
+  .rail-foot .ic { flex: none; font-size: 17px; color: var(--blue); margin-top: 2px; }
+
+  /* ---- the four trade builds, as a row of small targets ---- */
+  .trades { margin-top: 34px; padding-top: 28px; border-top: 1px solid var(--line); }
+  .trades-h { font-size: 15px; font-weight: 700; color: var(--text-2); margin-bottom: 16px; }
+  .trade-row { display: grid; gap: 10px; grid-template-columns: 1fr; }
+  @media (min-width: 560px) { .trade-row { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 900px) { .trade-row { grid-template-columns: repeat(4, 1fr); } }
+
+  .trade {
+    display: flex; align-items: center; gap: 11px;
+    padding: 13px 16px;
+    background: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: var(--r-ctl);
+    text-decoration: none;
+    transition: border-color .2s var(--ease), background .2s var(--ease);
+  }
+  .trade:hover { border-color: rgba(255,200,17,.45); background: rgba(255,200,17,.05); }
+  .trade:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  .trade .ic { font-size: 19px; color: var(--blue); }
+  .trade-name { flex: 1; min-width: 0; font-size: 14px; font-weight: 600; }
+  .trade-price {
+    font-family: var(--font-head); font-size: 15px; font-weight: 800;
+    letter-spacing: -.02em; color: var(--gold); font-variant-numeric: tabular-nums;
+  }
 
   /* cell visual variation */
   .cell-feature {
@@ -467,11 +551,6 @@
   }
   .cell-feature { position: relative; }
   .cell-feature > * { position: relative; z-index: 1; }
-  .cell-gold {
-    background: radial-gradient(110% 120% at 0% 100%, rgba(255,200,17,.055) 0%, transparent 52%), var(--surface);
-    border-color: rgba(255,200,17,.19);
-  }
-  .cell-gold.card-hover:hover { border-color: rgba(255,200,17,.4); }
 
   @media (min-width: 720px) {
     .bento { grid-template-columns: repeat(6, 1fr); }
@@ -501,7 +580,7 @@
   .work-copy p { max-width: 46ch; }
   .work-tag {
     display: inline-flex; align-items: center; gap: 8px;
-    font-size: 11.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+    font-size: 14px; font-weight: 500;
     color: var(--text-3);
   }
   .work-tag b { color: var(--blue); font-weight: 600; }
@@ -651,7 +730,7 @@
   }
   .step-n .ic { font-size: 15px; }
   .step h3 { margin-bottom: 9px; }
-  .step p  { font-size: 14px; line-height: 1.7; color: var(--text-3); }
+  .step p  { font-size: 14.5px; line-height: 1.7; color: var(--text-2); }
   @media (min-width: 820px) { .steps { grid-template-columns: repeat(3, 1fr); gap: 40px; } }
 
   /* ============================================================
@@ -668,9 +747,8 @@
     width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center;
     background: rgba(61,168,248,.13); color: var(--blue); font-size: 14px; margin-top: 1px;
   }
-  .pt.is-gold .ic-dot { background: rgba(255,200,17,.13); color: var(--gold); }
   .pt h3 { font-size: 15.5px; margin-bottom: 5px; }
-  .pt p  { font-size: 13.5px; line-height: 1.65; color: var(--text-3); }
+  .pt p  { font-size: 14px; line-height: 1.65; color: var(--text-2); }
   @media (min-width: 940px) { .about { grid-template-columns: minmax(0,1.05fr) minmax(0,.95fr); } }
 
   /* ============================================================
@@ -684,7 +762,7 @@
   .next-item:first-child { border-top: 0; padding-top: 0; }
   .next-item .ic { font-size: 18px; color: var(--blue); margin-top: 3px; }
   .next-item h3 { font-size: 15px; margin-bottom: 3px; }
-  .next-item p { font-size: 13.5px; line-height: 1.6; color: var(--text-3); }
+  .next-item p { font-size: 14px; line-height: 1.6; color: var(--text-2); }
 
   .form { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-card); padding: clamp(22px, 3.5vw, 32px); }
   .field { display: grid; gap: 7px; margin-bottom: 16px; }
@@ -692,16 +770,18 @@
   .field .hint { font-size: 12px; color: var(--text-3); }
   .input {
     width: 100%; background: rgba(7,12,20,.55);
-    border: 1px solid var(--line-2); border-radius: var(--r-ctl);
-    padding: 12px 14px; font-size: 14.5px; color: var(--text);
+    border: 1px solid var(--line-ui); border-radius: var(--r-ctl);
+    padding: 12px 14px; font-size: 15px; color: var(--text);
     transition: border-color .18s var(--ease), background .18s var(--ease);
   }
   .input::placeholder { color: var(--text-3); }
-  .input:hover { border-color: rgba(125,166,214,.34); }
+  .input:hover { border-color: rgba(125,166,214,.8); }
   .input:focus { outline: none; border-color: var(--blue); background: rgba(7,12,20,.8); }
-  .input:focus-visible { outline: 2px solid var(--blue-2); outline-offset: 2px; }
+  .input:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
   textarea.input { resize: vertical; min-height: 118px; }
-  .field-row { display: grid; gap: 16px; }
+  /* column gap only: each .field already carries its own bottom margin, so a
+     row gap doubled the space between stacked fields on phones */
+  .field-row { display: grid; column-gap: 16px; }
   @media (min-width: 560px) { .field-row { grid-template-columns: 1fr 1fr; } }
 
   .err {
@@ -725,7 +805,7 @@
 
   .sent h3 { text-wrap: balance; }
   .sent h3:focus { outline: none; }
-  .sent h3:focus-visible { outline: 2px solid var(--blue-2); outline-offset: 4px; border-radius: var(--r-xs); }
+  .sent h3:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; border-radius: var(--r-xs); }
   .sent .sent-lead { color: var(--text-2); max-width: 44ch; }
   .sent .sent-note {
     font-size: 12.5px; max-width: 42ch;
@@ -753,10 +833,7 @@
     display: flex; align-items: baseline; justify-content: space-between;
     gap: 12px; margin-bottom: 10px;
   }
-  .wiz-count {
-    font-size: 11.5px; font-weight: 600; letter-spacing: .1em;
-    text-transform: uppercase; color: var(--text-3);
-  }
+  .wiz-count { font-size: 13px; font-weight: 500; color: var(--text-3); font-variant-numeric: tabular-nums; }
   .wiz-now { font-family: var(--font-head); font-size: 13.5px; font-weight: 700; color: var(--text); letter-spacing: -.015em; }
 
   .wiz-bar {
@@ -773,14 +850,11 @@
   .wiz-panel { min-width: 0; }
   .wiz-title { font-size: 17px; margin-bottom: 5px; }
   .wiz-title:focus { outline: none; }
-  .wiz-title:focus-visible { outline: 2px solid var(--blue-2); outline-offset: 4px; border-radius: var(--r-xs); }
+  .wiz-title:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; border-radius: var(--r-xs); }
   .wiz-sub { font-size: 13.5px; line-height: 1.6; color: var(--text-3); margin-bottom: 20px; }
 
   .wiz-tag { margin-bottom: 20px; }
-  .opt-tag {
-    font-size: 11px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase;
-    color: var(--text-3); margin-left: 6px;
-  }
+  .opt-tag { font-size: 12.5px; font-weight: 500; color: var(--text-3); margin-left: 6px; }
 
   .wiz-alert {
     display: flex; align-items: flex-start; gap: 9px;
@@ -810,19 +884,19 @@
     display: flex; align-items: center; gap: 10px;
     min-height: 44px; height: 100%; padding: 9px 13px;
     background: rgba(7,12,20,.55);
-    border: 1px solid var(--line-2); border-radius: var(--r-ctl);
-    font-size: 13.5px; line-height: 1.4; color: var(--text-2); cursor: pointer;
+    border: 1px solid var(--line-ui); border-radius: var(--r-ctl);
+    font-size: 14px; line-height: 1.4; color: var(--text-2); cursor: pointer;
     transition: border-color .18s var(--ease), background .18s var(--ease), color .18s var(--ease);
   }
-  .opt:hover .opt-face { border-color: rgba(125,166,214,.34); color: var(--text); }
-  .opt input:focus-visible ~ .opt-face { outline: 2px solid var(--blue-2); outline-offset: 2px; }
+  .opt:hover .opt-face { border-color: rgba(125,166,214,.8); color: var(--text); }
+  .opt input:focus-visible ~ .opt-face { outline: 2px solid var(--gold); outline-offset: 2px; }
   .opt input:checked ~ .opt-face {
     background: rgba(61,168,248,.10); border-color: rgba(61,168,248,.5); color: var(--text);
   }
 
   .opt-mark {
     flex: none; width: 18px; height: 18px;
-    border-radius: var(--r-xs); border: 1px solid var(--line-2);
+    border-radius: var(--r-xs); border: 1px solid var(--line-ui);
     background: rgba(7,12,20,.6);
     display: grid; place-items: center;
     transition: background .18s var(--ease), border-color .18s var(--ease);
@@ -866,16 +940,16 @@
 
   textarea.input-sm { min-height: 84px; }
 
-  /* Rush delivery. Gold is the site's "read this" colour, and the border is
-     solid: dashed already means PLACEHOLDER everywhere else. */
+  /* Rush delivery note. Blue, like any other information: gold is reserved for
+     highlight and price. The border is solid because dashed means PLACEHOLDER. */
   .wiz-note {
     display: flex; align-items: flex-start; gap: 10px;
     margin-top: 12px; padding: 12px 14px;
-    background: rgba(255,200,17,.07);
-    border: 1px solid rgba(255,200,17,.30); border-radius: var(--r-ctl);
-    font-size: 13px; line-height: 1.6; color: var(--text-2);
+    background: rgba(61,168,248,.07);
+    border: 1px solid rgba(61,168,248,.28); border-radius: var(--r-ctl);
+    font-size: 13.5px; line-height: 1.6; color: var(--text-2);
   }
-  .wiz-note .ic { flex: none; font-size: 17px; color: var(--gold); margin-top: 2px; }
+  .wiz-note .ic { flex: none; font-size: 17px; color: var(--blue); margin-top: 2px; }
 
   /* ---------- review ---------- */
   .rev { display: grid; gap: 14px; margin-bottom: 22px; }
@@ -885,10 +959,7 @@
     padding: 15px 16px;
   }
   .rev-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
-  .rev-head h4 {
-    font-size: 11.5px; font-weight: 600; letter-spacing: .1em;
-    text-transform: uppercase; color: var(--text-2);
-  }
+  .rev-head h4 { font-size: 14px; font-weight: 700; color: var(--text); }
   .rev-edit {
     background: none; border: 0; cursor: pointer;
     padding: 6px 8px; margin: -6px -8px -6px 0; border-radius: var(--r-xs);
@@ -945,12 +1016,12 @@
   .foot { border-top: 1px solid var(--line); padding: clamp(48px, 6vw, 68px) 0 30px; background: var(--ink-2); }
   .foot-grid { display: grid; gap: 40px; grid-template-columns: 1fr; }
   @media (min-width: 780px) { .foot-grid { grid-template-columns: 2fr 1fr 1.2fr; gap: 48px; } }
-  .foot h4 { font-size: 11.5px; font-weight: 600; letter-spacing: .11em; text-transform: uppercase; color: var(--text-3); margin-bottom: 16px; }
+  .foot h4 { font-size: 15px; font-weight: 700; letter-spacing: -.01em; color: var(--text); margin-bottom: 16px; }
   .foot-list { display: grid; gap: 11px; }
   /* :not(.btn) so the footer CTA keeps its own white label and contrast */
   .foot-list a:not(.btn), .foot-list span { font-size: 14px; color: var(--text-2); text-decoration: none; transition: color .18s var(--ease); }
   .foot-list a:not(.btn):hover { color: var(--text); }
-  .foot-list a:focus-visible { outline: 2px solid var(--blue-2); outline-offset: 3px; border-radius: 3px; }
+  .foot-list a:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 3px; }
   .foot-contact { display: inline-flex; align-items: center; gap: 9px; }
   .foot-contact .ic { font-size: 16px; color: var(--blue); }
   .foot-bar {
@@ -972,8 +1043,8 @@
     }
     .reveal.in { opacity: 1; transform: none; }
 
-    .btn-primary:hover, .btn-ghost:hover { transform: translateY(-1px); }
-    .btn:active { transform: translateY(0) scale(.985); }
+    /* pressed, per the button spec: a 1px push, no lift on hover */
+    .btn:active { transform: translateY(1px); }
     .card-hover:hover { transform: translateY(-3px); }
 
     .frame-link .stage { transition: transform .3s var(--ease), border-color .25s var(--ease); }

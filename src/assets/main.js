@@ -492,16 +492,29 @@
     finish();
   });
 
-  /* The package cards link to /contact/?package=growth. Carrying that through
-     means the request already says which tier they clicked, so the first reply
-     is a quote rather than a question they have already answered. */
+  /* The package cards link to /contact/?package=standard, and the trade builds
+     to /contact/?package=detailer. Carrying that through means the request
+     already says what they clicked, so the first reply is a quote rather than a
+     question they have already answered.
+
+     The two groups get different labels because they are different things: a
+     package is a tier, a trade build is that tier with the picks made. Keep
+     this map in step with packages.json and bundles.json. */
   var wanted = new URLSearchParams(window.location.search).get('package');
-  var names = { starter: 'Starter', growth: 'Growth', pro: 'Pro' };
+  var names = {
+    foundation: 'Foundation package',
+    standard: 'Standard package',
+    complete: 'Complete package',
+    detailer: 'The Detailer build',
+    'home-service-pro': 'The Home Service Pro build',
+    salon: 'The Salon build',
+    restaurant: 'The Restaurant build'
+  };
   if (wanted && names[wanted]) {
     form.elements.package.value = names[wanted];
     var tag = form.querySelector('.wiz-tag');
     if (tag) {
-      tag.querySelector('[data-package-label]').textContent = names[wanted] + ' package';
+      tag.querySelector('[data-package-label]').textContent = names[wanted];
       tag.hidden = false;
     }
   }

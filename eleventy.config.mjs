@@ -45,15 +45,33 @@ export default function (eleventyConfig) {
     v ? v : '<span class="ph">PLACEHOLDER &mdash; ' + (what || "not written yet") + "</span>"
   );
 
+  // The price list carries shapes a flat number cannot express: a range that
+  // is genuinely a range, a surcharge added to something else, a floor under
+  // a quote, and a service that has no price because it is not for sale yet.
+  // All four are deliberate values, not missing ones, so none of them may
+  // render as PLACEHOLDER — only `null` does that.
+  const dollars = (n) => "$" + n.toLocaleString("en-US");
+  eleventyConfig.addFilter("money", (v) => {
+    if (typeof v === "number") return dollars(v);
+    if (v && typeof v === "object") {
+      if (v.soon) return '<span class="tag-soon">Coming soon</span>';
+      if (typeof v.plus === "number") return "+" + dollars(v.plus);
+      if (typeof v.from === "number" && typeof v.to === "number")
+        return dollars(v.from) + " &ndash; " + dollars(v.to);
+      if (typeof v.from === "number")
+        return '<span class="money-pre">From</span> ' + dollars(v.from);
+    }
+    return '<span class="ph" title="PLACEHOLDER — price not set">$&mdash;</span>';
+  });
+
   eleventyConfig.addFilter("byFamily", (items, slug) =>
     (items || []).filter((x) => x.family === slug)
   );
 
-  // Every add-on belonging to one service — how the business-cards and
-  // shirt-design pages pick up their basic/premium pair without naming the
-  // two slugs in the template.
-  eleventyConfig.addFilter("byService", (items, slug) =>
-    slug ? (items || []).filter((x) => x.service === slug) : []
+  // One group of the standalone price list, by slug. Lets the packages page
+  // show the project extras without restating the figures the list already owns.
+  eleventyConfig.addFilter("byGroup", (groups, slug) =>
+    (groups || []).find((g) => g.slug === slug)
   );
 
   eleventyConfig.addFilter("find", (arr, key, value) =>

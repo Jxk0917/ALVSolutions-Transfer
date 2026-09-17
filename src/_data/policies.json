@@ -1,0 +1,69 @@
+{
+  "_comment": "Plain-language, public. These are the commercial terms, written to be read rather than to be survived. The legal stubs under /legal/ are a different thing and still unwritten.",
+
+  "policies": [
+    {
+      "slug": "domain",
+      "icon": "cloud",
+      "title": "You own your domain",
+      "body": "You buy and hold your own domain, in your own name. I point it at your site. Nobody has to ask me for permission to move it, including you."
+    },
+    {
+      "slug": "google",
+      "icon": "search",
+      "title": "Your Google listing stays yours",
+      "body": "Your Google Business Profile is set up and optimized inside your own Google account. I handle the submission and the optimization. Google controls verification timelines, and no one can promise you a date on that."
+    },
+    {
+      "slug": "payment",
+      "icon": "tag",
+      "title": "Half to start, half at launch",
+      "body": "A 50% deposit secures your project and the remaining 50% is due at launch. Care plans are billed automatically each month to a card on file."
+    },
+    {
+      "slug": "cancel",
+      "icon": "shield-check",
+      "title": "Pause or cancel, and the site is still yours",
+      "body": "If you stop your care plan, I stop hosting the site. Nothing is deleted and nothing is held back. I will help you move it to your own hosting."
+    },
+    {
+      "slug": "scope",
+      "icon": "alert",
+      "title": "I flag before I charge",
+      "body": "If your project runs past what your package includes, you get a quote and a chance to approve it before any extra work starts. No surprise invoices, ever."
+    },
+    {
+      "slug": "assets",
+      "icon": "photo",
+      "title": "No logo or photos yet is fine",
+      "body": "I can point you at DIY options that work, build with professional stock photography as a placeholder and swap in your real content later, or handle it for you through logo sourcing."
+    }
+  ],
+
+  "faq": [
+    {
+      "q": "How long does a build take?",
+      "a": "Typically 1 to 2 weeks from the time I have your content, depending on the package and how complex the build is. The clock starts when your content arrives, not when you pay, so getting that together early is the single biggest thing you control."
+    },
+    {
+      "q": "What if I do not have a logo or photos?",
+      "a": "Either I point you at something quick that works (Looka, Fiverr, Canva), or I build with professional stock photography as a placeholder and swap in your real content once it exists. Logo sourcing and setup assistance is a listed $75 if you would rather I just handled it."
+    },
+    {
+      "q": "Can I edit my own site?",
+      "a": "Most sites are updated by me as part of the care plan, which is usually faster than doing it yourself. If you want to make quick changes to your own menu, services or gallery, ask about the self-editable content power feature."
+    },
+    {
+      "q": "What happens if I stop paying for hosting?",
+      "a": "The site is yours. If payment lapses for an extended period I stop hosting it, but I will always reach out well before that happens, and I will help you move it somewhere else if that is what you want."
+    },
+    {
+      "q": "Why is a care plan required?",
+      "a": "Because a site nobody hosts, backs up or patches is not a working site, and I am not willing to hand over something that will quietly break. The plan covers hosting, SSL, backups, monitoring and small edits, starting at $45 a month with a 3-month minimum."
+    },
+    {
+      "q": "What counts as a revision round?",
+      "a": "One consolidated list of changes, submitted within 5 business days of delivery. Ten notes in one message is one round. Ten messages over three weeks is not."
+    }
+  ]
+}

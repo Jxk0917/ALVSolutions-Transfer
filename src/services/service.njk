@@ -10,52 +10,30 @@ eleventyComputed:
   description: "{{ svc.promise }}"
 ---
 
-{%- set famLabel = { web: "Websites", ads: "Advertising", print: "Print & apparel" } -%}
+{%- set famLabel = { web: "Websites", care: "Care and visibility", print: "Print & apparel" } -%}
 {%- set fam = famLabel[svc.family] -%}
-{%- set a = addons | find("slug", svc.addon) -%}
-{%- set group = addons | byService(svc.addonGroup) if svc.addonGroup else [] -%}
+{%- set p = svc.pricing -%}
 
-{#- ─────────── normalise pricing into one `tiers` shape ───────────
-    Two different data shapes land on this page: one add-on carrying several
-    levels (a menu page priced simple or complex), or several add-ons carrying
-    one level each (the basic and premium cards). The picker should not have
-    to care, so the difference is flattened here.
-
-    `push` inside a loop is the codebase's existing trick for building an
-    array in Nunjucks — the `set` is a no-op, the mutation is what persists. -#}
+{#- ─────────── normalise pricing into the picker's `tiers` shape ───────────
+    The picker takes [{ label, price, unit, note, shot, rows }] and does not
+    care where any of it came from. Only `kind: "levels"` produces tiers; every
+    other kind renders as a single aside card instead, because one number does
+    not need a tab strip. -#}
 {%- set tiers = [] -%}
 {%- set hasFactors = false -%}
-{%- set cmpFactors = [] -%}
-{%- set cmpName = "" -%}
+{%- set cmpFactors = p.factors or [] -%}
+{%- set cmpName = p.cmpName or (svc.name | lower) -%}
 
-{%- if a -%}
-  {%- set hasFactors = true if a.factors else false -%}
-  {%- set cmpFactors = a.factors or [] -%}
-  {%- set cmpName = a.name -%}
-  {%- for l in a.levels -%}
+{%- if p.kind == "levels" -%}
+  {%- set hasFactors = true if p.factors else false -%}
+  {%- for l in p.levels -%}
     {%- set li = loop.index0 -%}
     {%- set rows = [] -%}
-    {%- for f in (a.factors or []) -%}
+    {%- for f in (p.factors or []) -%}
       {%- set rows = (rows.push({ label: f.label, value: f.values[li], example: f.example }), rows) -%}
     {%- endfor -%}
-    {%- set tiers = (tiers.push({ label: l.label, price: l.price, unit: l.unit, rows: rows }), tiers) -%}
-  {%- endfor -%}
-{%- elif group.length -%}
-  {#- Several add-ons, one level each. The factors that tell them apart cannot
-      live on any single add-on — they compare across the pair — so the service
-      carries them and the values are indexed by tier order. -#}
-  {%- set gf = svc.factors or [] -%}
-  {%- set hasFactors = true if gf.length else false -%}
-  {%- set cmpFactors = gf -%}
-  {%- set cmpName = svc.name | lower -%}
-  {%- for g in group -%}
-    {%- set gi = loop.index0 -%}
-    {%- set rows = [] -%}
-    {%- for f in gf -%}
-      {%- set rows = (rows.push({ label: f.label, value: f.values[gi], example: f.example }), rows) -%}
-    {%- endfor -%}
-    {%- set tiers = (tiers.push({ label: g.levels[0].label, price: g.levels[0].price,
-                                  note: g.blurb, shot: g.shot, rows: rows }), tiers) -%}
+    {%- set tiers = (tiers.push({ label: l.label, price: l.price, unit: l.unit,
+                                  note: l.note, shot: l.shot, rows: rows }), tiers) -%}
   {%- endfor -%}
 {%- endif -%}
 {%- set ptid = svc.slug -%}
@@ -66,7 +44,6 @@ eleventyComputed:
 {%- set hasShots = shotFlags.length > 0 -%}
 
 {%- set ph = {
-  eyebrow: fam,
   heading: svc.name,
   lead: svc.promise,
   back: { label: "Services", url: "/services/" },
@@ -81,61 +58,87 @@ eleventyComputed:
 <main id="main">
 
   {#- ══════════════ ONE SECTION: cost on the left, the case on the right ═════
-      These used to be two stacked sections — pricing full-width, then the
-      description below it — which read as two unrelated pages glued together.
       Side by side, the factor list answers "what will mine cost" while the
-      prose beside it answers "what is it", and neither has to be scrolled
-      past to reach the other.
-
-      Left also carries the two fact cards (which packages, turnaround),
-      because those are the same kind of commercial detail as the price. -#}
+      prose beside it answers "what is it", and neither has to be scrolled past
+      to reach the other. -#}
   <section class="sec">
     <div class="wrap">
       <div class="svc-split">
 
         <!-- ──────── left: what it costs ──────── -->
         <div class="svc-money">
+
           {%- if tiers.length %}
           <div class="sec-head reveal" style="margin-bottom: 20px;">
-            <span class="eyebrow">Pricing</span>
-            <h2 class="svc-h2" style="margin-top: 12px;">
-              {%- if a and a.pricing == "monthly" %}Setup once, then month to month.
-              {%- elif tiers.length > 2 %}Priced by how big the job is.
-              {%- else %}Two levels, and the rule for each.{% endif %}
-            </h2>
+            <h2 class="svc-h2">Two levels, and the rule for each.</h2>
             {%- if hasShots %}
             <p class="body-3" style="margin-top: 12px;">
               Both designed against the same brand as your site. The cards below
-              are mine &mdash; the same treatment your business gets.
+              are mine, with the same treatment your business gets.
             </p>
             {%- endif %}
           </div>
           {% include "components/pricing-tiers.njk" %}
 
-          {%- elif svc.packagePricing or svc.included %}
+          {%- if p.extra %}
+          <p class="svc-extra reveal">
+            <span class="svc-extra-p">{{ p.extra.price | money | safe }}</span>
+            <span>
+              <b>{{ p.extra.label }}</b><br />
+              {{ p.extra.note }}
+            </span>
+          </p>
+          {%- endif %}
+
+          {%- elif p.kind == "package" %}
           <div class="sec-head reveal" style="margin-bottom: 20px;">
-            <span class="eyebrow">Pricing</span>
-            <h2 class="svc-h2" style="margin-top: 12px;">
-              {{ "Priced with the package." if svc.packagePricing else "No charge, ever." }}
-            </h2>
+            <h2 class="svc-h2">Priced as a package.</h2>
           </div>
           <div class="aside-card reveal">
-            {%- if svc.packagePricing %}
             <span class="aside-price">From {{ packages.tiers[0].price | price | safe }}</span>
-            <p class="aside-note">Flat, agreed before I start. Three packages, each with a monthly plan for hosting and updates.</p>
-            <a class="btn btn-ghost" href="/packages/">
-              Compare packages
-              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg>
-            </a>
-            {%- else %}
-            <span class="aside-price">Included</span>
-            <p class="aside-note">In every package, at no extra cost. There is no separate SEO retainer and there never will be.</p>
-            <a class="btn btn-ghost" href="/packages/">
-              See packages
-              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg>
-            </a>
-            {%- endif %}
+            <p class="aside-note">
+              A one-time price agreed before I start, plus a care plan from
+              {{ careplans.plans[0].price | price | safe }} a month for hosting, security and edits.
+            </p>
+            <a class="btn btn-ghost" href="/packages/">Compare the three packages</a>
           </div>
+
+          {%- elif p.kind == "care" %}
+          <div class="sec-head reveal" style="margin-bottom: 20px;">
+            <h2 class="svc-h2">Two plans. Pick one.</h2>
+          </div>
+          {% include "components/care-cards.njk" %}
+
+          {%- elif p.kind == "flat" %}
+          <div class="sec-head reveal" style="margin-bottom: 20px;">
+            <h2 class="svc-h2">One price, one time.</h2>
+          </div>
+          <div class="aside-card reveal">
+            <span class="aside-price">{{ p.price | price | safe }}</span>
+            {%- if p.unit %}<span class="aside-unit">{{ p.unit }}</span>{% endif %}
+            <p class="aside-note">{{ p.note }}</p>
+            <a class="btn btn-ghost" href="/pricing/">See the full price list</a>
+          </div>
+
+          {%- elif p.kind == "soon" %}
+          <div class="sec-head reveal" style="margin-bottom: 20px;">
+            <h2 class="svc-h2">Not open for orders yet.</h2>
+          </div>
+          <div class="aside-card reveal">
+            <span class="tag-soon">Coming soon</span>
+            <p class="aside-note">
+              The pricing is not settled, so there is no number here. I would rather
+              say that than invent one and change it on you later.
+            </p>
+            <a class="btn btn-ghost" href="/contact/">Ask me where it stands</a>
+          </div>
+          {%- endif %}
+
+          {%- if svc.packageNote %}
+          <p class="svc-pnote reveal">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tag"/></svg>
+            <span>{{ svc.packageNote | safe }}</span>
+          </p>
           {%- endif %}
 
         </div>
@@ -143,8 +146,8 @@ eleventyComputed:
         <!-- ──────── right: what it is ──────── -->
         <div class="svc-story">
           <div class="svc-prose reveal">
-            {%- for p in svc.intro %}
-            <p>{{ p }}</p>
+            {%- for para in svc.intro %}
+            <p>{{ para }}</p>
             {%- endfor %}
           </div>
 
@@ -156,12 +159,12 @@ eleventyComputed:
           </ul>
 
           <div class="svc-facts reveal" style="--d:1">
-            {%- if svc.packageKey or svc.packagePricing or svc.included %}
+            {%- if svc.packageKey %}
             <div class="aside-card">
               <h3>In which packages</h3>
               <ul class="in-pack">
                 {%- for t in packages.tiers %}
-                {%- set v = true if (svc.packagePricing or svc.included) else t.has[svc.packageKey] %}
+                {%- set v = t.has[svc.packageKey] %}
                 <li>
                   {%- if v %}
                   <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg>
@@ -170,9 +173,8 @@ eleventyComputed:
                   {%- endif %}
                   <span>
                     <b>{{ t.name }}</b>
-                    {%- if v === "either" %} &mdash; as your one choice
-                    {%- elif v and v !== true %} &mdash; {{ v }}
-                    {%- elif not v %} &mdash; add it à la carte{% endif %}
+                    {%- if v and v !== true %} <em>({{ v }})</em>
+                    {%- elif not v %} <em>(add it on its own)</em>{% endif %}
                   </span>
                 </li>
                 {%- endfor %}
@@ -186,9 +188,10 @@ eleventyComputed:
                 {%- if svc.turnaroundNote %}
                 {{ svc.turnaroundNote | safe }}
                 {%- else %}
-                Standard build is <b style="color:var(--text)">{{ site.turnaround }}</b>.
-                Need it sooner? Rush delivery is a listed
-                <a href="/packages/#fees" style="color: var(--blue);">flat fee</a>, not a renegotiation.
+                A standard build takes <b style="color:var(--text)">{{ site.turnaround }}</b>
+                from the day your content arrives. Need it sooner? Rush delivery is a
+                listed <a href="/pricing/#project-extras" style="color: var(--blue);">flat fee</a>,
+                not a renegotiation.
                 {%- endif %}
               </p>
             </div>
@@ -199,9 +202,6 @@ eleventyComputed:
     </div>
   </section>
 
-
-  {#- The pricing detail that used to sit here is now the Compare tab at the
-      top of the page, so the same table is not printed twice. -#}
 
   {%- set processHeading = svc.processHeading or ("How " + svc.name | lower + " gets built.") %}
   {% include "components/process-steps.njk" %}
