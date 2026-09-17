@@ -27,8 +27,8 @@ export default function (eleventyConfig) {
   // own CSS. They are not pages of this site and deliberately stay outside
   // src/ — copied verbatim so the "View build" buttons keep working until
   // they have external URLs of their own.
-  eleventyConfig.addPassthroughCopy({ "Demo Restaurant": "Demo Restaurant" });
-  eleventyConfig.addPassthroughCopy({ "Demo Detailer": "Demo Detailer" });
+  eleventyConfig.addPassthroughCopy({ "Demo Restaurant": "demo-restaurant" });
+eleventyConfig.addPassthroughCopy({ "Demo Detailer": "demo-detailer" });
 
   // Money, rendered from the one place that knows the placeholder rule: a
   // null price has not been supplied yet and must read as unfinished rather
